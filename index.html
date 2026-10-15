@@ -230,6 +230,28 @@ nav button[aria-current="page"] svg{filter:drop-shadow(0 0 8px rgb(255 126 182/.
 .dhero b{animation:heroIn .6s var(--spring) both}@keyframes heroIn{from{opacity:0;transform:translateY(8px) scale(.94)}}
 canvas{animation:fadeIn .6s ease both}
 ::selection{background:rgb(255 126 182/.35)}
+#detail.page{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none;align-items:stretch;justify-content:center;animation:none!important;z-index:40}
+#detail.page .in{animation:none!important;height:100%;max-height:100%;max-width:760px;width:100%;border:0;border-radius:0;background:var(--bg);padding:0 16px calc(36px + env(safe-area-inset-bottom));gap:0;display:block;overflow-y:auto}
+.dbar{position:sticky;top:0;z-index:3;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;margin:0 -16px;padding:calc(env(safe-area-inset-top) + 8px) 16px 10px;background:rgb(13 10 19/.92);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--line)}
+.dback{width:40px;height:40px;border-radius:50%;padding:0;display:grid;place-items:center;background:rgb(255 255 255/.06);border:1px solid var(--line)}.dback svg{width:22px;height:22px;stroke:var(--fg);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.dtitle{text-align:center;font:700 16px var(--display)}
+.dnav{display:flex;align-items:center;justify-content:center;gap:18px;margin:12px 0 2px}.dnav button{width:36px;height:36px;border-radius:50%;padding:0;font-size:20px;line-height:1;background:rgb(255 255 255/.05)}.dnav button:disabled{opacity:.25}.dnav b{min-width:130px;text-align:center;font:700 15px var(--display);text-transform:capitalize}
+.dcontent{display:flex;flex-direction:column;gap:16px;padding-top:10px}
+.dcontent>*{animation:cardIn .5s var(--ease) both}.dcontent>*:nth-child(2){animation-delay:.05s}.dcontent>*:nth-child(3){animation-delay:.1s}.dcontent>*:nth-child(4){animation-delay:.15s}.dcontent>*:nth-child(5){animation-delay:.2s}.dcontent>*:nth-child(n+6){animation-delay:.25s}
+.dcontent.in-left{animation:slideL .38s var(--ease) both}.dcontent.in-right{animation:slideR .38s var(--ease) both}.dcontent.in-up{animation:cardIn .38s var(--ease) both}
+@keyframes slideL{from{opacity:0;transform:translateX(-36px)}}@keyframes slideR{from{opacity:0;transform:translateX(36px)}}
+.rhero{display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0 4px}.mring.big{max-width:200px;width:200px}.mring.big .n b{font-size:48px}.mring.big .n span{font-size:13px}.rsub{color:var(--muted);font-size:14px;text-align:center}
+.kst{display:flex;flex-direction:column;background:rgb(255 255 255/.03);border:1px solid var(--line);border-radius:18px;padding:4px 14px}
+.ks{display:grid;grid-template-columns:1fr 84px 92px;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}.ks:first-child{border-top:0}
+.ksl span{display:block;font-size:14px}.ksl small{color:var(--dim);font-size:11.5px}
+.ksb em{display:block;height:6px;border-radius:6px;background:linear-gradient(90deg,rgb(255 255 255/.03),rgb(255 255 255/.14) 50%,rgb(255 255 255/.03));position:relative}
+.ksb u{position:absolute;top:-4px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--fg);box-shadow:0 0 0 3px var(--bg);transition:left .8s var(--ease)}.ksb u.g{background:var(--good)}.ksb u.r{background:var(--bad)}
+.ks b{text-align:right;font:700 15px var(--mono)}.ks b.g{color:var(--good)}.ks b.r{color:var(--bad)}.ks b i{font-style:normal;font-size:10px;margin-right:4px}
+.seg.sm{padding:3px}.seg.sm button{padding:5px 10px;font-size:12px}
+.tblock{display:flex;flex-direction:column;gap:8px;background:rgb(255 255 255/.03);border:1px solid var(--line);border-radius:18px;padding:14px}
+.links{display:flex;flex-wrap:wrap;gap:8px}.links button{flex:1;min-width:140px;font-size:13px;padding:11px}
+.dsub{text-transform:capitalize;text-align:center;margin:0;font-size:20px}
+[data-open]{cursor:pointer;transition:transform .18s var(--ease)}[data-open]:active{transform:scale(.97)}#heat i{cursor:pointer}.lr{cursor:pointer}.lr:active{opacity:.7}
 </style>
 </head>
 <body>
@@ -1100,7 +1122,7 @@ function applyWhoop(w){const dels=new Set(store.get("delw",[]));const tb=new Set
     const rc=w.recoveries.find(r=>r.sleep_id===sl.id&&r.score_state==="SCORED"&&r.score);
     let c=chk.find(x=>dayKey(x.d)===k);if(!c){c={d:b,feel:null,tags:null};chk.push(c)}
     const q=c.sleep&&c.sleep.q;
-    c.sleep={src:"whoop",bed:tod(a),wake:tod(b),h:+asleep.toFixed(2),need:+((N.baseline_milli+N.need_from_sleep_debt_milli+N.need_from_recent_strain_milli+N.need_from_recent_nap_milli)/36e5).toFixed(2),base:+(N.baseline_milli/36e5).toFixed(2),
+    c.sleep={src:"whoop",start:a,end:b,bed:tod(a),wake:tod(b),h:+asleep.toFixed(2),need:+((N.baseline_milli+N.need_from_sleep_debt_milli+N.need_from_recent_strain_milli+N.need_from_recent_nap_milli)/36e5).toFixed(2),base:+(N.baseline_milli/36e5).toFixed(2),
       q,perf:sl.score.sleep_performance_percentage??null,eff:sl.score.sleep_efficiency_percentage!=null?Math.round(sl.score.sleep_efficiency_percentage):null,cons:sl.score.sleep_consistency_percentage??null,
       st:{awake:S_.total_awake_time_milli,light:S_.total_light_sleep_time_milli,sws:S_.total_slow_wave_sleep_time_milli,rem:S_.total_rem_sleep_time_milli},cyc:S_.sleep_cycle_count,dist:S_.disturbance_count};
     c.src="whoop";c.wsid=sl.id;if(sl.score.respiratory_rate)c.resp=+sl.score.respiratory_rate.toFixed(1);
@@ -1275,6 +1297,7 @@ function renderCouple(){const el=$("couple");if(!el)return;const P=store.get("pe
   const mh=me&&me.sleep&&me.sleep.h,ph=P.c.sleep&&P.c.sleep.h;if(mh&&ph&&Math.abs(mh-ph)>=.5)line+=` ${mh>ph?esc(myName):esc(P.name)} ha dormido ${hm(Math.abs(mh-ph))} más.`;
   el.innerHTML=`<div class="row sb"><h2>Vosotros</h2><span class="small">${new Date(P.t).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}</span></div><div class="couple">${coupleCol(myName,me,dayStrain(Date.now()))}<div class="vs">vs</div>${coupleCol(P.name,P.c,P.strain)}</div>${line?`<div class="msg">${line}</div>`:""}`}
 // ---------- Detalle al tocar: sueño, estrés, pulso, HRV, recuperación, esfuerzo ----------
+let DOFF=0;const DAYT=()=>startOfDay(Date.now())-DOFF*DAY;const isToday=()=>DOFF===0;const upto=()=>isToday()?`Hasta ahora (${fmtT(Date.now())})`:"Ese día";
 const hh=t=>fmtT(t);
 const mins=ms=>Math.round(ms/60000);
 const dur=ms=>{const m=Math.round(ms/60000);return m>=60?Math.floor(m/60)+" h "+String(m%60).padStart(2,"0")+" min":m+" min"};
@@ -1328,8 +1351,8 @@ const evList=E=>E.length?`<div class="evs">${E.map(e=>`<div class="ev"><i style=
 function compareTxt(v,a,unit,betterHigh,fmt=x=>Math.round(x)){if(v==null||a==null)return"";const d=v-a;if(Math.abs(d)<(Math.abs(a)*.04||1))return`en tu media (${fmt(a)}${unit})`;const up=d>0;const good=betterHigh==null?null:betterHigh===up;return`<span class="${good===true?"g":good===false?"r":""}">${up?"▲":"▼"} ${fmt(Math.abs(d))}${unit}</span> vs tu media (${fmt(a)}${unit})`}
 
 // ===== FRECUENCIA CARDIACA =====
-function dHR(){const now=Date.now(),t0=startOfDay(now);const L=AUTO.log.filter(x=>x[0]>=t0);const R=sleepRanges();const rest=baseline().rhr||CFG.rest;
-  if(L.length<12)return{title:"Frecuencia cardiaca",hero:"--",sub:"Sin datos de hoy",body:story(["Todavía no tengo pulso de hoy. Con la pulsera conectada, aquí verás tu día minuto a minuto: picos, bajadas, entrenos y momentos de calma."])};
+function dHR(){const t0=DAYT(),now=Math.min(Date.now(),t0+DAY-1);const L=AUTO.log.filter(x=>x[0]>=t0);const R=sleepRanges();const rest=baseline().rhr||CFG.rest;
+  if(L.length<12)return{title:"Frecuencia cardiaca",hero:"--",sub:isToday()?"Sin datos de hoy":"Sin registro de ese día",body:story(["Todavía no tengo pulso de hoy. Con la pulsera conectada, aquí verás tu día minuto a minuto: picos, bajadas, entrenos y momentos de calma."])};
   const sm=smooth(L.map(x=>x[1]),3);const P=L.map((x,i)=>[x[0],sm[i]]);
   const awake=L.filter(x=>!inR(R,x[0])),asl=L.filter(x=>inR(R,x[0]));const aw=awake.map(x=>x[1]);
   let mx=0;P.forEach((p,i)=>{if(p[1]>P[mx][1])mx=i});let mn=0;P.forEach((p,i)=>{if(p[1]<P[mn][1])mn=i});
@@ -1340,7 +1363,7 @@ function dHR(){const now=Date.now(),t0=startOfDay(now);const L=AUTO.log.filter(x
   const ss=sessions().filter(x=>!x.demo&&x.id>=t0);
   const hourly=[];for(let h=0;h<24;h++){const a=t0+h*36e5,b=a+36e5;const s=L.filter(x=>x[0]>=a&&x[0]<b).map(x=>x[1]);hourly.push(s.length>=6?Math.round(mean(s)):null)}
   const curHr=L[L.length-1][1];const hiM=mins(z[3]+z[4]);
-  const S=[`Hasta ahora (${hh(now)}) tu pulso medio despierto ha sido de <b>${aw.length?Math.round(mean(aw)):"--"} ppm</b>, con un reposo de referencia de ${Math.round(rest)} ppm.`,
+  const S=[`${upto()} tu pulso medio despierto ha sido de <b>${aw.length?Math.round(mean(aw)):"--"} ppm</b>, con un reposo de referencia de ${Math.round(rest)} ppm.`,
     `Tu <b>pico del día</b> fue de ${Math.round(P[mx][1])} ppm a las ${hh(P[mx][0])}${pkS?`, en tu ${typeOf(pkS.type)[1]}`:", fuera de un entreno registrado"}.`,
     asl.length?`Tu pulso más bajo, <b>${Math.round(P[mn][1])} ppm</b>, fue a las ${hh(P[mn][0])}${inR(R,P[mn][0])?" mientras dormías":""}.`:`Tu pulso más bajo fue de ${Math.round(P[mn][1])} ppm a las ${hh(P[mn][0])}.`,
     hiM?`Has pasado <b>${hiM} min en zona 4-5</b> (esfuerzo alto)${ss.length?` repartidos en ${ss.length} ${ss.length===1?"entreno":"entrenos"}`:""}.`:"No has pasado tiempo en zonas altas todavía.",
@@ -1360,7 +1383,7 @@ function dHR(){const now=Date.now(),t0=startOfDay(now);const L=AUTO.log.filter(x
 // ===== ESTRÉS =====
 function stressSeries(t0,t1){const R=sleepRanges();const L=AUTO.log.filter(x=>x[0]>=t0&&x[0]<t1);const out=[];for(let a=t0;a<t1;a+=5*60000){const s=L.filter(x=>x[0]>=a&&x[0]<a+5*60000&&!inR(R,x[0])&&!sessAt(x[0])&&rFrac(x[1])<.3);
   if(s.length>=15)out.push([a+150000,+stressOf(mean(s.map(x=>x[1])),mean(s.map(x=>x[2]).filter(Boolean))||null).toFixed(2)])}return out}
-function dStress(){const now=Date.now(),t0=startOfDay(now);const S=stressSeries(t0,now);const man=stresses().filter(x=>x.d>=t0);
+function dStress(){const t0=DAYT(),now=Math.min(Date.now(),t0+DAY-1);const S=stressSeries(t0,now);const man=stresses().filter(x=>x.d>=t0);
   if(S.length<3&&!man.length)return{title:"Estrés",hero:"--",sub:"Sin datos de hoy",body:story(["Aún no tengo suficiente pulso de hoy estando despierto y quieto. En cuanto lo tenga, aquí verás cómo ha ido tu estrés: picos, momentos de calma y qué hacer."])};
   const vals=S.map(x=>x[1]);const cal=vals.filter(v=>v<1).length*5,med=vals.filter(v=>v>=1&&v<2).length*5,alt=vals.filter(v=>v>=2).length*5,tot=cal+med+alt||1;
   const ep=[];let c=null;S.forEach(p=>{if(p[1]>=2){if(!c)c={a:p[0]-150000,b:p[0]+150000,m:p[1],tm:p[0]};else{c.b=p[0]+150000;if(p[1]>c.m){c.m=p[1];c.tm=p[0]}}}else if(c){ep.push(c);c=null}});if(c)ep.push(c);
@@ -1370,7 +1393,7 @@ function dStress(){const now=Date.now(),t0=startOfDay(now);const S=stressSeries(
   // ayer a la misma hora
   const yS=stressSeries(t0-DAY,now-DAY);const yAvg=yS.length>=6?mean(yS.map(x=>x[1])):null;
   const half=S.filter(x=>x[0]>now-3*36e5),rec=half.length>=6?mean(half.map(x=>x[1])):null;
-  const St=[`Hasta ahora llevo <b>${dur(tot*60000)}</b> de tu día medido despierto y sin entrenar: <b>${Math.round(cal/tot*100)} % en calma</b>, ${Math.round(med/tot*100)} % con estrés medio y <b>${Math.round(alt/tot*100)} % alto</b>.`,
+  const St=[`${isToday()?"Hasta ahora llevo":"Ese día medí"} <b>${dur(tot*60000)}</b> de tu día despierto y sin entrenar: <b>${Math.round(cal/tot*100)} % en calma</b>, ${Math.round(med/tot*100)} % con estrés medio y <b>${Math.round(alt/tot*100)} % alto</b>.`,
     top.length?`Tu <b>pico de estrés</b> fue a las ${hh(top.sort((a,b)=>b.m-a.m)[0].tm)} (${fx(top[0].m)} sobre 3)${top.length>1?`, y ha habido ${ep.length} ${ep.length===1?"momento":"momentos"} de estrés alto en total`:""}.`:"No has tenido picos de estrés alto hoy. Bien.",
     calm?`Tu momento más tranquilo fue entre las ${hh(calm.a)} y las ${hh(calm.b+300000)}.`:"",
     rec!=null&&avg!=null&&Math.abs(rec-avg)>=.3?`En las últimas 3 horas estás ${rec<avg?"<b>más tranquilo</b>":"<b>más tenso</b>"} que tu media de hoy (${fx(rec)} frente a ${fx(avg)}).`:"",
@@ -1386,9 +1409,9 @@ function dStress(){const now=Date.now(),t0=startOfDay(now);const S=stressSeries(
       const b=$("dbreath");if(b)b.onclick=()=>{closeDetail();go("rec");setTimeout(()=>{const x=$("brstart");if(x)x.scrollIntoView({behavior:"smooth",block:"center"})},200)}}}}
 
 // ===== SUEÑO =====
-function dSleep(){const C=checks();const c=C.find(x=>x.sleep&&x.sleep.h);if(!c)return{title:"Sueño",hero:"--",sub:"Sin noches registradas",body:story(["Duerme con la pulsera puesta: por la mañana tendrás aquí tu noche completa, con fases, despertares, pulso y HRV."])};
+function dSleep(){const C=checks();const c=C.find(x=>x.sleep&&x.sleep.h&&dayKey(x.d)===dayKey(DAYT()));if(!c)return{title:"Sueño",hero:"--",sub:isToday()?"Aún no hay noche de hoy":"Sin noche registrada ese día",body:story(["Duerme con la pulsera puesta: por la mañana tendrás aquí tu noche completa, con fases, despertares, pulso y HRV."])};
   const z=c.sleep;const P=C.filter(x=>x!==c&&x.sleep&&x.sleep.h&&x.d<c.d&&x.d>c.d-15*DAY);const av=f=>{const v=P.map(f).filter(x=>x!=null&&isFinite(x));return v.length>=3?mean(v):null};
-  const need=z.need||sleepNeed(c.d).need;const a=z.start,b=z.end;const sm=a&&b?AUTO.log.filter(x=>x[0]>=a&&x[0]<=b):[];
+  const need=z.need||sleepNeed(c.d).need;let a=z.start,b=z.end;if(!a){const w=(WH().sleeps||[]).find(q=>!q.nap&&dayKey(Date.parse(q.end))===dayKey(c.d));if(w){a=Date.parse(w.start);b=Date.parse(w.end)}}const sm=a&&b?AUTO.log.filter(x=>x[0]>=a&&x[0]<=b):[];
   const seg=sm.length>200?stageSeq(sm):null;const wakes=seg?seg.slice(1,-1).filter(s=>s.k==="awake"&&s.b-s.a>=2*60000):[];const longW=wakes.sort((x,y)=>(y.b-y.a)-(x.b-x.a))[0];
   let low=null;if(sm.length>60){const s2=smooth(sm.map(x=>x[1]),15);let mi=0;s2.forEach((v,i)=>{if(v<s2[mi])mi=i});low={t:sm[mi][0],v:Math.round(s2[mi])}}
   const st=z.st||null;const tot=st?(st.light||0)+(st.sws||0)+(st.rem||0):0;const dp=deepPct(c);const P2=P.map(deepPct).filter(Boolean);const msw=P2.length>=3?mean(P2.map(x=>x.sws)):null,mre=P2.length>=3?mean(P2.map(x=>x.rem)):null;
@@ -1403,7 +1426,7 @@ function dSleep(){const C=checks();const c=C.find(x=>x.sleep&&x.sleep.h);if(!c)r
     low?`Tu pulso tocó fondo a las <b>${hh(low.t)}</b> (${low.v} ppm)${low.t>a+(b-a)*.7?": muy tarde en la noche, señal de que el cuerpo tardó en relajarse (cena, alcohol, entreno tardío o estrés)":low.t<a+(b-a)*.5?": en la primera mitad, como debe ser":""}.`:"",
     c.hrv?`HRV nocturna de <b>${c.hrv} ms</b> ${compareTxt(c.hrv,av(x=>x.hrv)," ms",true)}.`:"",c.resp?`Respiración: ${fx(c.resp)} rpm ${compareTxt(c.resp,av(x=>x.resp)," rpm",false,v=>fx(v))}.`:"",
     c.dip!=null?`Tu pulso bajó un ${Math.round(c.dip*100)} % respecto al día ${c.dip<.08?"(poco: lo normal es 10-20 %)":"(bien)"}.`:""];
-  const tn=sleepNeed(startOfDay(Date.now())+DAY);
+  const tn=sleepNeed(DAYT()+DAY);
   return{title:"Sueño",hero:hms(z.h),unit:"",sub:`${Math.round(z.h/need*100)} % de lo necesario · eficiencia ${z.eff??"--"} %`,col:z.h/need>=.9?"--violet":z.h/need>=.75?"--warn":"--bad",
     body:(seg?`<canvas id="dcv" style="height:150px"></canvas>`:"")+story(S)+
       (st?`<div class="dstg">${[["sws","Profundo"],["rem","REM"],["light","Ligero"],["awake","Despierto"]].map(([k,l])=>{const v=st[k]||0;const col=HYPC[k];return`<div><span>${l}</span><em><i style="background:${col.startsWith("--")?`var(${col})`:col};width:${Math.max(2,v/((tot+(st.awake||0))||1)*100)}%"></i></em><b>${hm(v/36e5)}</b></div>`}).join("")}</div>`:"")+
@@ -1413,7 +1436,7 @@ function dSleep(){const C=checks();const c=C.find(x=>x.sleep&&x.sleep.h);if(!c)r
     draw:()=>{if(seg)hypChart($("dcv"),seg,a,b);const N=C.filter(x=>x.sleep&&x.sleep.h).slice(0,14).reverse();barChart($("dcv2"),N.map(x=>+x.sleep.h.toFixed(2)),N.map(x=>new Date(x.d).getDate()+""),{min:0,colorFn:v=>cssv(v>=need*.9?"--violet":v>=need*.75?"--warn":"--bad")})}}}
 
 // ===== HRV =====
-function dHRV(){const C=checks();const c=C.find(x=>x.hrv);if(!c)return{title:"HRV",hero:"--",sub:"Sin datos",body:story(["La HRV necesita que tu pulsera envíe el tiempo entre latidos. Duerme una noche con ella y aquí verás tu tendencia y qué significa."])};
+function dHRV(){const C=checks().filter(x=>x.d<DAYT()+DAY);const c=C.find(x=>x.hrv);if(!c)return{title:"HRV",hero:"--",sub:"Sin datos",body:story(["La HRV necesita que tu pulsera envíe el tiempo entre latidos. Duerme una noche con ella y aquí verás tu tendencia y qué significa."])};
   const H=C.filter(x=>x.hrv);const b7=mean(H.slice(1,8).map(x=>x.hrv)),b28=mean(H.slice(0,28).map(x=>x.hrv));const m7=mean(H.slice(0,7).map(x=>x.hrv));const cv=H.length>=5?sd(H.slice(0,7).map(x=>x.hrv))/m7*100:null;
   const t0=startOfDay(Date.now());const dl=AUTO.log.filter(x=>x[0]>=t0&&x[2]!=null&&!inR(sleepRanges(),x[0])&&rFrac(x[1])<.25);const dayHv=dl.length>=30?Math.round(pct(dl.map(x=>x[2]),.5)):null;
   const S=[`Tu HRV nocturna ${dayKey(c.d)===dayKey(Date.now())?"de anoche":"más reciente"} es de <b>${c.hrv} ms</b> ${compareTxt(c.hrv,b7||null," ms",true)}.`,
@@ -1426,23 +1449,23 @@ function dHRV(){const C=checks();const c=C.find(x=>x.hrv);if(!c)return{title:"HR
     draw:()=>{const pts=H.slice(0,30).reverse().map(x=>[x.d,x.hrv]);trendChart($("dcv"),pts,{col:"--violet"})}}}
 
 // ===== RECUPERACIÓN =====
-function dRec(){const C=checks();const c=C[0]&&dayKey(C[0].d)===dayKey(Date.now())?C[0]:null;if(!c)return{title:"Recuperación",hero:"--",sub:"Aún sin datos de anoche",body:story(["Tu recuperación aparece en cuanto la pulsera mide tu noche. Se calcula con tu HRV, tu pulso en reposo, tu sueño y tu carga reciente."])};
-  const R=c.parts&&c.parts.length?c.parts:readinessParts(c).parts;const L=labDay();const P=C.filter(x=>x.score).slice(0,14);const avg=mean(P.slice(1).map(x=>x.score));
+function dRec(){const C=checks();const c=C.find(x=>dayKey(x.d)===dayKey(DAYT()))||null;if(!c)return{title:"Recuperación",hero:"--",sub:"Aún sin datos de anoche",body:story(["Tu recuperación aparece en cuanto la pulsera mide tu noche. Se calcula con tu HRV, tu pulso en reposo, tu sueño y tu carga reciente."])};
+  const R=c.parts&&c.parts.length?c.parts:readinessParts(c).parts;const L=isToday()?labDay():[];const P=C.filter(x=>x.score&&x.d<=c.d).slice(0,14);const avg=mean(P.slice(1).map(x=>x.score));
   const best=[...R].sort((a,b)=>b[1]-a[1])[0],worst=[...R].sort((a,b)=>a[1]-b[1])[0];
-  const S=[`Hoy estás al <b>${c.score} %</b> ${compareTxt(c.score,avg||null," %",true)}.`,best&&best[1]>0?`Lo que más te suma: <b>${best[0]==="HRV"?best[0]:best[0].toLowerCase()}</b> (${best[2]}).`:"",worst&&worst[1]<0?`Lo que más te resta: <b>${worst[0]==="HRV"?worst[0]:worst[0].toLowerCase()}</b> (${worst[2]}).`:"",
+  const S=[`${isToday()?"Hoy estás":"Ese día estabas"} al <b>${c.score} %</b> ${compareTxt(c.score,avg||null," %",true)}.`,best&&best[1]>0?`Lo que más te suma: <b>${best[0]==="HRV"?best[0]:best[0].toLowerCase()}</b> (${best[2]}).`:"",worst&&worst[1]<0?`Lo que más te resta: <b>${worst[0]==="HRV"?worst[0]:worst[0].toLowerCase()}</b> (${worst[2]}).`:"",
     c.score>=67?"Día para apretar: si toca intensidad, hoy es buen día.":c.score>=34?"Día de ritmo controlado: técnica y volumen moderado, sin buscar PRs.":"Día de recuperar: movilidad, paseo o descanso."];
   return{title:"Recuperación",hero:c.score,unit:"%",sub:c.score>=67?"Verde · listo":c.score>=34?"Amarillo · controlado":"Rojo · recupera",col:c.score>=67?"--good":c.score>=34?"--warn":"--bad",
     body:story(S)+`<h3>Qué suma y qué resta</h3><div class="contrib">${contribHTML(R)}</div>${L.length?"<h3>Tu informe</h3>"+labList(L):""}<h3>Últimos 14 días</h3><canvas id="dcv" style="height:130px"></canvas>`,
     draw:()=>{const N=P.slice().reverse();barChart($("dcv"),N.map(x=>x.score),N.map(x=>new Date(x.d).getDate()+""),{min:0,colorFn:v=>zColor(v)})}}}
 
 // ===== ESFUERZO / STRAIN =====
-function dStrain(){const now=Date.now(),t0=startOfDay(now);const L=AUTO.log.filter(x=>x[0]>=t0);const ss=sessions().filter(x=>!x.demo&&x.id>=t0);
+function dStrain(){const t0=DAYT(),now=Math.min(Date.now(),t0+DAY-1);const L=AUTO.log.filter(x=>x[0]>=t0&&x[0]<t0+DAY);const ss=sessions().filter(x=>!x.demo&&x.id>=t0&&x.id<t0+DAY);
   let acc=0;const curve=[];L.forEach((x,i)=>{const dt=i?Math.min(60,(x[0]-L[i-1][0])/1000):10;acc+=trimpMin(x[1])*dt/60;if(i%3===0)curve.push([x[0],+strainOf(acc).toFixed(2)])});
-  const sesTr=ss.reduce((a,x)=>a+x.trimp,0);const st=+strainOf(Math.max(acc,sesTr)).toFixed(1);const C=checks();const c=C[0]&&dayKey(C[0].d)===dayKey(now)?C[0]:null;
+  const sesTr=ss.reduce((a,x)=>a+x.trimp,0);const st=+strainOf(Math.max(acc,sesTr)).toFixed(1);const C=checks();const c=C.find(x=>dayKey(x.d)===dayKey(t0))||null;
   const tgt=c?(c.score>=67?[14,18]:c.score>=34?[10,14]:[6,10]):[10,14];const left=Math.max(0,tgt[0]-st);
   const all=labAll();const say=[];ss.forEach(x=>{const r=labCmp(x,all);if(r)r.say.forEach(s=>say.push({k:s[0],t:s[1],p:typeOf(x.type)[1]+": "+s[2]}))});
   const tot=ss.reduce((a,x)=>a+x.dur,0);const kc=ss.reduce((a,x)=>a+(x.kcal||0),0);
-  const S=[`Hasta ahora llevas un <b>strain de ${fx(st)}</b> sobre 21${ss.length?`, con ${ss.length} ${ss.length===1?"entreno":"entrenos"} (${mmss(tot)})`:" sin entrenos registrados"}.`,
+  const S=[`${isToday()?"Hasta ahora llevas":"Ese día hiciste"} un <b>strain de ${fx(st)}</b> sobre 21${ss.length?`, con ${ss.length} ${ss.length===1?"entreno":"entrenos"} (${mmss(tot)})`:" sin entrenos registrados"}.`,
     c?`Con tu recuperación del ${c.score} % tu objetivo de hoy es <b>${tgt[0]}-${tgt[1]}</b>. ${st>=tgt[1]?"<span class=\"r\">Ya lo has superado: a partir de aquí, solo suave.</span>":st>=tgt[0]?"<span class=\"g\">Estás dentro del objetivo.</span>":`Te faltan unos ${fx(left)} puntos: ${left>6?"un WOD de 30-40 min":left>3?"un entreno de 20-30 min en zona 3-4":"un paseo largo o algo de cardio suave"} lo cubre.`}`:"",
     kc?`Has quemado unas ${kc} kcal entrenando.`:""];
   return{title:"Esfuerzo del día",hero:fx(st),unit:"/ 21",sub:c?`objetivo ${tgt[0]}-${tgt[1]}`:"strain estimado",col:"--sky",
@@ -1450,12 +1473,12 @@ function dStrain(){const now=Date.now(),t0=startOfDay(now);const L=AUTO.log.filt
     draw:()=>{tlChart($("dcv"),curve,{bin:120000,win:2,t0,t1:Math.max(now,t0+12*36e5),now,lo:0,hi:Math.max(21*.75,st+2),ticks:[0,7,14,21],col:"--sky",lw:2.6,bands:[...ss.map(x=>({a:x.id,b:x.id+x.dur*1000,col:"--pink",al:.2})),{a:t0,b:t0+1,col:"--sky"}],marks:curve.length?[{t:curve[curve.length-1][0],v:curve[curve.length-1][1],label:fx(st),col:"--sky"}]:[]})}}}
 
 // ===== ACTIVIDAD =====
-function dAct(){const now=Date.now(),t0=startOfDay(now);const L=AUTO.log.filter(x=>x[0]>=t0);const act=L.filter(x=>rFrac(x[1])>=.25);const am=Math.round(act.length/6);
+function dAct(){const t0=DAYT(),now=Math.min(Date.now(),t0+DAY-1);const L=AUTO.log.filter(x=>x[0]>=t0&&x[0]<t0+DAY);const act=L.filter(x=>rFrac(x[1])>=.25);const am=Math.round(act.length/6);
   const hourly=[];for(let h=0;h<24;h++){const a=t0+h*36e5;hourly.push(Math.round(L.filter(x=>x[0]>=a&&x[0]<a+36e5&&rFrac(x[1])>=.25).length/6))}
   const kAct=L.reduce((a,x)=>{const k=rFrac(x[1])>=.25?kcalMin(x[1]):null;return a+(k?k*10/60:0)},0);const best=hourly.indexOf(Math.max(...hourly));
   const sed=[];let cur=null;L.forEach(x=>{const still=rFrac(x[1])<.12;if(still){if(!cur)cur={a:x[0],b:x[0]};else cur.b=x[0]}else if(cur){if(cur.b-cur.a>=90*60000)sed.push(cur);cur=null}});if(cur&&cur.b-cur.a>=90*60000)sed.push(cur);
   const R=sleepRanges();const sedA=sed.filter(s=>!inR(R,s.a+(s.b-s.a)/2));
-  const S=[`Hasta ahora llevas <b>${am} min activos</b> (pulso por encima de paseo)${kAct?` y unas ${Math.round(kAct)} kcal activas`:""}.`,am?`Tu hora más activa fue de ${best}:00 a ${best+1}:00 (${hourly[best]} min).`:"",
+  const S=[`${isToday()?"Hasta ahora llevas":"Ese día hiciste"} <b>${am} min activos</b> (pulso por encima de paseo)${kAct?` y unas ${Math.round(kAct)} kcal activas`:""}.`,am?`Tu hora más activa fue de ${best}:00 a ${best+1}:00 (${hourly[best]} min).`:"",
     sedA.length?`Has tenido <b>${sedA.length} ${sedA.length===1?"rato largo":"ratos largos"} sin moverte</b> (más de 1 h 30), el último de ${hh(sedA[sedA.length-1].a)} a ${hh(sedA[sedA.length-1].b)}. Levantarte 5 minutos cada hora mejora la recuperación y el estrés.`:"Sin ratos largos sentado: bien."];
   return{title:"Actividad",hero:am,unit:"min",sub:"activos hoy",col:"--lime",body:story(S)+`<h3>Minutos activos por hora</h3><canvas id="dcv" style="height:130px"></canvas>`,
     draw:()=>barChart($("dcv"),hourly,[...Array(24)].map((_,h)=>h%6===0?String(h).padStart(2,"0"):""),{min:0,colorFn:()=>cssv("--lime")})}}
@@ -1560,7 +1583,7 @@ function renderProg(){renderLabTrend();const pm=pmc(42);const cur=pm[pm.length-1
     cx.fillStyle=cssv("--dim");cx.textAlign="left";cx.fillText("−6 sem",30,H-4);cx.textAlign="right";cx.fillText("hoy",W-4,H-4)}
   const today=startOfDay(Date.now()),wk0=weekStart(Date.now())-11*7*DAY;const sd={};ss.forEach(s=>{const k=startOfDay(s.id);sd[k]=(sd[k]||0)+s.trimp});
   const hc=v=>v<=0?"rgb(255 255 255/.05)":v<6?"rgb(100 199 255/.35)":v<11?"rgb(169 139 255/.6)":v<15?"rgb(255 126 182/.8)":"#ff5f7e";
-  let hh="";["L","M","X","J","V","S","D"].forEach((dn,r)=>{hh+=`<span>${dn}</span>`;for(let w=0;w<12;w++){const t=wk0+w*7*DAY+r*DAY;const st=t>today?-1:strainOf(sd[t]||0);hh+=`<i title="${new Date(t).toLocaleDateString("es-ES")} · strain ${st<0?"":fx(st)}" style="background:${st<0?"transparent":hc(st)}"></i>`}});$("heat").innerHTML=hh;
+  let hh="";["L","M","X","J","V","S","D"].forEach((dn,r)=>{hh+=`<span>${dn}</span>`;for(let w=0;w<12;w++){const t=wk0+w*7*DAY+r*DAY;const st=t>today?-1:strainOf(sd[t]||0);hh+=`<i data-t="${t}" title="${new Date(t).toLocaleDateString("es-ES")} · strain ${st<0?"":fx(st)}" style="background:${st<0?"transparent":hc(st)}"></i>`}});$("heat").innerHTML=hh;
   const wkI=[],lb=[];for(let i=7;i>=0;i--){const a0=ws-i*7*DAY,b0=a0+7*DAY;wkI.push(ss.filter(s=>s.id>=a0&&s.id<b0).reduce((x,s)=>x+iminOf(s.zones),0));lb.push(i?"−"+i:"esta")}
   $("goalsmall").textContent="objetivo "+CFG.goal+"/sem";barChart($("cvimin"),wkI,lb,{goal:+CFG.goal||150,colorFn:v=>cssv(v>=(+CFG.goal||150)?"--lime":"--sky")});
   const z4=[0,0,0,0,0];ss.filter(s=>s.id>Date.now()-28*DAY).forEach(s=>s.zones.forEach((z,i)=>z4[i]+=z));const tot=z4.reduce((a,b)=>a+b,0);
@@ -1618,8 +1641,6 @@ function countUp(el,dec){if(!el||reduce)return;const txt=el.textContent.trim();c
   const f=t=>{const k=Math.min(1,(t-t0)/D),e=1-Math.pow(1-k,3);const v=to*e;el.textContent=dec?v.toFixed(dec).replace(".",","):Math.round(v);if(k<1)requestAnimationFrame(f);else el.textContent=txt};requestAnimationFrame(f)}
 window.countUp=countUp;
 let counted=false;const _rh=renderHoy;renderHoy=function(){_rh.apply(this,arguments);if(!counted){counted=true;countUp($("r1v"));countUp($("r2v"),1);countUp($("r3v"))}};
-const _od=openDetail;openDetail=function(k){_od(k);const b=document.querySelector("#detin .dhero b");if(b){const t=b.textContent;countUp(b,/,/.test(t)?1:0)}};
-closeDetail=function(){const d=$("detail");if(d.hidden)return;d.classList.add("closing");setTimeout(()=>{d.hidden=true;d.classList.remove("closing")},250);DCUR=null};
 const _go=go;go=function(v){_go(v);if(NATIVE)nat("haptic").catch(()=>{})};
 // cabecera que se vuelve cristal al hacer scroll
 const hd=document.querySelector("header");let tick=false;addEventListener("scroll",()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{hd.classList.toggle("scrolled",scrollY>12);tick=false})},{passive:true});
@@ -1628,9 +1649,113 @@ function swipe(sheet,close){const inn=sheet.querySelector(".in");if(!inn)return;
   inn.addEventListener("touchstart",e=>{if(inn.scrollTop>0)return;y0=e.touches[0].clientY;dy=0;inn.style.transition="none"},{passive:true});
   inn.addEventListener("touchmove",e=>{if(y0==null)return;dy=Math.max(0,e.touches[0].clientY-y0);if(dy>0&&inn.scrollTop<=0){inn.style.transform=`translateY(${dy}px)`;sheet.style.background=`rgb(5 3 9/${Math.max(.2,.7-dy/600)})`}},{passive:true});
   inn.addEventListener("touchend",()=>{if(y0==null)return;inn.style.transition="transform .3s cubic-bezier(.2,.8,.2,1)";if(dy>110){close()}inn.style.transform="";sheet.style.background="";y0=null},{passive:true})}
-swipe($("detail"),closeDetail);
+swipe($("detail"),()=>closeDetail());
 swipe($("sum"),()=>{if($("sum").dataset.closable==="1")$("sum").hidden=true});
 if($("devsheet"))swipe($("devsheet"),()=>closeDev(NS&&NS.state==="on"));
+})();
+</script>
+<script>
+// ---------- Páginas a pantalla completa: zoom desde lo que tocas, navegación por días, estadísticas clave ----------
+(function(){
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const DAYKEYS=new Set(["hr","stress","sleep","rec","strain","act","day"]);
+const TITLES2={hr:"Frecuencia cardiaca",stress:"Estrés",sleep:"Sueño",hrv:"HRV",rec:"Recuperación",strain:"Esfuerzo",act:"Actividad",day:"Tu día",load:"Carga y forma",week:"Tu semana",vo2:"VO2max"};
+let tapR=null,curK=null;
+document.addEventListener("pointerdown",e=>{const t=e.target.closest(".gl,.tile,.card,.lr,.mring,.reco,.sess,#heat i,canvas,.rings>div,.hero,.k,.ev");if(t)tapR=t.getBoundingClientRect()},true);
+const vib=()=>{if(NATIVE)nat("haptic").catch(()=>{});else if(navigator.vibrate)try{navigator.vibrate(6)}catch(e){}};
+// ---- utilidades ----
+const daysBack=n=>checks().filter(x=>x.d>DAYT()-n*DAY&&x.d<DAYT()+DAY);
+function stat(arr){const v=arr.filter(x=>x!=null&&isFinite(x));if(v.length<3)return null;const m=mean(v);return{m,s:sd(v)||m*.08||1,n:v.length}}
+function keyStats(rows){const R=rows.filter(r=>r.v!=null);if(!R.length)return"";
+  return`<h3>Estadísticas clave <span class="small" style="text-transform:none;letter-spacing:0">· vs tus 30 días</span></h3><div class="kst">${R.map(r=>{const b=r.b;let pos=50,cls="",arr="";if(b){const z=(r.v-b.m)/(b.s*2);pos=Math.max(4,Math.min(96,50+z*46));const d=r.v-b.m;const sig=Math.abs(d)>=b.s*.5;if(sig){const good=r.hi==null?null:(r.hi?d>0:d<0);cls=good===true?"g":good===false?"r":"";arr=d>0?"▲":"▼"}}
+    return`<div class="ks"><div class="ksl"><span>${r.l}</span><small>${b?"media "+r.f(b.m):"sin media aún"}</small></div><div class="ksb"><em><u style="left:${pos}%" class="${cls}"></u></em></div><b class="${cls}">${arr?`<i>${arr}</i>`:""}${r.f(r.v)}</b></div>`}).join("")}</div>`}
+function trendBlock(id,title,series,o={}){return{html:`<div class="tblock"><div class="row sb"><h3>${title}</h3><div class="seg sm" id="${id}seg"><button data-n="7" aria-pressed="false">7 D</button><button data-n="30" aria-pressed="true">30 D</button><button data-n="90" aria-pressed="false">90 D</button></div></div><canvas id="${id}" style="height:150px"></canvas><div class="small" id="${id}txt"></div></div>`,
+  draw:()=>{const go=n=>{const pts=series(n);trendChart($(id),pts,o);const v=pts.map(p=>p[1]);if(v.length>=2){const a=mean(v.slice(0,Math.ceil(v.length/2))),b=mean(v.slice(Math.floor(v.length/2)));const d=b-a;$(id+"txt").textContent=Math.abs(d)<(Math.abs(a)*.03||.5)?"Estable en este periodo.":`${d>0?"Subiendo":"Bajando"} en este periodo (${d>0?"+":"−"}${(o.df||o.f||(x=>Math.round(x)))(Math.abs(d))}).`}else $(id+"txt").textContent=""};
+    document.querySelectorAll(`#${id}seg button`).forEach(b=>b.onclick=e=>{e.stopPropagation();document.querySelectorAll(`#${id}seg button`).forEach(x=>x.setAttribute("aria-pressed",String(x===b)));go(+b.dataset.n);vib()});go(30)}}}
+function ringHero(frac,col,val,unit,sub){const off=314.2;return`<div class="rhero"><div class="mring big"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="9"/><circle class="rh" cx="60" cy="60" r="50" fill="none" stroke="${col}" stroke-width="9" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="${off}" data-to="${off*(1-Math.max(0,Math.min(1,frac)))}"/></svg><div class="n"><b class="rv">${val}</b><span>${unit||""}</span></div></div><div class="rsub">${sub||""}</div></div>`}
+// ---- extras por métrica ----
+const EXTRA={
+ sleep:()=>{const c=checks().find(x=>x.sleep&&x.sleep.h&&dayKey(x.d)===dayKey(DAYT()));const P=daysBack(31).filter(x=>x!==c&&x.sleep&&x.sleep.h);const dp=c&&deepPct(c);
+   const ks=c?keyStats([{l:"Horas dormidas",v:c.sleep.h,b:stat(P.map(x=>x.sleep.h)),f:v=>hm(v),hi:true},{l:"Eficiencia",v:c.sleep.eff,b:stat(P.map(x=>x.sleep.eff)),f:v=>Math.round(v)+" %",hi:true},
+     {l:"Sueño profundo",v:dp&&dp.sws,b:stat(P.map(x=>deepPct(x)&&deepPct(x).sws)),f:v=>Math.round(v)+" %",hi:true},{l:"Sueño REM",v:dp&&dp.rem,b:stat(P.map(x=>deepPct(x)&&deepPct(x).rem)),f:v=>Math.round(v)+" %",hi:true},
+     {l:"HRV",v:c.hrv,b:stat(P.map(x=>x.hrv)),f:v=>Math.round(v)+" ms",hi:true},{l:"Pulso en reposo",v:c.rhr,b:stat(P.map(x=>x.rhr)),f:v=>Math.round(v)+" ppm",hi:false},{l:"Respiración",v:c.resp,b:stat(P.map(x=>x.resp)),f:v=>fx(v)+" rpm",hi:false}]):"";
+   const T=trendBlock("tsl","Horas de sueño",n=>daysBack(n).filter(x=>x.sleep&&x.sleep.h).reverse().map(x=>[x.d,+x.sleep.h.toFixed(2)]),{col:"--violet",f:v=>fx(v,1),df:v=>hm(v)});
+   return{html:ks+T.html,draw:T.draw,ring:c?[Math.min(1,c.sleep.h/(c.sleep.need||sleepNeed(c.d).need)),"var(--violet)",hms(c.sleep.h),"",`${Math.round(c.sleep.h/(c.sleep.need||sleepNeed(c.d).need)*100)} % de lo necesario`]:null}},
+ rec:()=>{const c=checks().find(x=>dayKey(x.d)===dayKey(DAYT()));const P=daysBack(31).filter(x=>x!==c);
+   const ks=c?keyStats([{l:"Recuperación",v:c.score,b:stat(P.map(x=>x.score)),f:v=>Math.round(v)+" %",hi:true},{l:"HRV",v:c.hrv,b:stat(P.map(x=>x.hrv)),f:v=>Math.round(v)+" ms",hi:true},{l:"Pulso en reposo",v:c.rhr,b:stat(P.map(x=>x.rhr)),f:v=>Math.round(v)+" ppm",hi:false},
+     {l:"Respiración",v:c.resp,b:stat(P.map(x=>x.resp)),f:v=>fx(v)+" rpm",hi:false},{l:"Sueño",v:c.sleep&&c.sleep.h,b:stat(P.map(x=>x.sleep&&x.sleep.h)),f:v=>hm(v),hi:true}]):"";
+   const T=trendBlock("trc","Recuperación",n=>daysBack(n).filter(x=>x.score).reverse().map(x=>[x.d,x.score]),{col:"--good",df:v=>Math.round(v)+" %"});
+   return{html:ks+T.html,draw:T.draw,ring:c?[c.score/100,`var(${c.score>=67?"--good":c.score>=34?"--warn":"--bad"})`,c.score,"%",c.score>=67?"Verde · listo para apretar":c.score>=34?"Amarillo · ritmo controlado":"Rojo · toca recuperar"]:null}},
+ hrv:()=>{const T=trendBlock("thv","Tendencia de HRV",n=>daysBack(n).filter(x=>x.hrv).reverse().map(x=>[x.d,x.hrv]),{col:"--violet",df:v=>Math.round(v)+" ms"});const T2=trendBlock("trh","Pulso en reposo",n=>daysBack(n).filter(x=>x.rhr).reverse().map(x=>[x.d,x.rhr]),{col:"--sky",df:v=>Math.round(v)+" ppm"});
+   return{html:T.html+T2.html,draw:()=>{T.draw();T2.draw()}}},
+ strain:()=>{const t0=DAYT();const days=[];for(let i=13;i>=0;i--){const a=t0-i*DAY;days.push(+strainOf(sessions().filter(x=>!x.demo&&x.id>=a&&x.id<a+DAY).reduce((s,x)=>s+x.trimp,0)).toFixed(1))}
+   const st=days[13];const b=stat(days.slice(0,13).filter(v=>v>0));
+   return{html:keyStats([{l:"Strain de entrenos",v:st,b,f:v=>fx(v),hi:null}])+`<h3>Últimos 14 días</h3><canvas id="tstd" style="height:130px"></canvas>`,
+     draw:()=>barChart($("tstd"),days,days.map((_,i)=>new Date(t0-(13-i)*DAY).getDate()+""),{min:0,colorFn:v=>cssv(v>=14?"--pink":v>=10?"--violet":"--sky")})}}
+};
+// ---- páginas nuevas ----
+function dDay(){const t0=DAYT();const c=checks().find(x=>dayKey(x.d)===dayKey(t0));const ss=sessions().filter(x=>!x.demo&&x.id>=t0&&x.id<t0+DAY);const st=strainOf(ss.reduce((a,x)=>a+x.trimp,0));
+  const S=[c&&c.score?`Recuperación del <b>${c.score} %</b>${c.hrv?` con HRV de ${c.hrv} ms`:""}${c.rhr?` y pulso en reposo de ${c.rhr} ppm`:""}.`:"Sin recuperación registrada ese día.",
+    c&&c.sleep&&c.sleep.h?`Dormiste <b>${hm(c.sleep.h)}</b>${c.sleep.eff?` con una eficiencia del ${c.sleep.eff} %`:""}.`:"",ss.length?`Entrenaste ${ss.length} ${ss.length===1?"vez":"veces"}: strain del día <b>${fx(st)}</b>.`:"Día sin entrenos registrados."];
+  return{title:new Date(t0).toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"}),hero:c&&c.score?c.score:"--",unit:c&&c.score?"%":"",sub:"recuperación",col:c&&c.score?(c.score>=67?"--good":c.score>=34?"--warn":"--bad"):"--muted",
+    body:story(S)+`<div class="grid3">${kv("Sueño",c&&c.sleep&&c.sleep.h?hm(c.sleep.h):"--")}${kv("Strain",fx(st))}${kv("HRV",c&&c.hrv||"--","ms")}</div>`+(ss.length?"<h3>Entrenos</h3>"+evList(ss.map(x=>({col:typeOf(x.type)[2],t:`${fmtT(x.id)} · ${typeOf(x.type)[1]}`,p:`${mmss(x.dur)} · strain ${fx(x.strain)} · media ${x.avg} ppm`}))):"")+
+      `<div class="links"><button data-open="sleep">Ver su sueño</button><button data-open="rec">Ver su recuperación</button><button data-open="strain">Ver su esfuerzo</button></div>`}}
+function dLoad(){const P=pmc(90);const cur=P[P.length-1]||{ctl:0,atl:0,tsb:0};const a=acwr();const f=formState(cur.tsb);
+  const S=[`Tu <b>forma física</b> (lo que has entrenado las últimas 6 semanas) está en <b>${Math.round(cur.ctl)}</b> y tu <b>fatiga</b> (última semana) en <b>${Math.round(cur.atl)}</b>.`,
+    `La diferencia es tu <b>frescura: ${Math.round(cur.tsb)}</b> → <b>${f.t}</b>. ${cur.tsb<-25?"Estás cargando mucho: mete un día suave antes de seguir.":cur.tsb<-10?"Carga productiva: estás construyendo forma, vigila el sueño.":cur.tsb>10?"Muy fresco: buen momento para un test o un PR.":"Zona óptima: entrenas y recuperas en equilibrio."}`,
+    a?`Carga de esta semana frente a tu media mensual: <b>${fx(a.r,2)}</b> ${a.r>1.5?"(<span class=\"r\">pico de carga, más riesgo de lesión</span>)":a.r<.8?"(semana floja)":"(<span class=\"g\">zona segura 0,8-1,3</span>)"}.`:"Con más sesiones te digo si estás cargando de más."];
+  return{title:"Carga y forma",hero:f.t,unit:"",sub:`frescura ${Math.round(cur.tsb)} · forma ${Math.round(cur.ctl)} · fatiga ${Math.round(cur.atl)}`,col:f.c==="g"?"--good":f.c==="w"?"--warn":"--bad",
+    body:`<canvas id="dcv" style="height:180px"></canvas><div class="row small" style="gap:14px"><span><b style="color:var(--sky)">━</b> Forma</span><span><b style="color:var(--pink)">━</b> Fatiga</span><span><b style="color:var(--lime)">━</b> Frescura</span></div>`+story(S),
+    draw:()=>{const c=$("dcv");const Pp=prep(c);if(!Pp)return;const{x:cx,W,H}=Pp;const vals=P.flatMap(p=>[p.ctl,p.atl,p.tsb]);const lo=Math.min(0,...vals)-3,hi=Math.max(...vals)+3;const X=i=>30+i/(P.length-1||1)*(W-38),Y=v=>H-18-(v-lo)/(hi-lo)*(H-28);
+      cx.strokeStyle="rgba(255,255,255,.08)";cx.beginPath();cx.moveTo(30,Y(0));cx.lineTo(W-6,Y(0));cx.stroke();
+      [["ctl","--sky"],["atl","--pink"],["tsb","--lime"]].forEach(([k,col])=>drawSmooth(cx,P.map((p,i)=>[i,p[k],i===0]),X,Y,{lo,hi,col,lw:2.2,fill:k==="ctl"}));
+      cx.fillStyle=cssv("--dim");cx.textAlign="left";cx.fillText("hace 90 d",30,H-3);cx.textAlign="right";cx.fillText("hoy",W-6,H-3)}}}
+function dWeek(){const ws=weekStart(Date.now());const ss=sessions().filter(x=>!x.demo);const cur=ss.filter(x=>x.id>=ws),prev=ss.filter(x=>x.id>=ws-7*DAY&&x.id<ws);const sum=(a,f)=>a.reduce((s,x)=>s+f(x),0);
+  const days=[...Array(7)].map((_,i)=>+strainOf(sum(ss.filter(x=>x.id>=ws+i*DAY&&x.id<ws+(i+1)*DAY),x=>x.trimp)).toFixed(1));const sk=streak();
+  const S=[`Esta semana llevas <b>${cur.length} ${cur.length===1?"sesión":"sesiones"}</b> (${mmss(sum(cur,x=>x.dur))}) frente a ${prev.length} la semana pasada.`,`Minutos de intensidad: <b>${sum(cur,x=>iminOf(x.zones))}</b> de ${CFG.goal||150} de objetivo.`,`Racha actual: <b>${sk} ${sk===1?"día":"días"}</b> seguidos con entreno o medición.`];
+  return{title:"Tu semana",hero:cur.length,unit:cur.length===1?"sesión":"sesiones",sub:"esta semana",col:"--pink",body:story(S)+`<h3>Strain por día</h3><canvas id="dcv" style="height:140px"></canvas>`+(cur.length?"<h3>Sesiones</h3>"+evList(cur.map(x=>({col:typeOf(x.type)[2],t:`${new Date(x.id).toLocaleDateString("es-ES",{weekday:"short"})} · ${typeOf(x.type)[1]}`,p:`${mmss(x.dur)} · strain ${fx(x.strain)}`}))):""),
+    draw:()=>barChart($("dcv"),days,["L","M","X","J","V","S","D"],{min:0,colorFn:v=>cssv(v>=14?"--pink":v>=10?"--violet":"--sky")})}}
+function dVo2(){const v=vo2At(Date.now());const T=trendBlock("tvo","VO2max estimado",n=>{const o=[];for(let t=startOfDay(Date.now())-n*DAY;t<=Date.now();t+=Math.max(1,Math.round(n/15))*DAY){const x=vo2At(t);if(x)o.push([t,+x.toFixed(1)])}return o},{col:"--lime",df:v=>fx(v)});
+  return{title:"VO2max",hero:v?Math.round(v):"--",unit:"ml/kg/min",sub:"estimado con tu pulso máximo y en reposo",col:"--lime",body:story([`Tu VO2max estimado es <b>${v?Math.round(v):"--"}</b>. Es la capacidad máxima de tu motor aeróbico: cuanto más alto, más aguantas a ritmo alto.`,"Sube cuando baja tu pulso en reposo con el entreno. Es una estimación (método Uth), no una prueba de laboratorio."])+T.html,draw:T.draw}}
+Object.assign(DETAIL,{day:dDay,load:dLoad,week:dWeek,vo2:dVo2});
+// ---- pintar la página ----
+function dayLabel(){if(DOFF===0)return"Hoy";if(DOFF===1)return"Ayer";return new Date(DAYT()).toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"})}
+function render(k,dir){let D;try{D=DETAIL[k]()}catch(e){console.error(e);D={title:TITLES2[k]||"Detalle",hero:"--",body:story(["No he podido preparar este detalle todavía."])}}
+  let X={html:"",draw:null,ring:null};try{if(EXTRA[k])X=EXTRA[k]()||X}catch(e){console.error(e)}
+  const col=D.col?(D.col.startsWith("--")?`var(${D.col})`:D.col):"var(--fg)";const dn=DAYKEYS.has(k);
+  const hero=X.ring?ringHero(...X.ring):`<div class="dhero" style="--dc:${col}"><b>${D.hero}</b>${D.unit?`<span>${D.unit}</span>`:""}<div>${D.sub||""}</div></div>`;
+  $("detin").innerHTML=`<div class="dbar"><button class="dback" id="dclose" aria-label="Volver"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><div class="dtitle">${TITLES2[k]||D.title}</div><span class="dsp"></span></div>
+    ${dn?`<div class="dnav"><button id="dprev" aria-label="Día anterior">‹</button><b>${dayLabel()}</b><button id="dnext" aria-label="Día siguiente" ${DOFF===0?"disabled":""}>›</button></div>`:""}
+    <div class="dcontent ${dir?"in-"+dir:""}">${k==="day"?`<h2 class="dsub">${D.title}</h2>`:""}${hero}${D.body}${X.html}</div>`;
+  $("dclose").onclick=closeDetail;
+  if(dn){$("dprev").onclick=()=>{if(DOFF<90){DOFF++;vib();render(k,"left")}};$("dnext").onclick=()=>{if(DOFF>0){DOFF--;vib();render(k,"right")}}}
+  setTimeout(()=>{try{D.draw&&D.draw()}catch(e){console.error(e)}try{X.draw&&X.draw()}catch(e){console.error(e)}
+    document.querySelectorAll("#detin .rh").forEach(c=>{requestAnimationFrame(()=>{c.style.transition="stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)";c.setAttribute("stroke-dashoffset",c.dataset.to)})});
+    const b=document.querySelector("#detin .rv")||document.querySelector("#detin .dhero b");if(b&&window.countUp){const t=b.textContent;if(/^[\d,.]+$/.test(t.trim()))countUp(b,/,/.test(t)?1:0)}},60)}
+openDetail=function(k,off){curK=k;if(off!=null)DOFF=off;else if(!$("detail").hidden){}else DOFF=0;const el=$("detail");const was=!el.hidden;
+  el.classList.add("page");el.hidden=false;render(k,was?"up":null);$("detin").scrollTop=0;vib();
+  if(!was&&!reduce&&el.animate){const r=tapR||{top:innerHeight/2-40,left:innerWidth/2-40,right:innerWidth/2+40,bottom:innerHeight/2+40};const W=innerWidth,H=innerHeight;
+    el.animate([{clipPath:`inset(${r.top}px ${W-r.right}px ${H-r.bottom}px ${r.left}px round 24px)`,opacity:.4},{clipPath:"inset(0px 0px 0px 0px round 0px)",opacity:1}],{duration:480,easing:"cubic-bezier(.2,.85,.25,1)"});
+    $("detin").animate([{transform:"scale(.94)",opacity:0},{transform:"none",opacity:1}],{duration:420,easing:"cubic-bezier(.2,.85,.25,1)"})}
+  tapR=null};
+closeDetail=function(){const el=$("detail");if(el.hidden)return;curK=null;
+  if(reduce||!el.animate){el.hidden=true;return}const a=el.animate([{transform:"none",opacity:1},{transform:"scale(.96)",opacity:0}],{duration:240,easing:"cubic-bezier(.4,0,.2,1)"});a.onfinish=()=>{el.hidden=true}};
+// gesto de volver: desde el borde izquierdo hacia la derecha
+(function(){const el=$("detail");let x0=null,dx=0;el.addEventListener("touchstart",e=>{const t=e.touches[0];if(t.clientX<28){x0=t.clientX;dx=0;el.style.transition="none"}},{passive:true});
+  el.addEventListener("touchmove",e=>{if(x0==null)return;dx=Math.max(0,e.touches[0].clientX-x0);el.style.transform=`translateX(${dx}px)`},{passive:true});
+  el.addEventListener("touchend",()=>{if(x0==null)return;el.style.transition="transform .28s cubic-bezier(.2,.8,.2,1)";if(dx>90){el.style.transform=`translateX(${innerWidth}px)`;setTimeout(()=>{el.hidden=true;el.style.transform="";el.style.transition=""},280)}else el.style.transform="";x0=null},{passive:true})})();
+// ---- todo lo que se puede tocar ----
+const LABMAP=[[/dorm|sueño|REM|profundo|noche|horario|despert/i,"sleep"],[/HRV/i,"hrv"],[/reposo|enfermo|peleando|respiraci/i,"rec"],[/VO2/i,"vo2"],[/recuper/i,"rec"],[/pulso|pico|subir|arriba|deriva|esfuerz|WOD|Carrera|Fuerza/i,"strain"]];
+document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o){e.preventDefault();openDetail(o.dataset.open,o.dataset.off!=null?+o.dataset.off:undefined);return}
+  const h=e.target.closest("#heat i[data-t]");if(h){const off=Math.round((startOfDay(Date.now())-+h.dataset.t)/DAY);if(off>=0){openDetail("day",off)}return}
+  const lr=e.target.closest(".lr");if(lr&&!e.target.closest("button")){const t=lr.textContent;const m=LABMAP.find(([re])=>re.test(t));openDetail(m?m[1]:"rec",curK?DOFF:0);return}});
+function tag(sel,k){const el=typeof sel==="string"?document.querySelector(sel):sel;if(el){el.dataset.open=k;el.style.cursor="pointer"}}
+const tileOf=id=>{const e=$(id);return e&&e.closest(".tile")};
+tag(tileOf("rtime"),"load");tag(tileOf("formv"),"load");tag(tileOf("streak"),"week");tag(tileOf("wk"),"week");
+tag($("acwrtxt")&&$("acwrtxt").closest(".card"),"load");tag($("cvpmc")&&$("cvpmc").closest(".card"),"load");tag($("cvimin")&&$("cvimin").closest(".card"),"week");tag($("weekly"),"week");tag(tileOf("vo2"),"vo2");
+[["rr1","rec"],["rr2","sleep"],["rr3","stress"]].forEach(([id,k])=>{const e=$(id)&&$(id).closest(".rings>div");if(e)tag(e,k)});
+const gs=$("gosleep");if(gs){gs.onclick=null;gs.dataset.open="sleep";const card=gs.closest(".card");if(card)tag(card,"sleep")}
+if($("labtrend"))$("labtrend").addEventListener("click",e=>{if(e.target.closest("button"))return;openDetail({vo2:"vo2",hrr:"strain",hrv:"hrv",rhr:"rec",deep:"sleep"}[labMetric]||"rec")});
 })();
 </script>
 </body>
