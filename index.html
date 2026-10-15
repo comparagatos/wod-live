@@ -450,6 +450,82 @@ canvas{animation:fadeIn .6s ease both}
 .rsum .rstop svg{width:20px;height:20px;stroke:var(--sky);fill:none;stroke-width:2.2}.rsum #rsfit{margin-left:auto}
 .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.95) contrast(.85) saturate(.5)}
 .rap{top:20px!important}
+
+/* ---------- UX v18: fluidez + diales WHOOP + tarjetas Garmin ---------- */
+html{scroll-behavior:auto!important}
+body{touch-action:manipulation}
+.view:not([hidden]){animation:none}
+.view:not([hidden])>*{animation:none}
+.view.firstin:not([hidden])>*:nth-child(-n+6){animation:cardIn .5s var(--ease) both}
+.view.firstin:not([hidden])>*:nth-child(2){animation-delay:.05s}.view.firstin:not([hidden])>*:nth-child(3){animation-delay:.1s}.view.firstin:not([hidden])>*:nth-child(4){animation-delay:.15s}.view.firstin:not([hidden])>*:nth-child(5){animation-delay:.2s}.view.firstin:not([hidden])>*:nth-child(6){animation-delay:.25s}
+.press{transform:scale(.972)!important;transition:transform .12s var(--ease)!important}
+.gl,.tile,.sess,.card,.dial,.mycard,.lr{-webkit-user-select:none;user-select:none}
+
+/* barra inferior con píldora deslizante */
+nav .in{position:relative}
+nav .tabpill{position:absolute;top:2px;left:0;height:calc(100% - 4px);border-radius:16px;background:radial-gradient(80% 90% at 50% 0%,rgb(255 126 182/.20),rgb(169 139 255/.10) 60%,transparent);border:1px solid rgb(255 255 255/.06);transition:transform .45s cubic-bezier(.3,1.35,.5,1),width .3s var(--ease);pointer-events:none;z-index:0}
+nav button{position:relative;z-index:1}
+
+/* diales tipo WHOOP */
+.herocard .rings{display:none!important}
+.dials{display:grid;grid-template-columns:1fr 1.18fr 1fr;align-items:end;gap:4px;margin:4px -6px 2px}
+.dial{background:transparent;border:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:transform .18s var(--ease);color:var(--fg)}
+.dial .dw{position:relative;width:100%;aspect-ratio:1}
+.dial svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.dial .trk{stroke:rgb(255 255 255/.07)}
+.dial .arc{transition:stroke-dasharray 1.1s cubic-bezier(.2,.8,.2,1)}
+.dial .tip{transition:opacity .4s .9s}
+.dial .dv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:4px}
+.dial .dv b{font:700 30px/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.dial.mid .dv b{font-size:38px}
+.dial .dv span{font:700 11px var(--body);color:var(--muted);margin-top:3px}
+.dial h4{margin:0;font:800 10.5px var(--body);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:5px;white-space:nowrap}
+.dial .dd{font:800 11px var(--body);min-height:14px;margin-top:-3px}.dial .dd i{font-style:normal;font-size:10px;font-weight:800;letter-spacing:0}
+.dial .dd i.up{color:var(--good)}.dial .dd i.dn{color:var(--bad)}
+.dial .glow{position:absolute;inset:14%;border-radius:50%;filter:blur(18px);opacity:.22;pointer-events:none}
+
+/* «Mi día» al estilo Garmin */
+.mydays{display:flex;flex-direction:column;gap:10px}
+.myhead{display:flex;align-items:baseline;justify-content:space-between;padding:2px 4px 0}
+.myhead h3{font-size:12px}
+.mycard{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;padding:16px;border-radius:24px;background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);cursor:pointer;transition:transform .18s var(--ease),border-color .25s;width:100%;text-align:left;color:var(--fg);font:inherit;box-shadow:0 1px 0 rgb(255 255 255/.04) inset,0 10px 30px -18px rgb(0 0 0/.8)}
+.mycard .mi{min-width:0}
+.mycard small{display:block;font:800 10.5px var(--body);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.mycard .mv{display:flex;align-items:baseline;gap:8px;margin-top:2px;flex-wrap:wrap}
+.mycard .mv b{font:700 34px/1.05 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.mycard .mv em{white-space:nowrap;font-size:12px!important;font-style:normal;font:800 13px var(--body);padding:3px 9px;border-radius:999px;background:rgb(255 255 255/.06)}
+.mycard p{margin:4px 0 0;font-size:13px;color:var(--muted);line-height:1.35}
+.mycard .chev{color:var(--dim);font-size:22px;align-self:center}
+.mycard canvas{display:block;width:100%;height:44px;margin-top:8px}
+.batt{width:46px;height:78px;position:relative}
+.batt svg{width:100%;height:100%;overflow:visible}
+.batt .bf{transition:y 1s var(--ease),height 1s var(--ease)}
+.rgauge{width:86px;height:54px;position:relative}
+.rgauge svg{width:100%;height:100%;overflow:visible}
+.rgauge b{position:absolute;left:0;right:0;bottom:-2px;text-align:center;font:700 24px/1 var(--display)}
+.facts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.facts span{display:flex;align-items:center;gap:6px;font:700 11px var(--body);color:var(--muted);background:rgb(255 255 255/.04);border:1px solid var(--line);border-radius:999px;padding:4px 9px}
+.facts span i{width:7px;height:7px;border-radius:50%;display:block}
+.hrvband{width:100%;height:50px;margin-top:8px}
+.hrvic{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(140deg,rgb(100 199 255/.25),rgb(169 139 255/.18));border:1px solid rgb(100 199 255/.25)}
+.hrvic svg{width:24px;height:24px;stroke:var(--sky);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* páginas Energía / Preparación */
+.ecv{width:100%;height:200px;display:block}
+.facrows{display:flex;flex-direction:column;gap:12px}
+.facrow{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;padding:12px 14px;border-radius:16px;background:rgb(255 255 255/.035);border:1px solid var(--line)}
+.facrow b{font:700 15px var(--body)}
+.facrow span{font:600 13px var(--mono);color:var(--fg)}
+.facrow em{grid-column:1/-1;display:block;height:8px;border-radius:8px;background:rgb(255 255 255/.06);overflow:hidden}
+.facrow em i{display:block;height:100%;border-radius:8px;transition:width 1s var(--ease)}
+.facrow p{grid-column:1/-1;margin:0;font-size:12.5px;color:var(--muted)}
+.estats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.estats div{background:rgb(255 255 255/.035);border:1px solid var(--line);border-radius:16px;padding:10px 12px}
+.estats small{display:block;font:800 9.5px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.estats b{font:600 20px var(--mono)}
+.edr{display:flex;flex-direction:column;gap:8px}
+.edr div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:rgb(255 255 255/.03);border:1px solid var(--line);font-size:13px}
+.edr b{font:600 13px var(--mono)}
 </style>
 </head>
 <body>
@@ -2379,7 +2455,7 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="17";let busy=false;
+const WL_BUILD="18";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
   if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if(E&&E.on){if(manual)toast("Hay versión nueva: se instalará al terminar la carrera");return false}
@@ -2389,6 +2465,171 @@ const _nr=window.__nrefresh;window.__nrefresh=async()=>{if(await checkUpdate(tru
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkUpdate(false)});
 setTimeout(()=>checkUpdate(false),2500);
 window.WL_BUILD=WL_BUILD;
+})();
+</script>
+<script>
+// ---------- UX v18: fluidez, diales tipo WHOOP y «Mi día» tipo Garmin (Energía, Preparación, Estado de HRV) ----------
+(function(){
+const vib=()=>{if(NATIVE)nat("haptic").catch(()=>{});else if(navigator.vibrate)try{navigator.vibrate(6)}catch(e){}};
+const DAYMS=864e5;
+const tcheck=(off=0)=>{const k=dayKey(Date.now()-off*DAYMS);return checks().find(x=>dayKey(x.d)===k)||null};
+const C=v=>cssv(v);
+
+// ===== 1. rendimiento: estrés por horas en una sola pasada y con caché =====
+let hsK=null,hsV=null;
+hourStress=function(){const t0=startOfDay(Date.now());const L=AUTO.log;const raw=localStorage.getItem("sess")||"";
+  const key=t0+"|"+L.length+"|"+(L.length?L[L.length-1][0]:0)+"|"+raw.length;if(key===hsK)return hsV.slice();
+  const base=baseline().rhr||CFG.rest,den=Math.max(1,CFG.max-base);const S=sessions().map(x=>[x.id,x.id+x.dur*1000]);
+  const B=Array.from({length:24},()=>({h:[],v:[]}));
+  for(const x of L){if(x[0]<t0)continue;const h=Math.floor((x[0]-t0)/36e5);if(h>23)continue;if((x[1]-base)/den>=.25)continue;
+    let ov=false;for(const s of S)if(s[0]<x[0]+1&&s[1]>x[0]-1){ov=true;break}if(ov)continue;B[h].h.push(x[1]);if(x[2])B[h].v.push(x[2])}
+  hsV=B.map(b=>b.h.length>=12?stressOf(mean(b.h),mean(b.v)):null);hsK=key;return hsV.slice()};
+
+// ===== 2. navegación: memoria de scroll, transición con dirección, píldora y doble toque = arriba =====
+const TABS=["hoy","train","rec","prog","mas"];let cur="hoy";const mem={};const seen=new Set(["hoy"]);
+$("v-hoy").classList.add("firstin");setTimeout(()=>$("v-hoy").classList.remove("firstin"),900);
+const pill=document.createElement("i");pill.className="tabpill";document.querySelector("nav .in").prepend(pill);
+function movePill(anim){const b=document.querySelector(`nav button[data-v="${cur}"]`);if(!b)return;if(!anim)pill.style.transition="none";pill.style.width=b.offsetWidth+"px";pill.style.transform=`translateX(${b.offsetLeft}px)`;if(!anim){void pill.offsetWidth;pill.style.transition=""}}
+requestAnimationFrame(()=>movePill(false));addEventListener("resize",()=>movePill(false));
+const _go=go;go=function(v){
+  if(v===cur&&!$("v-"+v).hidden){window.scrollTo({top:0,behavior:"smooth"});return}
+  mem[cur]=scrollY;const dir=TABS.indexOf(v)>=TABS.indexOf(cur)?1:-1;cur=v;
+  const first=!seen.has(v);seen.add(v);
+  _go(v);
+  const el=$("v-"+v);if(first){el.classList.add("firstin");setTimeout(()=>el.classList.remove("firstin"),900)}
+  window.scrollTo(0,mem[v]||0);
+  try{el.animate([{opacity:0,transform:`translateX(${dir*22}px)`},{opacity:1,transform:"none"}],{duration:280,easing:"cubic-bezier(.2,.8,.2,1)"})}catch(e){}
+  movePill(true)};
+
+// pulsación con respuesta inmediata en todo lo que se puede tocar
+const PRESS=".dial,.mycard,.gl,.tile,.sess,.lr,.reco,.k[data-i],.rsbig div,.rbest div,.runhero,#heat i";let pr=null,px=0,py=0;
+document.addEventListener("pointerdown",e=>{const t=e.target.closest(PRESS);if(!t)return;pr=t;px=e.clientX;py=e.clientY;t.classList.add("press")},{passive:true});
+const unpress=()=>{if(pr){pr.classList.remove("press");pr=null}};
+document.addEventListener("pointerup",unpress,{passive:true});document.addEventListener("pointercancel",unpress,{passive:true});
+document.addEventListener("pointermove",e=>{if(pr&&Math.hypot(e.clientX-px,e.clientY-py)>8)unpress()},{passive:true});
+addEventListener("scroll",unpress,{passive:true});
+
+// ===== 3. modelos =====
+// Energía (al estilo Body Battery): se carga durmiendo y descansando, se gasta con estrés y actividad.
+let enK=null,enV=null;
+function energy(){const now=Date.now();const L=AUTO.log;const tc=tcheck();const key=(L.length?L[L.length-1][0]:0)+"|"+L.length+"|"+(tc?tc.d+":"+tc.score:"")+"|"+naps().length;if(key===enK)return enV;
+  const sl=tc&&tc.sleep&&tc.sleep.start&&tc.sleep.end&&tc.sleep.end>tc.sleep.start?tc.sleep:null;const rec=tc&&tc.score!=null?tc.score:null;
+  const NP=naps().map(n=>[n.start,n.end]);const inSl=t=>(sl&&t>=sl.start&&t<=sl.end)||NP.some(n=>t>=n[0]&&t<=n[1]);
+  const recF=rec!=null?.55+.9*rec/100:1;const base=baseline().rhr||CFG.rest,den=Math.max(1,CFG.max-base);
+  let t0,v;if(sl&&sl.start>now-36*36e5){t0=sl.start;v=25}else{t0=startOfDay(now)+5*36e5;v=rec!=null?Math.round(20+.7*rec):60}
+  const S=L.filter(x=>x[0]>=t0&&x[0]<=now);if(!S.length){enK=key;enV=null;return null}
+  const pts=[[t0,v]];let prev=t0,ch=0,dr=0,lastPush=t0,wake=null,hi=v,lo=v;const drains=[];
+  const step=(t,dtm,hr,hv)=>{let d=0;const sleeping=inSl(t);
+    if(hr==null){d=sleeping?.11*recF*dtm:-.035*dtm}
+    else if(sleeping){const s=stressOf(hr,hv);d=.11*recF*(1-Math.min(1,s/2))*dtm}
+    else{const f=(hr-base)/den;if(f>=.25){d=-(trimpMin(hr)*.3+.03)*dtm}else{const s=stressOf(hr,hv);d=s<.5&&f<.08?.025*(1-s*2)*dtm-.01*dtm:-(.035+.03*s)*dtm}}
+    const nv=clamp(5,100,v+d);if(nv>v)ch+=nv-v;else{dr+=v-nv;if(hr!=null)drains.push([t,v-nv])}v=nv;hi=Math.max(hi,v);lo=Math.min(lo,v)};
+  for(const x of S){let dtm=(x[0]-prev)/6e4;if(dtm<=0)continue;if(dtm>5){const gap=Math.min(dtm-5,6*60);step(prev+gap*3e4,gap,null,null);dtm=5}
+    step(x[0],dtm,x[1],x[2]);prev=x[0];if(sl&&wake==null&&x[0]>=sl.end)wake=v;if(x[0]-lastPush>=5*6e4){pts.push([x[0],Math.round(v*10)/10]);lastPush=x[0]}}
+  if(now-prev>10*6e4){step(now,Math.min((now-prev)/6e4,6*60),null,null);pts.push([now,v])}
+  const hr={};drains.forEach(([t,d])=>{const k=Math.floor(t/36e5);hr[k]=(hr[k]||0)+d});const top=Object.entries(hr).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,d])=>[+k*36e5,d]);
+  enV={now:Math.round(v),pts,ch:Math.round(ch),dr:Math.round(dr),hi:Math.round(hi),lo:Math.round(lo),wake:wake!=null?Math.round(wake):null,sl,top,t0};enK=key;return enV}
+const enCol=v=>v>=60?"--sky":v>=30?"--warn":"--bad";
+const enTxt=v=>v>=75?"Con las pilas cargadas":v>=50?"Buena reserva":v>=25?"Reserva justa":"Casi sin reservas";
+
+// Preparación para entrenar (al estilo Training Readiness)
+function readiness(){const tc=tcheck();const P=[];
+  if(tc&&tc.score!=null)P.push({k:"rec",sl:"Recuperación",l:"Recuperación",s:tc.score,w:.35,v:tc.score+" %",p:"Tu recuperación de hoy: HRV, pulso en reposo y sueño."});
+  if(tc&&tc.sleep&&tc.sleep.h){const need=tc.sleep.need||sleepNeed(tc.d).need||8;const pct=tc.sleep.h/need;P.push({k:"sleep",sl:"Sueño",l:"Sueño",s:clamp(0,100,(pct-.5)/.5*100),w:.25,v:hms(tc.sleep.h)+" · "+Math.round(pct*100)+" %",p:"Horas dormidas frente a lo que necesitabas."})}
+  const hv=checks().filter(x=>x.hrv);if(tc&&tc.hrv&&hv.length>=4){const b=mean(hv.filter(x=>x!==tc).slice(0,7).map(x=>x.hrv));const r=tc.hrv/b;P.push({k:"hrv",sl:"HRV",l:"HRV",s:clamp(0,100,(r-.75)/.3*100),w:.15,v:tc.hrv+" ms · media "+Math.round(b),p:"Tu variabilidad de esta noche frente a tu semana."})}
+  const a=acwr();if(a){const r=a.r;P.push({k:"load",sl:"Carga",l:"Carga reciente",s:r<=1.1?100:r>=1.7?10:100-(r-1.1)/.6*90,w:.15,v:"ratio "+fx(r,2),p:"Lo que has entrenado esta semana frente a tu mes. Por encima de 1,3 sube el riesgo."})}
+  const last=sessions().find(x=>!x.demo);if(last){const left=Math.max(0,recoveryHours(last,curPmc().tsb)-(Date.now()-(last.id+last.dur*1000))/36e5);P.push({k:"rt",sl:"Descanso",l:"Tiempo de recuperación",s:clamp(5,100,100-left/36*100),w:.1,v:left>0?Math.ceil(left)+" h":"listo",p:"Horas que te quedan para asimilar tu última sesión."})}
+  if(!P.length)return null;const W=P.reduce((a,p)=>a+p.w,0);const s=Math.round(P.reduce((a,p)=>a+p.s*p.w,0)/W);
+  const lab=s>=95?"Óptima":s>=75?"Alta":s>=50?"Moderada":s>=25?"Baja":"Muy baja";const col=s>=75?"--good":s>=50?"--sky":s>=25?"--warn":"--bad";
+  const msg=s>=75?"Listo para darlo todo: buen día para intensidad o un PR.":s>=50?"Entrena con normalidad, sin buscar récords.":s>=25?"Mejor técnica, movilidad o zona 2.":"Hoy toca descansar o moverte muy suave.";
+  return{s,lab,col,msg,P,partial:P.length<3}}
+
+// Estado de HRV (al estilo Garmin): media de 7 noches frente a tu rango normal
+function hrvStatus(){const c=checks().filter(x=>x.hrv);if(c.length<3)return null;const l7=c.slice(0,7);const avg=mean(l7.map(x=>x.hrv));
+  let B=c.slice(7,40).map(x=>x.hrv);if(B.length<5)B=c.slice(0,40).map(x=>x.hrv);const m=mean(B),s=Math.max(sd(B)||0,m*.06);const lo=m-s,hi=m+s;
+  const st=avg<m-1.6*s?"Bajo":avg<lo||avg>hi?"Desequilibrado":"Equilibrado";const col=st==="Equilibrado"?"--good":st==="Bajo"?"--bad":"--warn";
+  return{avg,m,lo,hi,st,col,days:l7.slice().reverse(),n:B.length}}
+
+// ===== 4. pintar =====
+function arcPath(){return 0}
+function dialSVG(id,f,c1,c2){const r=52,C2=2*Math.PI*r,L=C2*.75;const fl=Math.max(0,Math.min(1,f||0))*L;
+  return`<svg viewBox="0 0 120 120"><defs><linearGradient id="g${id}" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs>
+  <g transform="rotate(135 60 60)"><circle class="trk" cx="60" cy="60" r="${r}" fill="none" stroke-width="9" stroke-linecap="round" stroke-dasharray="${L} ${C2}"/>
+  <circle class="arc" id="a${id}" cx="60" cy="60" r="${r}" fill="none" stroke="url(#g${id})" stroke-width="9" stroke-linecap="round" stroke-dasharray="0 ${C2}" data-to="${fl} ${C2}"/></g></svg>`}
+let dialsDone=false;
+function renderDials(){const hc=document.querySelector(".herocard");if(!hc)return;let el=$("dials");if(!el){el=document.createElement("div");el.className="dials";el.id="dials";hc.querySelector(".rings").after(el)}
+  const tc=tcheck(),yc=tcheck(1);const ls=tc&&tc.sleep&&tc.sleep.h?tc.sleep:null;const need=ls?(ls.need||sleepNeed(tc.d).need||8):null;
+  const sp=ls?Math.round(ls.h/need*100):null;const ysp=yc&&yc.sleep&&yc.sleep.h?Math.round(yc.sleep.h/(yc.sleep.need||8)*100):null;
+  const rec=tc&&tc.score!=null?tc.score:null,yrec=yc&&yc.score!=null?yc.score:null;
+  const st=parseFloat(($("r2v").textContent||"0").replace(",","."));const yst=dayStrain(Date.now()-DAYMS);
+  const rc=rec==null?"--muted":rec>=67?"--good":rec>=34?"--warn":"--bad";
+  const delta=(a,b,u="")=>a==null||b==null||Math.abs(a-b)<(u?.3:1)?"":`<i class="${a>b?"up":"dn"}">${a>b?"▲":"▼"}${u?fx(Math.abs(a-b)):Math.abs(Math.round(a-b))}</i>`;
+  const D=[{k:"sleep",id:"ds",h:"Sueño",v:sp!=null?sp:"--",u:sp!=null?"%":"",sub:ls?hms(ls.h):"sin datos",f:sp!=null?sp/100:0,c:["#7a6cff","#b9a6ff"],d:delta(sp,ysp)},
+    {k:"rec",id:"dr",h:"Recuperación",v:rec!=null?rec:"--",u:rec!=null?"%":"",sub:rec!=null?(rec>=67?"verde":rec>=34?"amarilla":"roja"):"haz tu check",f:rec!=null?rec/100:0,c:[C(rc),C(rc)],d:delta(rec,yrec),mid:1},
+    {k:"strain",id:"dt",h:"Esfuerzo",v:isFinite(st)?fx(st):"--",u:"/ 21",sub:"",f:isFinite(st)?st/21:0,c:["#3aa0ff","#64c7ff"],d:delta(st,yst,"x")}];
+  el.innerHTML=D.map(d=>`<button class="dial ${d.mid?"mid":""}" data-k="${d.k}"><div class="dw"><div class="glow" style="background:${d.c[1]}"></div>${dialSVG(d.id,d.f,d.c[0],d.c[1])}<div class="dv"><b data-n="${d.v}">${d.v}</b><span>${d.u}${d.sub&&d.u?" · ":""}${d.sub}</span></div></div><h4>${d.h}</h4><div class="dd">${d.d||"&nbsp;"}</div></button>`).join("");
+  el.querySelectorAll(".dial").forEach(b=>b.onclick=()=>{vib();openDetail(b.dataset.k)});
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.querySelectorAll(".arc").forEach(a=>a.setAttribute("stroke-dasharray",a.dataset.to))));
+  if(!dialsDone&&window.countUp){dialsDone=true;el.querySelectorAll(".dv b").forEach((b,i)=>countUp(b,i===2?1:0))}}
+
+function sparkCanvas(c,pts,col,o={}){const P=prep(c);if(!P||pts.length<2)return;const{x,W,H}=P;const ys=pts.map(p=>p[1]);const lo=o.lo??Math.min(...ys),hi=o.hi??Math.max(...ys);const t0=o.t0??pts[0][0],t1=o.t1??pts[pts.length-1][0];
+  const X=t=>(t-t0)/Math.max(1,t1-t0)*W,Y=v=>H-3-(v-lo)/Math.max(1e-6,hi-lo)*(H-6);
+  if(o.bands)o.bands.forEach(([a,b])=>{x.fillStyle="rgba(169,139,255,.10)";x.fillRect(X(a),0,Math.max(1,X(b)-X(a)),H)});
+  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,col+"55");g.addColorStop(1,col+"00");
+  x.beginPath();pts.forEach((p,i)=>{const px=X(p[0]),py=Y(p[1]);if(!i)x.moveTo(px,py);else{const q=pts[i-1];const mx=(X(q[0])+px)/2;x.quadraticCurveTo(X(q[0]),Y(q[1]),mx,(Y(q[1])+py)/2)}});
+  const lp=pts[pts.length-1];x.lineTo(X(lp[0]),Y(lp[1]));x.strokeStyle=col;x.lineWidth=2.4;x.lineJoin="round";x.lineCap="round";x.stroke();
+  x.lineTo(X(lp[0]),H);x.lineTo(X(pts[0][0]),H);x.closePath();x.fillStyle=g;x.fill();
+  x.fillStyle=col;x.beginPath();x.arc(X(lp[0]),Y(lp[1]),3.5,0,7);x.fill();x.strokeStyle="rgba(255,255,255,.9)";x.lineWidth=1.5;x.stroke()}
+
+function battSVG(v,col){const h=Math.max(2,62*v/100);return`<svg viewBox="0 0 46 78"><rect x="15" y="1" width="16" height="6" rx="2" fill="rgba(255,255,255,.18)"/><rect x="2" y="6" width="42" height="70" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.16)" stroke-width="2"/>
+  <defs><linearGradient id="bg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${col}" stop-opacity=".75"/><stop offset="1" stop-color="${col}"/></linearGradient></defs>
+  <rect class="bf" x="6" y="${72-h}" width="34" height="${h}" rx="6" fill="url(#bg)"/><path d="M25 26l-7 13h6l-3 11 9-15h-6z" fill="rgba(255,255,255,.9)" opacity="${v>0?1:.3}"/></svg>`}
+function semiSVG(s,col){const r=36,C2=Math.PI*r;const f=Math.max(0,Math.min(1,s/100));return`<svg viewBox="0 0 86 50"><path d="M7 46a36 36 0 0 1 72 0" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8" stroke-linecap="round"/><path d="M7 46a36 36 0 0 1 72 0" fill="none" stroke="${col}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C2*f} ${C2}"/></svg>`}
+function hrvBandSVG(H){const vals=H.days.map(d=>d.hrv).concat([H.lo,H.hi,H.avg]);const lo=Math.min(...vals)*.92,hi=Math.max(...vals)*1.06;const W=300,Hh=50;const Y=v=>Hh-4-(v-lo)/(hi-lo)*(Hh-10);const n=H.days.length;const X=i=>14+i*(W-28)/Math.max(1,n-1);
+  return`<svg class="hrvband" viewBox="0 0 ${W} ${Hh}" preserveAspectRatio="none"><rect x="0" y="${Y(H.hi)}" width="${W}" height="${Y(H.lo)-Y(H.hi)}" rx="6" fill="rgba(79,227,154,.12)"/>
+  <line x1="0" x2="${W}" y1="${Y(H.avg)}" y2="${Y(H.avg)}" stroke="${C(H.col)}" stroke-width="2" stroke-dasharray="5 5"/>
+  <polyline points="${H.days.map((d,i)=>X(i)+","+Y(d.hrv)).join(" ")}" fill="none" stroke="rgba(100,199,255,.6)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+  ${H.days.map((d,i)=>`<circle cx="${X(i)}" cy="${Y(d.hrv)}" r="${i===n-1?5:3.5}" fill="${i===n-1?"#fff":"#64c7ff"}"/>`).join("")}</svg>`}
+
+function renderMyDay(){let wrap=$("myday");if(!wrap){wrap=document.createElement("div");wrap.id="myday";wrap.className="mydays";document.querySelector(".herocard").after(wrap)}
+  const E=energy(),R=readiness(),H=hrvStatus();let h=`<div class="myhead"><h3>Mi día</h3><span class="small">toca para ver el detalle</span></div>`;
+  if(E){const col=C(enCol(E.now));h+=`<button class="mycard" data-open="energy" id="myen"><div class="batt">${battSVG(E.now,col)}</div><div class="mi"><small>Energía</small><div class="mv"><b style="color:${col}">${E.now}</b><em style="color:${col}">${enTxt(E.now)}</em></div><p>+${E.ch} cargada · −${E.dr} gastada${E.wake!=null?" · al despertar "+E.wake:""}</p><canvas id="myenc"></canvas></div><span class="chev">›</span></button>`}
+  if(R){const col=C(R.col);h+=`<button class="mycard" data-open="ready" id="myrd"><div class="rgauge">${semiSVG(R.s,col)}<b>${R.s}</b></div><div class="mi"><small>Preparación para entrenar</small><div class="mv"><b style="color:${col};font-size:26px">${R.lab}</b></div><p>${R.msg}</p><div class="facts">${R.P.map(p=>`<span><i style="background:${C(p.s>=75?"--good":p.s>=50?"--sky":p.s>=25?"--warn":"--bad")}"></i>${p.sl}</span>`).join("")}</div></div><span class="chev">›</span></button>`}
+  if(H){const col=C(H.col);h+=`<button class="mycard" data-open="hrv" id="myhv"><div class="hrvic"><svg viewBox="0 0 24 24"><path d="M3 12h3l2-4 3 9 3-11 2 6h5"/></svg></div><div class="mi"><small>Estado de HRV</small><div class="mv"><b style="color:${col};font-size:26px">${H.st}</b><em>${Math.round(H.avg)} ms · 7 noches</em></div><p>Tu rango normal: ${Math.round(H.lo)}–${Math.round(H.hi)} ms</p>${hrvBandSVG(H)}</div><span class="chev">›</span></button>`}
+  if(!E&&!R&&!H)h+=`<div class="mycard" style="cursor:default"><div class="mi"><small>Mi día</small><p>En cuanto tu pulsera grabe unas horas o hagas el check, aquí verás tu energía, tu preparación para entrenar y tu estado de HRV.</p></div></div>`;
+  wrap.innerHTML=h;
+  wrap.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{vib();openDetail(b.dataset.open)});
+  if(E)requestAnimationFrame(()=>sparkCanvas($("myenc"),E.pts,C(enCol(E.now)),{lo:0,hi:100,bands:E.sl?[[E.sl.start,E.sl.end]]:[]}))}
+
+const _rh=renderHoy;renderHoy=function(){_rh.apply(this,arguments);try{renderDials()}catch(e){console.error(e)}try{renderMyDay()}catch(e){console.error(e)}};
+
+// ===== 5. páginas de detalle =====
+function energyChart(c,E){const P=prep(c);if(!P)return;const{x,W,H}=P;const pts=E.pts;if(pts.length<2)return;const t0=pts[0][0],t1=Math.max(Date.now(),pts[pts.length-1][0]);
+  const L=28,R=8,T=8,Bm=22;const X=t=>L+(t-t0)/(t1-t0)*(W-L-R),Y=v=>T+(1-v/100)*(H-T-Bm);
+  x.font="600 10px 'JetBrains Mono',monospace";x.fillStyle="#6f6684";x.textAlign="right";[0,25,50,75,100].forEach(v=>{x.fillText(v,L-6,Y(v)+3);x.strokeStyle="rgba(255,255,255,.05)";x.beginPath();x.moveTo(L,Y(v));x.lineTo(W-R,Y(v));x.stroke()});
+  if(E.sl){x.fillStyle="rgba(169,139,255,.12)";x.fillRect(X(E.sl.start),T,X(E.sl.end)-X(E.sl.start),H-T-Bm);x.fillStyle="#a98bff";x.textAlign="left";x.fillText("☾ sueño",X(E.sl.start)+4,T+12)}
+  naps().filter(n=>n.end>t0).forEach(n=>{x.fillStyle="rgba(169,139,255,.12)";x.fillRect(X(n.start),T,X(n.end)-X(n.start),H-T-Bm)});
+  sessions().filter(s=>s.id>t0).forEach(s=>{x.fillStyle="rgba(255,126,182,.14)";x.fillRect(X(s.id),T,Math.max(2,X(s.id+s.dur*1000)-X(s.id)),H-T-Bm)});
+  const g=x.createLinearGradient(0,T,0,H-Bm);g.addColorStop(0,"rgba(100,199,255,.30)");g.addColorStop(.5,"rgba(255,200,87,.16)");g.addColorStop(1,"rgba(255,95,126,.04)");
+  x.beginPath();x.moveTo(X(pts[0][0]),H-Bm);pts.forEach(p=>x.lineTo(X(p[0]),Y(p[1])));x.lineTo(X(pts[pts.length-1][0]),H-Bm);x.closePath();x.fillStyle=g;x.fill();
+  x.lineWidth=2.6;x.lineCap="round";x.lineJoin="round";for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i];x.beginPath();x.moveTo(X(a[0]),Y(a[1]));x.lineTo(X(b[0]),Y(b[1]));x.strokeStyle=C(enCol((a[1]+b[1])/2));x.stroke()}
+  const lp=pts[pts.length-1];x.fillStyle="#fff";x.beginPath();x.arc(X(lp[0]),Y(lp[1]),4.5,0,7);x.fill();
+  x.fillStyle="#6f6684";x.textAlign="center";for(let t=Math.ceil(t0/(3*36e5))*3*36e5;t<=t1;t+=3*36e5)x.fillText(new Date(t).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"}),X(t),H-6)}
+function dEnergy(){const E=energy();if(!E)return{title:"Energía",hero:"--",sub:"necesito unas horas de pulsera grabadas",col:"--sky",body:story(["Tu energía se calcula con el pulso, la HRV y el estrés que graba tu pulsera a lo largo del día, y con lo que recargas durmiendo."])};
+  const col=enCol(E.now);
+  return{title:"Energía",hero:E.now,unit:"/ 100",sub:enTxt(E.now),col,
+    body:`<div class="card"><div class="row sb"><h3>Tu batería de hoy</h3><span class="small">desde ${new Date(E.t0).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}</span></div><canvas class="ecv" id="ecv"></canvas><div class="row small" style="gap:12px"><span><b style="color:var(--violet)">▮</b> Sueño</span><span><b style="color:var(--pink)">▮</b> Entrenos</span></div></div>
+    <div class="estats"><div><small>Ahora</small><b>${E.now}</b></div><div><small>Cargada</small><b style="color:var(--good)">+${E.ch}</b></div><div><small>Gastada</small><b style="color:var(--bad)">−${E.dr}</b></div><div><small>Al despertar</small><b>${E.wake??"--"}</b></div><div><small>Máximo</small><b>${E.hi}</b></div><div><small>Mínimo</small><b>${E.lo}</b></div></div>
+    ${E.top.length?`<div class="card"><h3>Lo que más te ha gastado</h3><div class="edr">${E.top.map(([t,d])=>{const s=sessions().find(x=>x.id<=t+36e5&&x.id+x.dur*1000>=t);return`<div><span>${new Date(t).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}–${new Date(t+36e5).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})} · ${s?typeOf(s.type)[1]:"estrés y actividad"}</span><b>−${Math.round(d)}</b></div>`}).join("")}</div></div>`:""}`+
+    story([`Tienes <b>${E.now}</b> de energía. ${E.wake!=null?`Te despertaste con <b>${E.wake}</b> después de cargar durante la noche.`:""}`,"Se carga cuando duermes y cuando descansas tranquilo, y se gasta con el estrés, la actividad y los entrenos. La carga nocturna depende de tu recuperación: con la recuperación en verde cargas más.","Es una estimación propia al estilo Body Battery, calculada con tu pulsera."]),
+    draw:()=>energyChart($("ecv"),E)}}
+function dReady(){const R=readiness();if(!R)return{title:"Preparación",hero:"--",sub:"haz el check matinal",col:"--sky",body:story(["Junto tu recuperación, sueño, HRV, carga reciente y tiempo de recuperación en una sola nota de 0 a 100."])};
+  return{title:"Preparación para entrenar",hero:R.s,unit:"/ 100",sub:R.lab+" · "+R.msg,col:R.col,
+    body:`<div class="card"><h3>Qué la forma</h3><div class="facrows">${R.P.map(p=>{const c=p.s>=75?"--good":p.s>=50?"--sky":p.s>=25?"--warn":"--bad";return`<div class="facrow"><b>${p.l}</b><span>${p.v}</span><em><i style="width:${Math.round(p.s)}%;background:var(${c})"></i></em><p>${p.p} Peso ${Math.round(p.w*100)} %.</p></div>`}).join("")}</div></div>`+
+    story([`Tu preparación hoy es <b>${R.lab.toLowerCase()} (${R.s})</b>. ${R.msg}`,R.partial?"Faltan datos de algún factor; con el check matinal y unas sesiones la nota es más fiable.":"Combina cómo has recuperado, cómo has dormido y cuánto vienes cargando, como el Training Readiness de Garmin."])}}
+Object.assign(DETAIL,{energy:dEnergy,ready:dReady});
+
+if(!$("v-hoy").hidden)renderHoy();
 })();
 </script>
 </body>
