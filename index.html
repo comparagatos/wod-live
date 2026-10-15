@@ -1,0 +1,195 @@
+<!-- test -->
+hola<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#17131f">
+<title>WOD Live</title>
+<style>
+:root{--bg:#17131f;--surface:#211b2c;--s2:#2a2338;--line:#362d46;--fg:#f7f0ff;--muted:#a99fc0;--pink:#ff86bf;--sky:#6cc8ff;
+--z1:#8fb8ff;--z2:#6cd8c8;--z3:#c6f36b;--z4:#ffcf5a;--z5:#ff6d82;--good:#57de95;--warn:#ffcf5a;--bad:#ff6d82;
+--display:"Fredoka",ui-rounded,"SF Pro Rounded",system-ui,sans-serif;--body:system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
+.wrap{max-width:1000px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:16px}
+h1,h2{font-family:var(--display);margin:0;font-weight:700}
+h1{font-size:26px}h2{font-size:18px}
+.top{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+button{font:700 14px var(--body);border-radius:999px;padding:10px 16px;border:1px solid var(--line);background:var(--s2);color:var(--fg);cursor:pointer}
+button.p{background:var(--pink);color:#2a0f1e;border-color:transparent}
+button:disabled{opacity:.45;cursor:default}
+button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.msg{color:var(--muted);font-size:13px}
+.msg.warn{color:var(--warn)}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+@media(max-width:640px){.hero{grid-template-columns:1fr}}
+.hr{font:700 clamp(84px,22vw,120px)/0.9 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.hr small{font:600 18px var(--body);color:var(--muted);letter-spacing:0}
+.zone{display:inline-block;font:800 14px var(--body);letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:var(--s2)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.k{background:var(--s2);border-radius:14px;padding:10px 12px}
+.k small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.k b{font:500 24px var(--mono);font-variant-numeric:tabular-nums}
+.zbar{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden}
+.zbar div{transition:flex .5s}
+.zleg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;font-size:12px;color:var(--muted)}
+.zleg b{display:block;font:500 14px var(--mono);color:var(--fg)}
+.zleg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px}
+canvas{width:100%;height:200px;display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:6px;border-bottom:1px solid var(--line)}
+td{padding:6px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.pill{font:700 11px var(--body);padding:2px 8px;border-radius:999px;background:var(--s2)}
+.g{color:var(--good)}.w{color:var(--warn)}.r{color:var(--bad)}
+.big{font:600 40px var(--display);font-variant-numeric:tabular-nums}
+label{font-size:13px;color:var(--muted)}
+input[type=number]{width:70px;background:var(--s2);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:4px 6px;font:14px var(--mono)}
+kbd{font:12px var(--mono);background:var(--s2);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><h1>WOD Live</h1><div class="msg" id="status">Pulsera desconectada</div></div>
+    <div class="btns">
+      <button class="p" id="connect">Conectar pulsera</button>
+      <button id="demo">Probar sin pulsera</button>
+      <button id="stop" disabled>Terminar sesión</button>
+      <button id="csv" disabled>Descargar CSV</button>
+    </div>
+  </div>
+  <div class="msg warn" id="bt" hidden></div>
+
+  <section class="panel">
+    <div class="hero">
+      <div><div class="hr" id="hr">--<small> ppm</small></div><span class="zone" id="zone">Sin señal</span></div>
+      <div class="kpis">
+        <div class="k"><small>Tiempo</small><b id="t">0:00</b></div>
+        <div class="k"><small>Media</small><b id="avg">--</b></div>
+        <div class="k"><small>Máximo</small><b id="max">--</b></div>
+        <div class="k"><small>% de tu máx</small><b id="pct">--</b></div>
+        <div class="k"><small>HRV en vivo</small><b id="rm">--</b></div>
+        <div class="k"><small>Última recuperación</small><b id="lasthrr">--</b></div>
+      </div>
+    </div>
+    <div class="zbar" id="zbar"></div>
+    <div class="zleg" id="zleg"></div>
+    <div class="msg">Zonas sobre tu pulso máximo: <input type="number" id="hrmax" value="194" min="150" max="230" aria-label="Pulso máximo"> ppm (el más alto que ha visto WHOOP en tus WODs).</div>
+  </section>
+
+  <section class="panel">
+    <h2>Últimos 10 minutos</h2>
+    <canvas id="cv" width="1000" height="200" aria-label="Pulso en directo"></canvas>
+  </section>
+
+  <div class="two">
+    <section class="panel">
+      <div class="top"><h2>Recuperación entre rondas</h2><button id="mark" disabled>Fin de esfuerzo <kbd>espacio</kbd></button></div>
+      <div class="msg">Al acabar una ronda o un sprint, pulsa el botón (o la barra espaciadora). Mido cuánto baja tu pulso en 30 y 60 segundos. También lo detecto solo cuando bajas de zona 4–5. Cuanto más baja, mejor está tu motor y más recuperado estás. La app de WHOOP no te da este dato.</div>
+      <table><thead><tr><th>#</th><th>Pico</th><th>−30 s</th><th>−60 s</th><th></th></tr></thead><tbody id="hrrt"><tr><td colspan="5" class="msg">Aún no hay rondas.</td></tr></tbody></table>
+    </section>
+    <section class="panel">
+      <div class="top"><h2>Test de HRV de 2 minutos</h2><button id="hrvbtn" disabled>Empezar test</button></div>
+      <div class="msg">Por la mañana, tumbado y quieto, antes de mirar el móvil. Mide tu HRV (RMSSD) con los latidos uno a uno, al momento, sin esperar a que WHOOP puntúe la noche. Hazlo siempre igual para poder comparar.</div>
+      <div class="big" id="hrvout">--</div>
+      <table><thead><tr><th>Día</th><th>RMSSD</th><th>Pulso</th></tr></thead><tbody id="hrvt"></tbody></table>
+    </section>
+  </div>
+  <div class="msg">Todo se queda en este dispositivo. Necesita Bluefy (iPhone) o Chrome (Android, Mac, PC) y activar «Broadcast Heart Rate» en la app de WHOOP.</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const ZC=["var(--z1)","var(--z2)","var(--z3)","var(--z4)","var(--z5)"],ZN=["Zona 1","Zona 2","Zona 3","Zona 4","Zona 5"];
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+$("hrmax").value=store.get("hrmax",194);$("hrmax").onchange=()=>store.set("hrmax",+$("hrmax").value);
+const S={on:false,t0:0,samples:[],rr:[],zones:[0,0,0,0,0],last:null,hrr:[],pending:null,synthetic:0,real:0,hrv:null,dev:null,demo:null,wl:null,retry:0};
+const hrmax=()=>+$("hrmax").value||194;
+const zoneOf=h=>{const p=h/hrmax();return p<.6?0:p<.7?1:p<.8?2:p<.9?3:4};
+const mmss=s=>Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0");
+
+if(!navigator.bluetooth){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth web. En iPhone abre esta página con la app Bluefy; en ordenador o Android, con Google Chrome.";$("connect").disabled=true}
+
+function parseHR(dv){const f=dv.getUint8(0);let i=1;const hr=(f&1)?dv.getUint16(1,true):dv.getUint8(1);i+=(f&1)?2:1;if(f&8)i+=2;const rr=[];if(f&16){while(i+1<dv.byteLength){rr.push(dv.getUint16(i,true)/1024*1000);i+=2}}return{hr,rr}}
+async function connect(){
+  try{S.dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}]});
+    S.dev.addEventListener("gattserverdisconnected",onDisc);await gatt()}
+  catch(e){if(e.name!=="NotFoundError")status("No he podido conectar: "+e.message+". ¿Tienes activado «Broadcast Heart Rate» en la app de WHOOP?",true)}}
+async function gatt(){status("Conectando con "+(S.dev.name||"la pulsera")+"…");const srv=await S.dev.gatt.connect();const svc=await srv.getPrimaryService("heart_rate");
+  const ch=await svc.getCharacteristic("heart_rate_measurement");await ch.startNotifications();
+  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);onBeat(m.hr,m.rr)});S.retry=0;start();status("Conectado a "+(S.dev.name||"tu pulsera"))}
+async function onDisc(){if(!S.on)return;if(S.retry<5){S.retry++;status("Señal perdida, reconectando ("+S.retry+"/5)…",true);setTimeout(()=>gatt().catch(onDisc),1500)}else status("Pulsera desconectada. Pulsa «Conectar pulsera».",true)}
+function status(t,w){$("status").textContent=t;$("status").className="msg"+(w?" warn":"")}
+
+function demo(){if(S.demo){clearInterval(S.demo);S.demo=null}start();status("Modo prueba: datos simulados, no son tuyos");let t=0,h=70;
+  S.demo=setInterval(()=>{t++;const phase=(t%150);const target=phase<90?95+phase*0.95:110;h+= (target-h)*0.08+(Math.random()-.5)*2;const ibi=60000/h;onBeat(Math.round(h),[ibi+(Math.random()-.5)*40])},1000)}
+
+function start(){if(S.on)return;S.on=true;S.t0=Date.now();S.samples=[];S.rr=[];S.zones=[0,0,0,0,0];S.hrr=[];renderHRR();
+  ["stop","mark","hrvbtn"].forEach(id=>$(id).disabled=false);$("csv").disabled=true;
+  if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>S.wl=w).catch(()=>{});}
+function stop(){S.on=false;if(S.demo){clearInterval(S.demo);S.demo=null}try{S.dev?.gatt?.disconnect()}catch(e){}S.wl?.release?.().catch(()=>{});
+  ["stop","mark","hrvbtn"].forEach(id=>$(id).disabled=true);$("csv").disabled=!S.samples.length;status("Sesión terminada · "+mmss((Date.now()-S.t0)/1000))}
+function onBeat(hr,rr){if(!S.on||!hr)return;const now=Date.now();
+  if(S.last)S.zones[zoneOf(S.last.hr)]+=Math.min(5,(now-S.last.t)/1000);
+  S.last={t:now,hr};S.samples.push({t:now,hr,rr:rr.map(x=>Math.round(x)).join(" ")});
+  rr.forEach(x=>{if(x>300&&x<2000){if(Math.abs(x-60000/hr)<=1.5)S.synthetic++;else S.real++;S.rr.push({t:now,v:x});if(S.hrv)S.hrv.rr.push(x)}});
+  S.rr=S.rr.filter(x=>now-x.t<60000);
+  autoHRR(now,hr);tickHRR(now,hr);draw()}
+
+function rmssd(a){const c=[];for(let i=1;i<a.length;i++){const d=a[i]-a[i-1];if(Math.abs(d)<a[i-1]*.2)c.push(d*d)}return c.length>=10?Math.sqrt(c.reduce((x,y)=>x+y,0)/c.length):null}
+const rrOK=()=>S.real>S.synthetic*2&&S.real>20;
+function hrvTest(){if(S.hrv)return;S.hrv={t0:Date.now(),rr:[],hrs:[]};$("hrvbtn").disabled=true;
+  const iv=setInterval(()=>{const el=(Date.now()-S.hrv.t0)/1000;if(S.last)S.hrv.hrs.push(S.last.hr);$("hrvout").textContent="Midiendo… "+mmss(120-el);
+    if(el>=120){clearInterval(iv);const v=rmssd(S.hrv.rr),h=Math.round(S.hrv.hrs.reduce((a,b)=>a+b,0)/Math.max(1,S.hrv.hrs.length));
+      if(v==null||!rrOK()){$("hrvout").textContent="Sin latido a latido";$("hrvout").insertAdjacentHTML("beforeend",'<div class="msg">Tu pulsera no está enviando los intervalos entre latidos, así que no puedo calcular el HRV en vivo. El pulso y la recuperación entre rondas sí funcionan.</div>')}
+      else{$("hrvout").textContent=Math.round(v)+" ms";const hist=store.get("hrv",[]);hist.unshift({d:new Date().toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"}),v:Math.round(v),h});store.set("hrv",hist.slice(0,30));renderHRV()}
+      S.hrv=null;$("hrvbtn").disabled=!S.on}},1000)}
+function renderHRV(){const h=store.get("hrv",[]);const base=h.length>3?h.slice(1,8).reduce((a,b)=>a+b.v,0)/Math.min(7,h.length-1):null;
+  $("hrvt").innerHTML=h.length?h.slice(0,7).map((x,i)=>`<tr><td>${x.d}</td><td>${x.v} ms ${i===0&&base?`<span class="pill ${x.v>=base*.95?"g":x.v>=base*.85?"w":"r"}">${x.v>=base?"+":""}${Math.round((x.v/base-1)*100)} % vs tu media</span>`:""}</td><td>${x.h} ppm</td></tr>`).join(""):'<tr><td colspan="3" class="msg">Aún no hay tests.</td></tr>'}
+
+function peakRecent(now,ms){let p=0;for(let i=S.samples.length-1;i>=0&&now-S.samples[i].t<ms;i--)p=Math.max(p,S.samples[i].hr);return p}
+function mark(auto){if(!S.on||!S.last||S.pending)return;const now=Date.now();S.pending={t:now,peak:peakRecent(now,15000),auto};}
+let hiSince=null;
+function autoHRR(now,hr){const z=zoneOf(hr);if(z>=3){hiSince=hiSince||now}else if(hiSince){if(now-hiSince>30000&&peakRecent(now,20000)-hr>=12&&!S.pending)mark(true);if(z<3)hiSince=null}}
+function tickHRR(now,hr){const p=S.pending;if(!p)return;const el=now-p.t;if(el>=30000&&p.h30==null)p.h30=hr;if(el>=60000){p.h60=hr;S.hrr.unshift({...p});S.pending=null;renderHRR()}}
+function renderHRR(){const r=S.hrr;$("lasthrr").textContent=r.length?"−"+(r[0].peak-r[0].h60):"--";
+  $("hrrt").innerHTML=r.length?r.map((x,i)=>{const d=x.peak-x.h60;const c=d>=30?"g":d>=20?"w":"r";return`<tr><td>${r.length-i}${x.auto?" auto":""}</td><td>${x.peak}</td><td>−${x.peak-(x.h30??x.peak)}</td><td>−${d}</td><td><span class="pill ${c}">${d>=30?"Muy buena":d>=20?"Normal":"Lenta"}</span></td></tr>`}).join(""):'<tr><td colspan="5" class="msg">Aún no hay rondas.</td></tr>'}
+
+const cv=$("cv"),cx=cv.getContext("2d");
+function draw(){const L=S.last;if(!L)return;const z=zoneOf(L.hr);
+  $("hr").innerHTML=L.hr+"<small> ppm</small>";$("hr").style.color=ZC[z];$("zone").textContent=ZN[z];$("zone").style.color=ZC[z];
+  const el=(Date.now()-S.t0)/1000;$("t").textContent=mmss(el);
+  const hs=S.samples.map(s=>s.hr);$("avg").textContent=Math.round(hs.reduce((a,b)=>a+b,0)/hs.length);$("max").textContent=Math.max(...hs);
+  $("pct").textContent=Math.round(L.hr/hrmax()*100)+" %";
+  const live=rrOK()?rmssd(S.rr.map(x=>x.v)):null;$("rm").textContent=live?Math.round(live)+" ms":(S.synthetic>20&&!rrOK()?"n/d":"--");
+  if(S.pending)$("lasthrr").textContent="midiendo…";
+  const tot=S.zones.reduce((a,b)=>a+b,0)||1;
+  $("zbar").innerHTML=S.zones.map((s,i)=>`<div style="flex:${s||0.0001};background:${ZC[i]}"></div>`).join("");
+  $("zleg").innerHTML=S.zones.map((s,i)=>`<span><i style="background:${ZC[i]}"></i>${ZN[i]}<b>${mmss(s)}</b>${Math.round(s/tot*100)} %</span>`).join("");
+  // chart
+  const W=cv.clientWidth,H=cv.clientHeight,dpr=devicePixelRatio||1;if(cv.width!==W*dpr){cv.width=W*dpr;cv.height=H*dpr}
+  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);const css=getComputedStyle(document.documentElement);
+  const now=Date.now(),span=600000,lo=Math.round(hrmax()*.4),hi=hrmax()+5,y=v=>H-18-(v-lo)/(hi-lo)*(H-26),x=t=>34+(t-(now-span))/span*(W-40);
+  [.6,.7,.8,.9].forEach((p,i)=>{const v=hrmax()*p;cx.strokeStyle=css.getPropertyValue("--line");cx.lineWidth=1;cx.beginPath();cx.moveTo(34,y(v));cx.lineTo(W-6,y(v));cx.stroke();
+    cx.fillStyle=css.getPropertyValue("--muted");cx.font="11px ui-monospace,Menlo,monospace";cx.textAlign="right";cx.fillText(Math.round(v),30,y(v)+4)});
+  const pts=S.samples.filter(s=>now-s.t<span);
+  for(let i=1;i<pts.length;i++){cx.strokeStyle=css.getPropertyValue(ZC[zoneOf(pts[i].hr)].slice(4,-1));cx.lineWidth=2.5;cx.lineCap="round";cx.beginPath();cx.moveTo(x(pts[i-1].t),y(pts[i-1].hr));cx.lineTo(x(pts[i].t),y(pts[i].hr));cx.stroke()}
+  cx.fillStyle=css.getPropertyValue("--muted");cx.textAlign="left";cx.fillText("−10 min",34,H-4);cx.textAlign="right";cx.fillText("ahora",W-6,H-4)}
+
+function csv(){const rows=["hora,pulso,rr_ms"].concat(S.samples.map(s=>new Date(s.t).toISOString()+","+s.hr+","+s.rr));
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([rows.join("\n")],{type:"text/csv"}));a.download="wod-live-"+new Date(S.t0).toISOString().slice(0,16).replace(":","")+".csv";a.click()}
+
+$("connect").onclick=connect;$("demo").onclick=demo;$("stop").onclick=stop;$("mark").onclick=()=>mark(false);$("hrvbtn").onclick=hrvTest;$("csv").onclick=csv;
+addEventListener("keydown",e=>{if(e.code==="Space"&&S.on&&e.target.tagName!=="INPUT"){e.preventDefault();mark(false)}});
+renderHRV();renderHRR();
+$("zbar").innerHTML=ZC.map(c=>`<div style="flex:1;background:${c};opacity:.25"></div>`).join("");
+$("zleg").innerHTML=ZN.map((n,i)=>`<span><i style="background:${ZC[i]}"></i>${n}<b>0:00</b>${[50,60,70,80,90][i]}–${[60,70,80,90,100][i]} %</span>`).join("");
+</script>
+</body>
+</html>
