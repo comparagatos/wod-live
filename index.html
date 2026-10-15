@@ -526,6 +526,32 @@ nav button{position:relative;z-index:1}
 .edr{display:flex;flex-direction:column;gap:8px}
 .edr div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:rgb(255 255 255/.03);border:1px solid var(--line);font-size:13px}
 .edr b{font:600 13px var(--mono)}
+/* ---------- objetivo de esfuerzo ---------- */
+.tcard{grid-template-columns:1fr auto}
+.tcard .row small{display:block}
+.tpill{font-style:normal;font:800 11px var(--body);padding:4px 10px;border-radius:999px;border:1px solid;letter-spacing:.02em;white-space:nowrap}
+.tbar{position:relative;height:12px;border-radius:12px;background:rgb(255 255 255/.06);margin:14px 0 4px}
+.tbar.big{height:18px;margin-top:30px}
+.tbar .tz{position:absolute;top:-3px;bottom:-3px;border-radius:8px;background:rgb(79 227 154/.18);border:1px solid rgb(79 227 154/.55)}
+.tbar .tx{position:absolute;top:0;bottom:0;right:0;border-radius:0 12px 12px 0;background:repeating-linear-gradient(135deg,rgb(255 95 126/.28) 0 4px,rgb(255 95 126/.1) 4px 8px)}
+.tbar .tf{position:absolute;left:0;top:0;bottom:0;border-radius:12px;transition:width 1s var(--ease);box-shadow:0 0 14px -2px rgb(100 199 255/.5)}
+.tbar .tm{position:absolute;top:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgb(255 255 255/.15);transition:left 1s var(--ease)}
+.tbar.big .tm{width:24px;height:24px}
+.tbar .tm b{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);font:700 12px var(--mono);color:var(--fg);white-space:nowrap}
+.tbar:not(.big) .tm b{display:none}
+.tleg{position:relative;height:14px;font:600 10px var(--mono);color:var(--dim)}
+.tleg span{position:absolute;transform:translateX(-50%)}
+.tleg span:first-child{left:0;transform:none}
+.tleg span:last-child{transform:none}
+.autoln{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font:600 12px var(--body);color:var(--muted)}
+.autoln i{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px rgb(79 227 154/.18);animation:pulse 1.6s infinite;flex:none}
+.tweek{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end}
+.tweek div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.tweek em{position:relative;width:100%;height:110px;border-radius:10px;background:rgb(255 255 255/.04);overflow:hidden}
+.tweek em u{position:absolute;left:0;right:0;background:rgb(79 227 154/.16);border-top:1px solid rgb(79 227 154/.6);border-bottom:1px solid rgb(79 227 154/.6)}
+.tweek em i{position:absolute;left:22%;right:22%;bottom:0;border-radius:6px 6px 0 0;transition:height .8s var(--ease)}
+.tweek b{font:600 11px var(--mono)}
+.tweek span{font:700 10px var(--body);color:var(--muted);text-transform:uppercase}
 </style>
 </head>
 <body>
@@ -1222,7 +1248,7 @@ function classify(all){const tr=all.length>90?15:0;const sm=all.slice(tr,all.len
   else if(cv>=.08){type="fuerza";why="picos con descansos largos"}
   else{type=mr>=.45?"carrera":"caminar";why="esfuerzo continuo"}
   return{type,why,mr,cv,z4,spm}}
-function finishAct(a,b){if(b-a<10*60000)return;const sm=samplesIn(a,b);if(sm.length<30||overlapsSession(a,b))return;const c=classify(sm);if(c.type==="caminar"&&(c.mr<.3||b-a<12*60000))return;const hs=sm.map(x=>x[1]);
+function finishAct(a,b){if(b-a<10*60000)return;const sm=samplesIn(a,b);if(sm.length<30||overlapsSession(a,b))return;const c=classify(sm);if(c.type==="caminar"&&(c.mr<.25||b-a<10*60000))return;const hs=sm.map(x=>x[1]);
   addDet({kind:"act",start:a,end:b,type:c.type,why:c.why,avg:Math.round(mean(hs)),max:Math.max(...hs)})}
 function finishSleep(a,b){if(b-a<15*60000)return;const sm=samplesIn(a,b);if(sm.length<60)return;const sh=new Date(a).getHours();const night=(sh>=19||sh<6)&&b-a>=3*36e5||b-a>=5*36e5;if(night&&(NATIVE||CFG.profile)){sensorNight(a,b);return}if(!night){if(b-a<20*60000)return;const rest=baseline().rhr||CFG.rest;const hv=sm.map(x=>x[2]).filter(v=>v!=null);const aw=AUTO.log.filter(x=>x[0]<a&&a-x[0]<6*36e5&&x[1]>rest+15&&x[2]!=null).map(x=>x[2]);if(hv.length>20&&aw.length>60&&pct(hv,.5)<pct(aw,.5)*1.15)return}
   addDet({kind:night?"night":"nap",start:a,end:b,avg:Math.round(mean(sm.map(x=>x[1]))),hrv:Math.round(mean(sm.map(x=>x[2]).filter(Boolean)))||null})}
@@ -2455,7 +2481,7 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="18";let busy=false;
+const WL_BUILD="19";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
   if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if(E&&E.on){if(manual)toast("Hay versión nueva: se instalará al terminar la carrera");return false}
@@ -2627,7 +2653,96 @@ function dReady(){const R=readiness();if(!R)return{title:"Preparación",hero:"--
   return{title:"Preparación para entrenar",hero:R.s,unit:"/ 100",sub:R.lab+" · "+R.msg,col:R.col,
     body:`<div class="card"><h3>Qué la forma</h3><div class="facrows">${R.P.map(p=>{const c=p.s>=75?"--good":p.s>=50?"--sky":p.s>=25?"--warn":"--bad";return`<div class="facrow"><b>${p.l}</b><span>${p.v}</span><em><i style="width:${Math.round(p.s)}%;background:var(${c})"></i></em><p>${p.p} Peso ${Math.round(p.w*100)} %.</p></div>`}).join("")}</div></div>`+
     story([`Tu preparación hoy es <b>${R.lab.toLowerCase()} (${R.s})</b>. ${R.msg}`,R.partial?"Faltan datos de algún factor; con el check matinal y unas sesiones la nota es más fiable.":"Combina cómo has recuperado, cómo has dormido y cuánto vienes cargando, como el Training Readiness de Garmin."])}}
-Object.assign(DETAIL,{energy:dEnergy,ready:dReady});
+Object.assign(DETAIL,{energy:dEnergy,ready:dReady});window.WL={readiness,energy,hrvStatus};
+
+if(!$("v-hoy").hidden)renderHoy();
+})();
+</script>
+<script>
+// ---------- Objetivo de esfuerzo diario + actividad detectada sola + avisos ----------
+(function(){
+if(!TYPES.some(t=>t[0]==="bici"))TYPES.splice(TYPES.length-1,0,["bici","Bici","--z1"]);
+const vib=h=>{if(NATIVE)nat("haptic",h?{style:"heavy"}:{}).catch(()=>{});else if(navigator.vibrate)try{navigator.vibrate(8)}catch(e){}};
+const C=v=>cssv(v);const DAYMS=864e5;
+const dkey=t=>new Date(t).toLocaleDateString("sv-SE");
+if(CFG.notifyActs==null)CFG.notifyActs=true;if(CFG.notifyTarget==null)CFG.notifyTarget=true;
+
+// ===== objetivo =====
+function target(){const R=window.WL&&WL.readiness?WL.readiness():null;const c=checks()[0];const tc=c&&dayKey(c.d)===dayKey(Date.now())?c:null;
+  const s=R?R.s:tc&&tc.score!=null?tc.score:55;const mid=clamp(5,17,4+.13*s);
+  const lo=Math.round((mid-1.5)*10)/10,hi=Math.round((mid+1.5)*10)/10;return{lo,hi,ex:Math.max(hi+4,17),s,src:R?"tu preparación ("+R.s+")":tc?"tu recuperación ("+tc.score+" %)":"un día normal"}}
+const curStrain=()=>{const v=parseFloat(($("r2v")&&$("r2v").textContent||"0").replace(",","."));return isFinite(v)?v:0};
+function state(st,T){return st>=T.ex?{k:"ex",l:"Carga extrema",c:"--bad"}:st>T.hi+.4?{k:"hi",l:"Te has pasado",c:"--warn"}:st>=T.lo?{k:"ok",l:"En tu objetivo",c:"--good"}:{k:"lo",l:"Por debajo",c:"--sky"}}
+const trOf=st=>-95*Math.log(1-Math.min(20.9,st)/21);
+const hrAt=p=>Math.round(CFG.max*p);
+function minsTo(st,goal,p){const d=trOf(goal)-trOf(st);if(d<=0)return 0;return Math.ceil(d/Math.max(.05,trimpMin(hrAt(p))))}
+function saveT(T){const m=store.get("tgt",{})||{};const k=dkey(Date.now());if(!m[k]||m[k].lo!==T.lo||m[k].hi!==T.hi){m[k]={lo:T.lo,hi:T.hi};const ks=Object.keys(m).sort().slice(-60);const o={};ks.forEach(x=>o[x]=m[x]);store.set("tgt",o)}}
+let lastSync="";
+function syncNative(T){if(!NATIVE)return;const prof={rest:Math.round(baseline().rhr||CFG.rest),max:+CFG.max,sex:CFG.sex,kg:+CFG.kg||0,age:+CFG.age||0,notifyActs:!!CFG.notifyActs,notifyTarget:!!CFG.notifyTarget};
+  const k=JSON.stringify([prof,T.lo,T.hi,dkey(Date.now())]);if(k===lastSync)return;lastSync=k;
+  nat("setProfile",prof).catch(()=>{});nat("setTarget",{lo:T.lo,hi:T.hi,day:dkey(Date.now())}).catch(()=>{})}
+
+function barHTML(st,T,big){const P=v=>Math.max(0,Math.min(100,v/21*100));const S=state(st,T);
+  return`<div class="tbar ${big?"big":""}"><div class="tz" style="left:${P(T.lo)}%;width:${P(T.hi)-P(T.lo)}%"></div><div class="tx" style="left:${P(T.ex)}%"></div><div class="tf" style="width:${P(st)}%;background:linear-gradient(90deg,#3aa0ff,${C(S.c)})"></div><div class="tm" style="left:${P(st)}%"><b>${fx(st)}</b></div></div>
+  <div class="tleg"><span>0</span><span style="left:${P(T.lo)}%">${fx(T.lo)}</span><span style="left:${P(T.hi)}%">${fx(T.hi)}</span><span style="left:${P(T.ex)}%;color:var(--bad)">${fx(T.ex)}</span><span style="right:0">21</span></div>`}
+function adviceTxt(st,T){const S=state(st,T);
+  if(S.k==="lo"){const z2=minsTo(st,T.lo,.68),z4=minsTo(st,T.lo,.85);return`Te faltan <b>${fx(T.lo-st)}</b> para entrar en tu rango: unos <b>${z2} min</b> suaves (zona 2) o <b>${z4} min</b> fuertes (zona 4).`}
+  if(S.k==="ok")return`Estás en tu rango. ${st<T.hi-.5?`Te quedan <b>${fx(T.hi-st)}</b> de margen antes de pasarte.`:"Buen sitio para parar por hoy."}`;
+  if(S.k==="hi")return`Te has pasado <b>${fx(st-T.hi)}</b> de tu objetivo. El resto del día, suave: camina, estira y prioriza dormir.`;
+  return`Carga extrema: <b>${fx(st)}</b> de 21. Hidrátate, come bien y mañana mira tu recuperación antes de entrenar.`}
+function lastAuto(){return sessions().find(s=>s.auto)}
+function renderTargetCard(){const wrap=$("myday");if(!wrap)return;const T=target();saveT(T);syncNative(T);const st=curStrain();const S=state(st,T);const la=lastAuto();
+  let el=$("mytgt");if(!el){el=document.createElement("button");el.className="mycard tcard";el.id="mytgt";el.dataset.open="target";const h=wrap.querySelector(".myhead");wrap.insertBefore(el,h?h.nextSibling:wrap.firstChild)}
+  el.innerHTML=`<div class="mi"><div class="row sb"><small>Objetivo de esfuerzo de hoy</small><em class="tpill" style="color:${C(S.c)};border-color:${C(S.c)}55">${S.l}</em></div>
+    <div class="mv"><b style="color:${C(S.c)}">${fx(st)}</b><em>objetivo ${fx(T.lo)}–${fx(T.hi)}</em></div>${barHTML(st,T)}<p>${adviceTxt(st,T)}</p>
+    <div class="autoln"><i></i>${NATIVE?"Detección automática activa, también con la app cerrada":"Detección automática al abrir la app"}${la?` · última: ${typeOf(la.type)[1].toLowerCase()} ${Math.round(la.dur/60)} min`:""}</div></div><span class="chev">›</span>`;
+  el.onclick=()=>{vib();openDetail("target")}}
+
+// diales: banda del objetivo en el dial de esfuerzo
+function decorateDial(){const d=document.querySelector('.dial[data-k="strain"]');if(!d)return;const T=target();const svg=d.querySelector("svg g");if(!svg||svg.querySelector(".tband"))return;
+  const r=60,C2=2*Math.PI*r,L=C2*.75;const a=L*T.lo/21,b=L*(T.hi-T.lo)/21;
+  const ns="http://www.w3.org/2000/svg";const c=document.createElementNS(ns,"circle");c.setAttribute("class","tband");c.setAttribute("cx","60");c.setAttribute("cy","60");c.setAttribute("r",r);c.setAttribute("fill","none");c.setAttribute("stroke","#4fe39a");c.setAttribute("stroke-width","3.5");c.setAttribute("stroke-linecap","round");c.setAttribute("stroke-dasharray",`0 ${a} ${b} ${C2}`);svg.appendChild(c);
+  const sp=d.querySelector(".dv span");if(sp)sp.textContent="obj "+fx(T.lo)+"–"+fx(T.hi)}
+const _rh=renderHoy;renderHoy=function(){_rh.apply(this,arguments);try{renderTargetCard()}catch(e){console.error(e)}try{decorateDial()}catch(e){console.error(e)}};
+
+// ===== página del objetivo =====
+function dTarget(){const T=target();const st=curStrain();const S=state(st,T);const m=store.get("tgt",{})||{};
+  const days=[];for(let i=6;i>=0;i--){const t=Date.now()-i*DAYMS;const k=dkey(t);days.push({t,s:i===0?st:dayStrain(t),T:m[k]||null})}
+  const P=v=>Math.max(0,Math.min(100,v/21*100));
+  const wk=`<div class="card"><h3>Tu semana frente a tu objetivo</h3><div class="tweek">${days.map(d=>{const ss=d.T?state(d.s,{...d.T,ex:Math.max(d.T.hi+4,17)}):null;return`<div><em>${d.T?`<u style="bottom:${P(d.T.lo)}%;height:${P(d.T.hi)-P(d.T.lo)}%"></u>`:""}<i style="height:${Math.max(2,P(d.s))}%;background:${ss?C(ss.c):"var(--s3)"}"></i></em><b>${fx(d.s)}</b><span>${new Date(d.t).toLocaleDateString("es-ES",{weekday:"short"}).slice(0,2)}</span></div>`}).join("")}</div><div class="small">La franja verde es el objetivo que tenías cada día.</div></div>`;
+  const how=`<div class="card"><h3>Para llegar a tu objetivo</h3><div class="edr">${[[.65,"Zona 2 · suave"],[.75,"Zona 3 · moderado"],[.85,"Zona 4 · fuerte"]].map(([p,l])=>{const mlo=minsTo(st,T.lo,p),mhi=minsTo(st,T.hi,p);return`<div><span>${l} (~${hrAt(p)} ppm)</span><b>${mlo?mlo+"–"+mhi+" min":mhi?"margen "+mhi+" min":"ya te has pasado"}</b></div>`}).join("")}</div></div>`;
+  const notif=`<div class="card"><h3>Avisos</h3><div class="rmenu" style="margin:0"><button class="rrow tg" id="tnA"><span>Actividad detectada<small>Al terminar una caminata, carrera o entreno, te mando el resumen</small></span><i class="tgl ${CFG.notifyActs?"on":""}"></i></button><button class="rrow tg" id="tnT"><span>Objetivo de esfuerzo<small>Cuando lo cumples, cuando te pasas y si es carga extrema</small></span><i class="tgl ${CFG.notifyTarget?"on":""}"></i></button><button class="rrow" id="tnP"><span>Probar aviso<small id="tnS">${NATIVE?"Comprobando permiso…":"Los avisos funcionan en la app del iPhone"}</small></span><em>Enviar</em></button></div></div>`;
+  return{title:"Objetivo de esfuerzo",hero:fx(st),unit:"/ 21",sub:S.l+" · objetivo "+fx(T.lo)+"–"+fx(T.hi),col:S.c,
+    body:`<div class="card">${barHTML(st,T,1)}<p class="msg" style="margin:6px 0 0">${adviceTxt(st,T)}</p></div>${how}${wk}${notif}`+
+      story([`Tu objetivo de hoy es <b>${fx(T.lo)}–${fx(T.hi)}</b> de esfuerzo (Strain, de 0 a 21). Lo calculo con ${T.src}: cuanto mejor has dormido y recuperado, más carga puedes asumir.`,`Por encima de <b>${fx(T.ex)}</b> lo considero carga extrema.`,"Cuenta todo el día: entrenos, caminatas y el estrés del pulso, igual que el Strain de WHOOP."]),
+    draw:()=>{const tg=(id,key)=>{const b=$(id);if(!b)return;b.onclick=()=>{CFG[key]=!CFG[key];saveCfg();b.querySelector(".tgl").classList.toggle("on",!!CFG[key]);vib();lastSync="";syncNative(target())}};tg("tnA","notifyActs");tg("tnT","notifyTarget");
+      if($("tnP"))$("tnP").onclick=()=>{vib();if(!NATIVE){toast("Abre la app del iPhone para recibir avisos");return}nat("notify",{title:"🍩 Así te avisaré",body:"Cuando termines una actividad o te pases de tu objetivo, te llegará un aviso como este.",open:"target"}).then(()=>toast("Aviso enviado")).catch(()=>toast("Instala la versión 1.2 de la app para los avisos"))};
+      if(NATIVE&&$("tnS"))nat("notifPermission").then(v=>{$("tnS").textContent=v==="on"?"Permiso concedido":v==="denied"?"Sin permiso: Ajustes › WOD Live › Notificaciones":"Te pediré permiso"}).catch(()=>{$("tnS").textContent="Instala la versión 1.2 de la app para los avisos"})}}}
+Object.assign(DETAIL,{target:dTarget});
+
+// ===== actividades detectadas por el iPhone (con la app cerrada) =====
+function actToSess(a){const z=(a.zones||[0,0,0,0,0]).map(Math.round);const tr=a.trimp||0;return{id:Math.round(a.start),type:a.type||"otro",dur:(a.end-a.start)/1000,avg:Math.round(a.avg),max:Math.round(a.max),min:Math.round(a.min),kcal:a.kcal?Math.round(a.kcal):null,trimp:Math.round(tr),zones:z,hrr:[],hrrT:[],
+  teA:+teAer(tr).toFixed(1),teN:+teAna(z[4],0).toFixed(1),strain:+strainOf(tr).toFixed(1),rounds:null,demo:false,auto:true,src:"auto",series:a.series||[],step:10,rpe:null,note:"",vt1:null,steps:a.steps!=null?Math.round(a.steps):null,dist:a.dist!=null?Math.round(a.dist):null,
+  why:a.motion&&(a.motion.running>=.4||a.motion.walking>=.4||a.motion.cycling>=.4)?"detectado con el pulso y el movimiento del iPhone":"detectado con tu pulso"}}
+async function ingest(){if(!NATIVE)return;let acts;try{acts=await nat("autoActs",{since:store.get("ingT",0)||0})}catch(e){return}if(!acts||!acts.length)return;
+  let h=sessions(),ch=false,maxEnd=store.get("ingT",0)||0;
+  for(const a of acts){maxEnd=Math.max(maxEnd,a.end);if(tombHas("det",Math.round(a.start))||tombHas("sess",Math.round(a.start)))continue;
+    const ov=h.filter(x=>x.id<a.end&&x.id+x.dur*1000>a.start);if(ov.some(x=>!x.auto||x.rpe||x.note||x.src==="whoop"||x.src==="auto"))continue;
+    h=h.filter(x=>!ov.includes(x));h.unshift(actToSess(a));ch=true}
+  store.set("ingT",maxEnd);if(ch){h.sort((x,y)=>y.id-x.id);store.set("sess",h.slice(0,600));try{renderVisible()}catch(e){}}}
+const _np=nativePull;nativePull=async function(){await ingest();return _np.apply(this,arguments)};
+setTimeout(()=>ingest().then(()=>{try{renderVisible()}catch(e){}}),1200);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)ingest()});
+
+// tarjeta de sesión: pasos y distancia de las detectadas
+const _card=sessCard;sessCard=function(s){let h=_card(s);if(s.src==="auto"&&!s.run){const ex=[s.dist>100?fx(s.dist/1000,2)+" km":"",s.steps?s.steps.toLocaleString("es-ES")+" pasos":""].filter(Boolean).join(" · ");h=h.replace('<span class="m">',`<span class="m"><span class="rk">auto${ex?" · "+ex:""}</span> · `)}return h};
+
+// abrir desde un aviso
+async function openTarget(t){if(!t)return;if(t.startsWith("act:")){const id=+t.slice(4);let s=sessions().find(x=>Math.abs(x.id-id)<180000);if(!s){await ingest();s=sessions().find(x=>Math.abs(x.id-id)<180000)}if(s){go("hoy");summary(s,false)}else toast("La actividad aparecerá en un momento")}
+  else if(t==="target"||t==="strain"){go("hoy");setTimeout(()=>openDetail(t),250)}}
+window.__nopen=t=>{if(NATIVE)nat("consumeOpen").catch(()=>{});openTarget(t)};
+if(NATIVE)setTimeout(()=>nat("consumeOpen").then(openTarget).catch(()=>{}),1600);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&NATIVE)setTimeout(()=>nat("consumeOpen").then(openTarget).catch(()=>{}),500)});
 
 if(!$("v-hoy").hidden)renderHoy();
 })();
