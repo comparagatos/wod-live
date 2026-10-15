@@ -2376,5 +2376,20 @@ window.openRun=openRun;window.__runE=()=>E;
 restore();
 })();
 </script>
+<script>
+// ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
+(function(){
+const WL_BUILD="17";let busy=false;
+async function checkUpdate(manual){if(busy)return false;busy=true;try{
+  const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
+  if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if(E&&E.on){if(manual)toast("Hay versión nueva: se instalará al terminar la carrera");return false}
+    toast("Actualizando WOD Live…");setTimeout(()=>location.replace(location.pathname+"?"+(NATIVE?"app=ios&":"")+"v="+m[1]),500);return true}
+  if(manual)toast("Tienes la última versión ("+WL_BUILD+")")}catch(e){}finally{busy=false}return false}
+const _nr=window.__nrefresh;window.__nrefresh=async()=>{if(await checkUpdate(true))return;if(_nr)await _nr()};
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkUpdate(false)});
+setTimeout(()=>checkUpdate(false),2500);
+window.WL_BUILD=WL_BUILD;
+})();
+</script>
 </body>
 </html>
