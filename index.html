@@ -598,6 +598,59 @@ nav button{position:relative;z-index:1}
 .fmore{background:transparent;border:1px dashed var(--line2);border-radius:16px;padding:10px;font:700 13px var(--body);color:var(--muted)}
 #prep .bigbtns{display:grid;grid-template-columns:1fr;gap:8px}
 #prep #connect{height:58px;font-size:17px}
+
+/* ---------- Garmin 2: estado, intensidad, sugerido, informe matutino ---------- */
+.sgic{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-size:28px;background:color-mix(in srgb,var(--c) 18%,transparent);border:1px solid color-mix(in srgb,var(--c) 40%,transparent)}
+.tsbar{display:flex;gap:4px;margin-top:8px}
+.tsbar i{flex:1;height:6px;border-radius:6px;background:rgb(255 255 255/.08)}
+.tsbar i:nth-child(1).on{background:var(--bad)}.tsbar i:nth-child(2).on,.tsbar i:nth-child(3).on{background:var(--warn)}.tsbar i:nth-child(4).on,.tsbar i:nth-child(5).on{background:var(--good)}
+.tsbar i.on{box-shadow:0 0 12px -2px currentColor}
+.iweek{display:flex;gap:5px;margin-top:8px;height:40px;align-items:flex-end}
+.iweek span{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end}
+.iweek i{display:block;width:100%;max-width:16px;min-height:3px;border-radius:5px;background:linear-gradient(180deg,#ff7eb6,#ffc857)}
+.iweek b{font:800 9px var(--body);color:var(--dim)}
+.iweek span.today b{color:var(--fg)}
+.tsscale{display:flex;gap:4px;flex-wrap:wrap}
+.tsscale span{flex:1 1 auto;text-align:center;font:800 10.5px var(--body);padding:7px 6px;border-radius:999px;background:rgb(255 255 255/.04);border:1px solid var(--line);color:var(--muted)}
+.tsscale span.on{color:#160f1d;border-color:transparent}
+.tsscale span:nth-child(1).on{background:var(--bad)}.tsscale span:nth-child(2).on,.tsscale span:nth-child(3).on{background:var(--warn)}.tsscale span:nth-child(4).on,.tsscale span:nth-child(5).on{background:var(--good)}
+.lgd{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px;font:700 11px var(--body);color:var(--muted)}
+.lgd i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.focs{display:flex;flex-direction:column;gap:12px}
+.foc .fh{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.foc .fh b{font:700 14px var(--body)}.foc .fh span{font:600 12px var(--mono);color:var(--muted)}
+.ftrk{position:relative;height:12px;border-radius:8px;background:rgb(255 255 255/.06);margin:6px 0 4px;overflow:hidden}
+.ftrk em{position:absolute;top:0;bottom:0;background:rgb(255 255 255/.14);border-left:1px dashed rgb(255 255 255/.4);border-right:1px dashed rgb(255 255 255/.4)}
+.ftrk i{position:absolute;left:0;top:3px;bottom:3px;border-radius:6px;transition:width 1s var(--ease)}
+.foc small{font:800 10.5px var(--body);letter-spacing:.04em}
+.foc small.ok{color:var(--good)}.foc small.bajo{color:var(--warn)}.foc small.alto{color:var(--bad)}
+.igoal{display:flex;gap:6px}
+.igoal button{flex:1;padding:9px 0}
+.igoal button.on{background:var(--grad);color:#1a0d1f;border-color:transparent}
+.sgz{display:inline-block;font:800 12px var(--body);padding:5px 11px;border-radius:999px;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent);border:1px solid color-mix(in srgb,var(--c) 35%,transparent)}
+/* informe matutino */
+.mrep{position:fixed;inset:0;z-index:59;background:rgb(7 6 11/.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:flex-end;justify-content:center;padding:16px 16px max(16px,env(safe-area-inset-bottom));animation:fade .25s}
+.mrep.out{animation:fadeOut .3s forwards}
+.mbox{width:min(100%,440px);max-height:calc(100dvh - 40px);overflow:auto;background:linear-gradient(175deg,#2c2140,#141020 70%);border:1px solid rgb(255 224 102/.25);border-radius:30px;padding:24px 18px 18px;text-align:center;animation:sheetUp .5s cubic-bezier(.25,1.3,.5,1);box-shadow:0 -20px 80px -30px rgb(255 200 87/.35)}
+@keyframes sheetUp{from{transform:translateY(60px);opacity:0}}
+.msun{font-size:46px;line-height:1;animation:spinIn .9s cubic-bezier(.2,1.3,.4,1)}
+.mbox>small{display:block;margin-top:8px;font:800 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--lemon)}
+.mbox h2{font-size:24px;margin:4px 0 14px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:left}
+.mrow{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:18px;background:rgb(255 255 255/.04);border:1px solid var(--line);min-width:0}
+.mrow>span{font-size:20px}
+.mrow small{display:block;font:800 9.5px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow b{font:700 20px/1.1 var(--display)}
+.mrow em{display:block;font:700 10.5px var(--body);font-style:normal;color:var(--muted)}
+.msug{display:flex;gap:12px;align-items:flex-start;text-align:left;margin-top:10px;padding:14px;border-radius:20px;background:color-mix(in srgb,var(--c) 12%,transparent);border:1px solid color-mix(in srgb,var(--c) 35%,transparent)}
+.msug>span{font-size:30px}
+.msug small{font:800 10px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.msug b{display:block;font:700 18px var(--display);color:var(--c)}
+.msug p{margin:3px 0 0;font-size:13px;color:var(--muted);line-height:1.35}
+.mfoot{margin:12px 0 14px;font:700 12.5px var(--body);color:var(--muted)}
+.mbox .p{width:100%;padding:14px}
+@media(max-width:360px){.mgrid{grid-template-columns:1fr}}
+.rtring b{display:flex!important;align-items:baseline;justify-content:center;padding-top:24px}
 </style>
 </head>
 <body>
@@ -2527,7 +2580,7 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="20";let busy=false;
+const WL_BUILD="21";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
   if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if(E&&E.on){if(manual)toast("Hay versión nueva: se instalará al terminar la carrera");return false}
@@ -2902,7 +2955,7 @@ function feedItems(){const now=Date.now(),day=dkey(now),out=[];const D=dis();con
   else if(R.h>36)out.push({id:"rl:"+day,ic:"⏳",c:"--bad",h:"Te quedan "+R.h+" h de recuperación",p:readyTxt(R)+". Hoy mejor suave.",t:now-1,act:()=>openDetail("rtime")});
   if(window.WL){try{const H=WL.hrvStatus();if(H&&H.st!=="Equilibrado")out.push({id:"hv:"+day,ic:"〰️",c:H.st==="Bajo"?"--bad":"--warn",h:"HRV "+H.st.toLowerCase(),p:`Media de 7 noches ${Math.round(H.avg)} ms, fuera de tu rango (${Math.round(H.lo)}–${Math.round(H.hi)}).`,t:now-2,act:()=>openDetail("hrv")})}catch(e){}
     try{const E=WL.energy();if(E&&E.now<25)out.push({id:"en:"+day,ic:"🪫",c:"--bad",h:"Energía baja: "+E.now,p:"Te queda poca batería. Descansa o haz algo muy suave.",t:now-3,act:()=>openDetail("energy")})}catch(e){}}
-  return out.filter(x=>!D.has(x.id)).sort((a,b)=>b.t-a.t).slice(0,8)}
+  (window.__feedX||[]).forEach(f=>{try{f(out)}catch(e){}});return out.filter(x=>!D.has(x.id)).sort((a,b)=>b.t-a.t).slice(0,8)}
 function openSess(id){const s=sessions().find(x=>x.id===id);if(s)summary(s,false)}
 const dkey=t=>new Date(t).toLocaleDateString("sv-SE");
 let feedOpen=false;function renderFeed(){const v=$("v-hoy");let el=$("feed");if(!el){el=document.createElement("div");el.id="feed";el.className="feed";v.insertBefore(el,v.querySelector(".herocard"))}
@@ -2941,7 +2994,151 @@ function tune(){const c=$("connect");if(c&&!c.dataset.t){c.dataset.t=1;c.innerHT
 const _rh=renderHoy;renderHoy=function(){_rh.apply(this,arguments);let fresh=[];try{fresh=evalAch()}catch(e){console.error(e)}try{renderRecCard()}catch(e){console.error(e)}try{renderFeed()}catch(e){console.error(e)}if(fresh.length)setTimeout(()=>celebrate(fresh),600)};
 const _rp=renderProg;renderProg=function(){_rp.apply(this,arguments);try{renderAchCard()}catch(e){console.error(e)}};
 tune();if(!$("v-hoy").hidden)renderHoy();
-window.__celebrate=celebrate;
+window.__celebrate=celebrate;window.__ach={BADGES,REC,recTime};
+})();
+</script>
+<script>
+// ---------- Garmin 2: estado de entrenamiento, enfoque de carga, minutos de intensidad, entreno sugerido, informe matutino ----------
+(function(){
+const vib=h=>{if(NATIVE)nat("haptic",h?{style:"heavy"}:{}).catch(()=>{});else if(navigator.vibrate)try{navigator.vibrate(h?25:8)}catch(e){}};
+const C=v=>cssv(v);const DAYMS=864e5;const realS=()=>sessions().filter(s=>!s.demo);
+const dkey=t=>new Date(t).toLocaleDateString("sv-SE");
+const bpm=p=>Math.round(zoneHr(p));
+const GA=()=>window.__ach||{};
+
+// ===== minutos de intensidad (OMS: 150 a la semana; vigorosos cuentan doble) =====
+const iGoal=()=>+CFG.imin||150;
+function iminOf(s){const z=s.zones||[0,0,0,0,0];const mod=((z[1]||0)+(z[2]||0))/60,vig=((z[3]||0)+(z[4]||0))/60;return{mod,vig,t:mod+vig*2}}
+function iWeek(ws){const we=ws+7*DAYMS;const days=[...Array(7)].map(()=>({mod:0,vig:0,t:0}));
+  realS().filter(s=>s.id>=ws&&s.id<we).forEach(s=>{const d=Math.min(6,Math.floor((startOfDay(s.id)-ws)/DAYMS+.01));const m=iminOf(s);days[d].mod+=m.mod;days[d].vig+=m.vig;days[d].t+=m.t});
+  const t=days.reduce((a,d)=>a+d.t,0);return{ws,days,t:Math.round(t),mod:Math.round(days.reduce((a,d)=>a+d.mod,0)),vig:Math.round(days.reduce((a,d)=>a+d.vig,0))}}
+function imin(){const ws=weekStart(Date.now());const W=iWeek(ws);const prev=[1,2,3,4].map(k=>iWeek(ws-k*7*DAYMS));const g=iGoal();
+  const dayIdx=Math.min(6,Math.floor((startOfDay(Date.now())-ws)/DAYMS+.01));const exp=g*(dayIdx+1)/7;
+  return{...W,g,prev,pct:W.t/g,left:Math.max(0,g-W.t),col:W.t>=g?"--good":W.t>=exp*.7?"--warn":"--bad",dayIdx}}
+
+// ===== enfoque de carga (28 días): aeróbico bajo · aeróbico alto · anaeróbico =====
+const FOC=[{k:"low",l:"Aeróbico bajo",z:"Zonas 1–2",c:"#64c7ff",lo:.30,hi:.55,tip:"rodajes suaves, caminatas, remo o bici en zona 2"},
+ {k:"high",l:"Aeróbico alto",z:"Zonas 3–4",c:"#ff9f43",lo:.30,hi:.55,tip:"umbral, tempos y WODs largos a ritmo sostenido"},
+ {k:"ana",l:"Anaeróbico",z:"Zona 5",c:"#ff5f7e",lo:.07,hi:.22,tip:"sprints, intervalos cortos y WODs muy intensos"}];
+function focus(){const t0=startOfDay(Date.now())-27*DAYMS;const S=realS().filter(s=>s.id>=t0);const v={low:0,high:0,ana:0};
+  S.forEach(s=>{const z=s.zones||[0,0,0,0,0];v.low+=((z[0]||0)*1+(z[1]||0)*2)/60;v.high+=((z[2]||0)*3+(z[3]||0)*4)/60;v.ana+=(z[4]||0)*6/60});
+  const tot=v.low+v.high+v.ana;if(tot<30)return null;
+  const F=FOC.map(f=>{const sh=v[f.k]/tot;return{...f,v:Math.round(v[f.k]),sh,st:sh<f.lo?"bajo":sh>f.hi?"alto":"ok"}});
+  const miss=F.filter(f=>f.st==="bajo").sort((a,b)=>(a.sh/a.lo)-(b.sh/b.lo))[0]||null;const over=F.find(f=>f.st==="alto")||null;
+  const msg=!miss&&!over?"Equilibrado: entrenas todas las intensidades en buena proporción.":miss?`Te falta <b>${miss.l.toLowerCase()}</b>: mete ${miss.tip}.`:`Mucho <b>${over.l.toLowerCase()}</b> en proporción; equilibra con otras intensidades.`;
+  return{F,tot:Math.round(tot),miss,over,ok:!miss&&!over,msg,n:S.length}}
+
+// ===== estado de entrenamiento (como Garmin) =====
+function tstatus(){const S=realS();const t28=startOfDay(Date.now())-27*DAYMS;const days=new Set(S.filter(s=>s.id>=t28).map(s=>startOfDay(s.id))).size;
+  const P=pmc(42);const now=P[P.length-1]||{ctl:0,atl:0,tsb:0};const p7=P[P.length-8]||now;const trend=(now.ctl-p7.ctl)/Math.max(1,p7.ctl);
+  const maxCtl=Math.max(...P.slice(-28).map(p=>p.ctl),0);const first=S.length?Math.min(...S.map(s=>s.id)):Date.now();const span=Math.max(1,Math.round((startOfDay(Date.now())-startOfDay(first))/DAYMS)+1);
+  const L=loads(),td=startOfDay(Date.now());let ac=0,cc=0;const W=Math.min(28,span);for(let i=0;i<W;i++){const v=L[td-i*DAYMS]||0;cc+=v;if(i<7)ac+=v}const r=span>=14&&cc?ac/(cc*7/W):null;let H=null;try{H=window.WL&&WL.hrvStatus?WL.hrvStatus():null}catch(e){}
+  const base={P,now,trend,r,hv:H,days,span,ctl:now.ctl,atl:now.atl,tsb:now.tsb};
+  if(span<14||days<4)return{...base,k:"none",l:"Calibrando",ic:"🌱",col:"--muted",msg:`Garmin necesita un par de semanas para conocerte y yo también: llevo ${Math.min(span,14)} de 14 días y ${days} con entreno. Sigue registrando sesiones.`,short:Math.min(span,14)+"/14 días"};
+  if(r!=null&&r>1.5)return{...base,k:"over",l:"Sobrecarga",ic:"🚨",col:"--bad",msg:"Estás cargando mucho más de lo habitual en tu semana. Riesgo de lesión y de quemarte: baja el volumen unos días.",short:"Demasiada carga"};
+  if(trend>.04&&H&&H.st==="Bajo")return{...base,k:"unprod",l:"Improductivo",ic:"😵",col:"--bad",msg:"Tu carga sube, pero tu HRV está baja: el cuerpo no lo está asimilando. Prioriza dormir y comer bien antes de apretar más.",short:"No lo asimilas"};
+  if(now.tsb>8&&maxCtl>0&&now.ctl>=maxCtl*.9&&r!=null&&r<.95)return{...base,k:"peak",l:"En tu pico",ic:"⛰️",col:"--good",msg:"Forma alta y fatiga baja: estás en el mejor momento para competir, un PR o un benchmark.",short:"Momento de PR"};
+  if(trend>.04)return{...base,k:"prod",l:"Productivo",ic:"📈",col:"--good",msg:"Tu forma está mejorando con la carga actual. Sigue así y respeta los días suaves.",short:"Estás mejorando"};
+  if(trend<-.06&&r!=null&&r<.55)return{...base,k:"detr",l:"Desentrenando",ic:"📉",col:"--bad",msg:"Llevas una semana con mucha menos carga de lo normal y tu forma baja. Si no es descanso buscado, retoma poco a poco.",short:"Pierdes forma"};
+  if(trend<-.02&&r!=null&&r<.85)return{...base,k:"rec",l:"Recuperación",ic:"🛌",col:"--warn",msg:"Carga más baja de lo habitual: tu cuerpo está asimilando. Bien después de un bloque duro.",short:"Asimilando"};
+  return{...base,k:"maint",l:"Mantenimiento",ic:"⚖️",col:"--warn",msg:"Tu carga mantiene tu forma, pero no la mejora. Para progresar, sube un poco el volumen o mete más intensidad.",short:"Mantienes forma"}}
+
+// ===== entreno sugerido del día =====
+function suggest(){let R=null,RT=null;try{R=window.WL&&WL.readiness?WL.readiness():null}catch(e){}try{RT=GA().recTime?GA().recTime():null}catch(e){}
+  const s=R?R.s:60,h=RT?RT.h:0;const Fc=focus();const ST=tstatus();const today=realS().filter(x=>startOfDay(x.id)===startOfDay(Date.now()));const doneT=today.reduce((a,x)=>a+x.trimp,0);
+  const Z=(a,b)=>bpm(a)+"–"+bpm(b)+" ppm";let o;
+  if(doneT>=90)o={k:"done",ic:"✅",t:"Hoy ya has entrenado",d:"Ya llevas tu carga del día. Lo que queda: estirar, comer bien y dormir.",z:"",min:0,col:"--good"};
+  else if(s<25||h>48||ST.k==="over")o={k:"rest",ic:"🛌",t:"Descanso",d:"Tu cuerpo pide parar. Hoy nada de intensidad: paseo corto o movilidad si te apetece.",z:"",min:0,col:"--bad"};
+  else if(s<50||h>24||ST.k==="unprod")o={k:"rec",ic:"🚶",t:"Recuperación activa",d:"20–30 minutos muy suaves: caminar, bici tranquila o movilidad.",z:"Zona 1 · "+Z(.5,.6),min:25,col:"--warn"};
+  else if(Fc&&Fc.miss&&Fc.miss.k==="low"||s<75||h>12)o={k:"base",ic:"🫁",t:"Base aeróbica",d:"40–50 minutos a ritmo cómodo, puedes hablar mientras lo haces. Rodaje, remo o bici.",z:"Zona 2 · "+Z(.6,.7),min:45,col:"--sky"};
+  else if(Fc&&Fc.miss&&Fc.miss.k==="ana")o={k:"ana",ic:"⚡",t:"Intervalos anaeróbicos",d:"Calienta 10 min. Luego 8 × 40 s a tope con 1:20 suave. Vuelta a la calma 10 min.",z:"Zona 5 · más de "+bpm(.9)+" ppm",min:35,col:"--bad"};
+  else if(Fc&&Fc.miss&&Fc.miss.k==="high")o={k:"thr",ic:"🔥",t:"Umbral",d:"Calienta 10 min. Luego 4 × 6 min fuerte pero sostenible con 2 min suave. Un WOD largo a ritmo constante también vale.",z:"Zona 4 · "+Z(.8,.9),min:45,col:"--warn"};
+  else o={k:"hard",ic:"🏋️",t:"Día fuerte",d:"Estás fresco: buen día para un WOD exigente, un benchmark o intentar un PR.",z:"Zonas 4–5",min:50,col:"--good"};
+  o.why=[R?`Preparación ${R.s} (${R.lab.toLowerCase()})`:null,RT?(RT.h>0?`${RT.h} h de recuperación pendientes`:"recuperado"):null,ST.k!=="none"?"estado: "+ST.l.toLowerCase():null,Fc&&Fc.miss?"te falta "+Fc.miss.l.toLowerCase():null].filter(Boolean).join(" · ");
+  return o}
+
+// ===== tarjetas en Hoy =====
+function card(id,after){const wrap=$("myday");if(!wrap)return null;let el=$(id);if(!el){el=document.createElement("button");el.className="mycard";el.id=id;const a=after&&$(after);a?a.after(el):wrap.appendChild(el)}return el}
+function renderCards(){const ST=tstatus();
+  const sg=suggest();let el=card("mysug","myrt");if(el){el.innerHTML=`<div class="sgic" style="--c:var(${sg.col})">${sg.ic}</div><div class="mi"><small>Entreno sugerido hoy</small><div class="mv"><b style="font-size:22px;color:var(${sg.col})">${sg.t}</b>${sg.min?`<em>${sg.min} min</em>`:""}</div><p>${sg.z?sg.z+" · ":""}${esc(sg.d)}</p></div><span class="chev">›</span>`;el.onclick=()=>{vib();openDetail("sugg")}}
+  el=card("mystat","mysug");if(el){el.innerHTML=`<div class="sgic" style="--c:var(${ST.col})">${ST.ic}</div><div class="mi"><small>Estado de entrenamiento</small><div class="mv"><b style="font-size:24px;color:${C(ST.col)}">${ST.l}</b><em>${ST.short}</em></div>${ST.k!=="none"?`<div class="tsbar">${["detr","rec","maint","prod","peak"].map(k=>`<i class="${k===ST.k?"on":""}"></i>`).join("")}</div>`:""}<p>${ST.k==="none"?ST.msg:`Forma ${Math.round(ST.ctl)} · fatiga ${Math.round(ST.atl)}${ST.r!=null?" · ratio "+fx(ST.r,2):""}`}</p></div><span class="chev">›</span>`;el.onclick=()=>{vib();openDetail("tstatus")}}
+  const I=imin();el=card("myimin","mystat");if(el){const f=Math.min(1,I.pct);el.innerHTML=`<div class="rtring">${ring(f,C(I.col))}<b>${Math.round(I.pct*100)}<small>%</small></b></div><div class="mi"><small>Minutos de intensidad · semana</small><div class="mv"><b style="color:${C(I.col)}">${I.t}</b><em>de ${I.g}</em></div><div class="iweek">${I.days.map((d,i)=>`<span class="${i===I.dayIdx?"today":""}"><i style="height:${Math.min(100,d.t/Math.max(30,I.g/4)*100)}%"></i><b>${"LMXJVSD"[i]}</b></span>`).join("")}</div><p>${I.left?`Te faltan ${I.left} min para el objetivo semanal`:"¡Objetivo semanal cumplido!"}</p></div><span class="chev">›</span>`;el.onclick=()=>{vib();openDetail("imin")}}}
+function ring(f,col){const r=34,Cc=2*Math.PI*r;return`<svg viewBox="0 0 84 84"><circle cx="42" cy="42" r="${r}" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="8"/><circle cx="42" cy="42" r="${r}" fill="none" stroke="${col}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${Cc*f} ${Cc}" transform="rotate(-90 42 42)"/></svg>`}
+
+// ===== páginas de detalle =====
+function focusHtml(Fc){if(!Fc)return`<div class="small">Con unas cuantas sesiones más con pulso te enseño en qué intensidades entrenas.</div>`;const mx=Math.max(.65,...Fc.F.map(f=>f.sh));
+  return`<div class="focs">${Fc.F.map(f=>`<div class="foc"><div class="fh"><b>${f.l}</b><span>${f.z} · ${Math.round(f.sh*100)} %</span></div><div class="ftrk"><em style="left:${f.lo/mx*100}%;width:${(f.hi-f.lo)/mx*100}%"></em><i style="width:${f.sh/mx*100}%;background:${f.c}"></i></div><small class="${f.st}">${f.st==="ok"?"En rango":f.st==="bajo"?"Por debajo de lo ideal":"Por encima de lo ideal"}</small></div>`).join("")}</div><p class="small" style="margin-top:10px">${Fc.msg}</p>`}
+function dTstatus(){const ST=tstatus();const Fc=focus();
+  return{title:"Estado de entrenamiento",hero:ST.l,unit:"",sub:ST.short,col:ST.col,
+   body:`<div class="tsscale">${[["detr","Desentrenando"],["rec","Recuperación"],["maint","Mantenimiento"],["prod","Productivo"],["peak","Pico"]].map(([k,l])=>`<span class="${k===ST.k?"on":""}">${l}</span>`).join("")}</div>
+   <div class="card"><h3>Forma y fatiga</h3><canvas id="tscv" style="height:170px"></canvas><div class="lgd"><span><i style="background:#a98bff"></i>Forma (carga crónica)</span><span><i style="background:#ff7eb6"></i>Fatiga (carga aguda)</span><span><i style="background:rgba(255,255,255,.25)"></i>Carga diaria</span></div></div>
+   <div class="estats"><div><small>Forma</small><b>${Math.round(ST.ctl)}</b></div><div><small>Fatiga</small><b>${Math.round(ST.atl)}</b></div><div><small>Ratio semana</small><b style="color:${C(ST.r==null?"--muted":ST.r<=1.3&&ST.r>=.8?"--good":ST.r<=1.5?"--warn":"--bad")}">${ST.r!=null?fx(ST.r,2):"--"}</b></div></div>
+   <div class="card"><h3>Enfoque de carga · 4 semanas</h3>${focusHtml(Fc)}</div>`+
+   story([ST.msg,ST.k==="none"?null:`Tendencia de tu forma en 7 días: <b>${ST.trend>=0?"+":""}${Math.round(ST.trend*100)} %</b>.${ST.hv?" HRV: "+ST.hv.st.toLowerCase()+".":""}`,"Como el estado de entrenamiento de Garmin: compara tu carga de la última semana con la de las últimas seis, la tendencia de tu forma y tu HRV. Verde es bien, amarillo regular, rojo cuidado."]),
+   draw:()=>{const c=$("tscv");const Pp=prep(c);if(!Pp)return;const{x,W,H}=Pp;let P=ST.P;const fi=P.findIndex(p=>p.l>0);if(fi>3)P=P.slice(Math.min(fi-3,P.length-10));if(P.length<2)return;const mx=Math.max(20,...P.map(p=>Math.max(p.ctl,p.atl,p.l*.5)));const X=i=>8+i/(P.length-1)*(W-16),Y=v=>H-18-v/mx*(H-28);const bw=Math.max(2,(W-16)/P.length-2);
+     P.forEach((p,i)=>{if(p.l>0){x.fillStyle="rgba(255,255,255,.16)";const y=Y(Math.min(mx,p.l*.5));x.fillRect(X(i)-bw/2,y,bw,H-18-y)}});
+     [["ctl","#a98bff"],["atl","#ff7eb6"]].forEach(([k,col])=>{x.beginPath();P.forEach((p,i)=>i?x.lineTo(X(i),Y(p[k])):x.moveTo(X(i),Y(p[k])));x.strokeStyle=col;x.lineWidth=2.6;x.lineJoin="round";x.stroke()});
+     x.fillStyle="#a197b8";const st=Math.max(1,Math.round(P.length/5));for(let i=0;i<P.length;i+=st){x.textAlign=i===0?"left":"center";x.fillText(new Date(P[i].t).toLocaleDateString("es-ES",{day:"numeric",month:"short"}),X(i),H-4)}}}}
+function dImin(){const I=imin();
+  return{title:"Minutos de intensidad",hero:I.t,unit:"de "+I.g+" min",sub:I.left?"Te faltan "+I.left+" min esta semana":"Objetivo semanal cumplido",col:I.col,
+   body:`<div class="card"><h3>Esta semana</h3><canvas id="imcv" style="height:160px"></canvas><div class="lgd"><span><i style="background:#ffc857"></i>Moderados (zonas 2–3)</span><span><i style="background:#ff7eb6"></i>Vigorosos ×2 (zonas 4–5)</span></div></div>
+   <div class="estats"><div><small>Moderados</small><b>${I.mod}</b></div><div><small>Vigorosos</small><b>${I.vig}</b></div><div><small>Total</small><b style="color:${C(I.col)}">${I.t}</b></div></div>
+   <div class="card"><h3>Últimas semanas</h3><div class="edr">${I.prev.map(w=>`<div><span>Semana del ${new Date(w.ws).toLocaleDateString("es-ES",{day:"numeric",month:"short"})}</span><b style="color:${C(w.t>=I.g?"--good":w.t>=I.g*.6?"--warn":"--bad")}">${w.t} min</b></div>`).join("")}</div></div>
+   <div class="card"><h3>Objetivo semanal</h3><div class="igoal">${[75,150,225,300].map(v=>`<button class="${v===I.g?"on":""}" data-g="${v}">${v}</button>`).join("")}</div></div>`+
+   story(["La OMS recomienda <b>150 minutos</b> de actividad moderada a la semana. Como en Garmin, cada minuto vigoroso (zonas 4–5) cuenta doble.",I.left?`Con ${Math.ceil(I.left/2)} minutos en zona 4 o un rodaje de ${I.left} min en zona 2 lo completas.`:"Ya lo has cumplido. Lo que sumes ahora es extra."]),
+   draw:()=>{document.querySelectorAll("#detin .igoal button").forEach(b=>b.onclick=()=>{vib();CFG.imin=+b.dataset.g;try{store.set("cfg",CFG)}catch(e){}openDetail("imin");try{renderCards()}catch(e){}});
+     const c=$("imcv");const Pp=prep(c);if(!Pp)return;const{x,W,H}=Pp;const D=I.days;const mx=Math.max(I.g/4,...D.map(d=>d.t))*1.15;const bw=(W-16)/7;const Y=v=>H-18-v/mx*(H-26);
+     const gy=Y(I.g/7);x.setLineDash([4,4]);x.strokeStyle="rgba(255,255,255,.25)";x.beginPath();x.moveTo(8,gy);x.lineTo(W-8,gy);x.stroke();x.setLineDash([]);
+     D.forEach((d,i)=>{const x0=8+i*bw+bw*.2,w=bw*.6;let y=H-18;const hm=d.mod/mx*(H-26),hv=d.vig*2/mx*(H-26);x.fillStyle="#ffc857";x.fillRect(x0,y-hm,w,hm);y-=hm;x.fillStyle="#ff7eb6";x.fillRect(x0,y-hv,w,hv);
+       x.fillStyle=i===I.dayIdx?"#fff":"#a197b8";x.textAlign="center";x.fillText("LMXJVSD"[i],x0+w/2,H-4);if(d.t>0)x.fillText(Math.round(d.t),x0+w/2,y-hv-4)})}}}
+function dSugg(){const sg=suggest();const Fc=focus();
+  return{title:"Entreno sugerido",hero:sg.ic,unit:sg.t,sub:sg.min?sg.min+" minutos · "+(sg.z||""):"",col:sg.col,
+   body:`<div class="card"><h3>Qué hacer</h3><p style="margin:0 0 8px">${esc(sg.d)}</p>${sg.z?`<div class="sgz" style="--c:var(${sg.col})">${sg.z}</div>`:""}</div>
+   <div class="card"><h3>Por qué</h3><p class="small" style="margin:0">${esc(sg.why||"Según tu preparación de hoy.")}</p></div>
+   <div class="card"><h3>Enfoque de carga · 4 semanas</h3>${focusHtml(Fc)}</div>
+   ${sg.min?`<button class="p" id="sggo" style="width:100%">▶ Iniciar actividad</button>`:""}`+
+   story(["Como los entrenos sugeridos de Garmin: miro tu preparación, el tiempo de recuperación que te queda, tu estado de entrenamiento y qué intensidades te faltan para proponerte la sesión que más te aporta hoy."]),
+   draw:()=>{const b=$("sggo");if(b)b.onclick=()=>{vib();closeDetail();setTimeout(()=>{go("train");const c=$("connect");if(c&&!$("prep").hidden)c.scrollIntoView({behavior:"smooth",block:"center"})},250)}}}}
+Object.assign(DETAIL,{tstatus:dTstatus,imin:dImin,sugg:dSugg});
+
+// ===== informe matutino (Morning Report) =====
+function greet(){const h=new Date().getHours();return h<6?"Buenas noches":h<13?"Buenos días":h<20?"Buenas tardes":"Buenas noches"}
+function morning(force){const now=new Date();const k=dkey(now);if(!force){if(store.get("mrep","")===k)return;if(now.getHours()<5||now.getHours()>=13)return;if(document.querySelector(".achpop,.mrep"))return setTimeout(()=>morning(),1500);if($("detail")&&!$("detail").hidden)return}
+  store.set("mrep",k);const c=checks()[0];const tc=c&&dayKey(c.d)===dayKey(Date.now())?c:null;let R=null,RT=null,E=null,H=null;try{R=WL.readiness()}catch(e){}try{RT=GA().recTime()}catch(e){}try{E=WL.energy()}catch(e){}try{H=WL.hrvStatus()}catch(e){}
+  const ST=tstatus(),sg=suggest(),I=imin();const name=(CFG.pname||"").split(" ")[0];
+  const row=(ic,l,v,col,sub)=>`<div class="mrow"><span>${ic}</span><div><small>${l}</small><b style="color:${C(col)}">${v}</b>${sub?`<em>${sub}</em>`:""}</div></div>`;
+  const o=document.createElement("div");o.className="mrep";o.innerHTML=`<div class="mbox"><div class="msun">${now.getHours()<13?"☀️":"🌙"}</div><small>${now.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})}</small><h2>${greet()}${name?", "+esc(name):""}</h2>
+    <div class="mgrid">${row("🌙","Sueño",tc&&tc.sleep&&tc.sleep.h?hms(tc.sleep.h):"--",tc&&tc.sleep&&tc.sleep.h?(tc.sleep.h>=7?"--good":tc.sleep.h>=6?"--warn":"--bad"):"--muted")}
+    ${row("💚","Recuperación",tc&&tc.score!=null?tc.score+" %":"--",tc&&tc.score!=null?(tc.score>=67?"--good":tc.score>=34?"--warn":"--bad"):"--muted")}
+    ${row("🎯","Preparación",R?R.s:"--",R?(R.s>=67?"--good":R.s>=34?"--warn":"--bad"):"--muted",R?R.lab:"")}
+    ${row("⏳","Por recuperar",RT?(RT.h>0?RT.h+" h":"Listo"):"--",RT?RT.col:"--muted")}
+    ${row("🔋","Energía",E?E.now:"--",E?(E.now>=60?"--good":E.now>=30?"--warn":"--bad"):"--muted")}
+    ${row("〰️","HRV",H?Math.round(H.avg)+" ms":"--",H?(H.st==="Equilibrado"?"--good":H.st==="Bajo"?"--bad":"--warn"):"--muted",H?H.st:"")}</div>
+    <div class="msug" style="--c:var(${sg.col})"><span>${sg.ic}</span><div><small>Entreno sugerido</small><b>${sg.t}${sg.min?" · "+sg.min+" min":""}</b><p>${esc(sg.d)}</p></div></div>
+    <p class="mfoot">${ST.ic} ${ST.l} · ${I.t}/${I.g} min de intensidad esta semana</p>
+    <button class="p" id="mok">Empezar el día 💪</button></div>`;
+  document.body.appendChild(o);vib();const close=()=>{o.classList.add("out");setTimeout(()=>o.remove(),300)};o.querySelector("#mok").onclick=e=>{e.stopPropagation();close()};o.onclick=e=>{if(e.target===o)close()}}
+window.__morning=morning;
+
+// ===== avisos (feed) y medallas nuevas =====
+(window.__feedX=window.__feedX||[]).push(out=>{const now=Date.now(),day=dkey(now);
+  const h=new Date().getHours();if(h>=5&&h<14)out.push({id:"mr:"+day,ic:"☀️",c:"--lemon",h:"Tu informe de la mañana",p:"Sueño, recuperación y el entreno que te toca hoy.",t:startOfDay(now)+5*36e5,act:()=>morning(true)});
+  const ST=tstatus();if(["over","unprod","detr","peak"].includes(ST.k))out.push({id:"ts:"+ST.k+":"+day,ic:ST.ic,c:ST.col,h:"Estado: "+ST.l,p:ST.msg,t:now-4,act:()=>openDetail("tstatus")});
+  const I=imin();if(I.t>=I.g&&I.prev.length)out.push({id:"im:"+dkey(I.ws),ic:"🎉",c:"--good",h:"Objetivo de intensidad cumplido",p:`${I.t} minutos de intensidad esta semana.`,t:now-5,act:()=>openDetail("imin")})});
+function addBadges(){const A=GA();if(!A.BADGES||A.BADGES.some(b=>b.k==="imin150"))return;
+  const anyWeek=n=>{const t0=weekStart(Date.now());for(let k=0;k<26;k++)if(iWeek(t0-k*7*DAYMS).t>=n)return true;return false};
+  A.BADGES.push({k:"imin150",ic:"⏲️",l:"150 de intensidad",d:"150 minutos de intensidad en una semana",ok:()=>anyWeek(150)},
+   {k:"imin300",ic:"💥",l:"Doble dosis",d:"300 minutos de intensidad en una semana",ok:()=>anyWeek(300)},
+   {k:"prod",ic:"📈",l:"Productivo",d:"Alcanza el estado de entrenamiento Productivo",ok:()=>tstatus().k==="prod"},
+   {k:"peak",ic:"⛰️",l:"En tu pico",d:"Alcanza el estado de entrenamiento Pico",ok:()=>tstatus().k==="peak"},
+   {k:"focus",ic:"🎯",l:"Equilibrio perfecto",d:"Enfoque de carga equilibrado en las tres intensidades",ok:()=>{const f=focus();return!!(f&&f.ok)}},
+   {k:"brk",ic:"☀️",l:"Madrugón con informe",d:"Abre tu informe de la mañana",ok:()=>!!store.get("mrep","")})}
+addBadges();
+
+// ===== enganche =====
+const _rh=renderHoy;renderHoy=function(){_rh.apply(this,arguments);try{renderCards()}catch(e){console.error(e)}setTimeout(()=>{try{morning()}catch(e){console.error(e)}},1400)};
+if(!$("v-hoy").hidden){try{renderCards()}catch(e){}setTimeout(()=>{try{morning()}catch(e){}},1600)}
+window.WL=Object.assign(window.WL||{},{tstatus,imin,focus,suggest});
 })();
 </script>
 </body>
