@@ -7,18 +7,18 @@
 <meta name="theme-color" content="#16121e">
 <title>WOD Live</title>
 <style>
-:root{--bg:#16121e;--surface:#211b2c;--s2:#2b2439;--line:#3a3050;--fg:#f8f2ff;--muted:#a99fc0;--pink:#ff86bf;--sky:#6cc8ff;--lemon:#ffe066;
+:root{--bg:#16121e;--surface:#211b2c;--s2:#2b2439;--s3:#352d46;--line:#3a3050;--fg:#f8f2ff;--muted:#a99fc0;--pink:#ff86bf;--sky:#6cc8ff;--lemon:#ffe066;--lime:#c6f36b;
 --z1:#8fb8ff;--z2:#6cd8c8;--z3:#c6f36b;--z4:#ffcf5a;--z5:#ff6d82;--good:#57de95;--warn:#ffcf5a;--bad:#ff6d82;--zc:#a99fc0;
 --display:"Fredoka",ui-rounded,"SF Pro Rounded",system-ui,sans-serif;--body:-apple-system,system-ui,"Segoe UI",sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 var(--body);overscroll-behavior:none}
-.app{max-width:720px;margin:0 auto;padding:max(12px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(96px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.app{max-width:720px;margin:0 auto;padding:max(12px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(100px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
 header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-block:6px 12px}
 h1{font:700 22px var(--display);margin:0}
 h2{font:700 18px var(--display);margin:0}
-h3{font:700 13px var(--body);margin:0;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
-.conn{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);text-align:right}
+h3{font:700 12px var(--body);margin:0;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.conn{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
 .dot{width:9px;height:9px;border-radius:50%;background:var(--bad);flex:none}
 .dot.on{background:var(--good);box-shadow:0 0 0 4px rgb(87 222 149/.18)}
 .dot.demo{background:var(--lemon)}
@@ -32,8 +32,33 @@ button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .sb{justify-content:space-between}
 .msg{color:var(--muted);font-size:13px}
+.est{font:600 10px var(--body);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 6px;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
 .warn{color:var(--warn)}
-.hero{border-radius:24px;padding:18px;background:radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--zc) 26%,transparent),var(--surface) 70%);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:8px}
+.g{color:var(--good)}.w{color:var(--warn)}.r{color:var(--bad)}
+.pill{font:700 11px var(--body);padding:3px 9px;border-radius:999px;background:var(--s2);white-space:nowrap}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.k{background:var(--s2);border-radius:14px;padding:10px 12px;min-width:0}
+.k small{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k b{font:500 21px var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.k span{font-size:11px;color:var(--muted)}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tile .v{font:600 30px var(--display);font-variant-numeric:tabular-nums;line-height:1.05}
+.tile .v small{font:600 13px var(--body);color:var(--muted)}
+.tile .d{font-size:12px;color:var(--muted)}
+.ringwrap{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.ring{position:relative;width:132px;height:132px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .n{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .n b{font:700 38px var(--display);line-height:1}
+.ring .n span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.verdict h2{font-size:22px}
+.verdict p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.bar{height:10px;border-radius:5px;background:var(--s2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:5px}
+.gauge{position:relative;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--sky) 0 25%,var(--good) 25% 60%,var(--warn) 60% 80%,var(--bad) 80%)}
+.gauge i{position:absolute;top:-5px;width:4px;height:22px;border-radius:2px;background:var(--fg);transform:translateX(-50%)}
+.hero{border-radius:24px;padding:16px;background:radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--zc) 26%,transparent),var(--surface) 70%);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:8px}
 .bpm{font:700 clamp(96px,30vw,150px)/.9 var(--display);font-variant-numeric:tabular-nums;color:var(--zc);letter-spacing:-.04em;transition:color .4s}
 .bpm small{font:600 17px var(--body);color:var(--muted);letter-spacing:0}
 .zline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
@@ -41,311 +66,391 @@ button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
 .trend{font:600 13px var(--mono);color:var(--muted)}
 .pctbar{width:100%;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--z1) 0 20%,var(--z2) 20% 40%,var(--z3) 40% 60%,var(--z4) 60% 80%,var(--z5) 80%);position:relative;margin-top:6px}
 .pctbar i{position:absolute;top:-5px;width:4px;height:20px;border-radius:2px;background:var(--fg);transform:translateX(-50%);transition:left .4s}
-.pctlab{display:flex;justify-content:space-between;width:100%;font:11px var(--mono);color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.k{background:var(--s2);border-radius:14px;padding:10px 12px;min-width:0}
-.k small{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.k b{font:500 21px var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-.k span{font-size:11px;color:var(--muted)}
-.zbar{display:flex;gap:2px;height:16px;border-radius:8px;overflow:hidden;background:var(--s2)}
+.zbar{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden;background:var(--s2)}
 .zleg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;font-size:11px;color:var(--muted);text-align:center}
 .zleg b{display:block;font:500 13px var(--mono);color:var(--fg)}
 .zleg i{display:block;height:4px;border-radius:2px;margin:0 auto 4px;width:60%}
 canvas{width:100%;height:180px;display:block}
-.seg{display:flex;gap:4px;background:var(--s2);padding:4px;border-radius:999px;width:fit-content}
+.seg{display:flex;gap:4px;background:var(--s2);padding:4px;border-radius:999px;width:fit-content;flex-wrap:wrap}
 .seg button{border:0;background:transparent;color:var(--muted);padding:6px 12px;font-size:13px;border-radius:999px}
 .seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{padding:9px 13px;font-size:14px;border-radius:999px}
+.chips button[aria-pressed="true"]{background:var(--pink);color:#2a0f1e;border-color:transparent}
 .bigbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .bigbtns button{padding:16px}
-.clock{font:700 clamp(72px,24vw,120px)/1 var(--mono);text-align:center;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-.phase{text-align:center;font:800 15px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.clock{font:700 clamp(56px,18vw,96px)/1 var(--mono);text-align:center;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.phase{text-align:center;font:800 14px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .phase.work{color:var(--pink)}.phase.rest{color:var(--sky)}
-.modes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-.modes button{padding:10px 4px;font-size:13px}
-.modes button[aria-pressed="true"]{background:var(--pink);color:#2a0f1e;border-color:transparent}
 label.f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);flex:1;min-width:100px}
-input,select{background:var(--s2);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:10px;font:16px var(--mono);width:100%}
+input,select,textarea{background:var(--s2);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:10px;font:16px var(--body);width:100%}
+input[type=number]{font-family:var(--mono)}
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
 th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:6px;border-bottom:1px solid var(--line);white-space:nowrap}
 td{padding:8px 6px;border-bottom:1px solid var(--line);font-family:var(--mono);white-space:nowrap}
-.pill{font:700 11px var(--body);padding:2px 8px;border-radius:999px;background:var(--s2)}
-.g{color:var(--good)}.w{color:var(--warn)}.r{color:var(--bad)}
-.big{font:600 44px var(--display);font-variant-numeric:tabular-nums}
-.sess{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:12px;border-radius:14px;background:var(--s2)}
+.empty{color:var(--muted);text-align:center;padding:16px 0;font-size:13px;font-family:var(--body);white-space:normal}
+.sess{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:12px;border-radius:14px;background:var(--s2);border:0;text-align:left;width:100%;font-weight:400}
 .sess b{font:600 15px var(--body)}
 .sess .m{font:12px var(--mono);color:var(--muted);grid-column:1/-1}
-.sess .zbar{grid-column:1/-1;height:8px}
-.empty{color:var(--muted);text-align:center;padding:18px 0;font-size:13px;font-family:var(--body);white-space:normal}
-nav{position:fixed;left:0;right:0;bottom:0;background:rgb(22 18 30/.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));z-index:5}
+.sess .zbar{grid-column:1/-1;height:7px}
+.rpe{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.rpe button{padding:10px 0;font:600 14px var(--mono);border-radius:10px}
+.rpe button[aria-pressed="true"]{background:var(--pink);color:#2a0f1e}
+.feel{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.feel button{padding:10px 0;font-size:13px}
+.feel button[aria-pressed="true"]{background:var(--pink);color:#2a0f1e}
+.recs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.sheet{position:fixed;inset:0;background:rgb(0 0 0/.6);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet .in{background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-width:720px;max-height:92vh;overflow:auto;padding:18px max(16px,env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:14px}
+nav{position:fixed;left:0;right:0;bottom:0;background:rgb(22 18 30/.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));z-index:10}
 nav .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
 nav button{background:transparent;border:0;border-radius:12px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font:600 10.5px var(--body)}
 nav button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 nav button[aria-current="page"]{color:var(--pink)}
-.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font:600 14px var(--body);z-index:9;max-width:90vw;text-align:center}
+nav .live{position:relative}
+nav .live::after{content:"";position:absolute;top:4px;right:calc(50% - 16px);width:8px;height:8px;border-radius:50%;background:var(--good);display:none}
+nav .live.on::after{display:block}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font:600 14px var(--body);z-index:30;max-width:90vw;text-align:center}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <div class="app">
   <header>
-    <h1>WOD Live</h1>
+    <h1 id="title">Hoy</h1>
     <div class="conn"><span id="status">Pulsera desconectada</span><span class="dot" id="dot"></span></div>
   </header>
   <div class="msg warn" id="bt" hidden></div>
 
-  <section class="view stack" id="v-live">
-    <div class="hero">
-      <div class="bpm" id="bpm">--<small> ppm</small></div>
-      <div class="zline"><span class="zone" id="zone">Sin señal</span><span class="trend" id="trend"></span></div>
-      <div class="pctbar" aria-hidden="true"><i id="pctmark" style="left:0%"></i></div>
-      <div class="pctlab"><span>50%</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100%</span></div>
+  <!-- HOY -->
+  <section class="view stack" id="v-hoy">
+    <div class="card">
+      <div class="ringwrap">
+        <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--s2)" stroke-width="12"/><circle id="rdyring" cx="60" cy="60" r="52" fill="none" stroke="var(--muted)" stroke-width="12" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
+          <div class="n"><b id="rdy">–</b><span>Preparación</span></div></div>
+        <div class="verdict"><span class="pill" id="rdypill">Sin test hoy</span><h2 id="rdyh" style="margin-top:6px">Haz tu check matinal</h2><p id="rdyp">2 minutos tumbado al despertar. Combina tu HRV, pulso en reposo, cómo te sientes y tu carga reciente.</p></div>
+      </div>
+      <button class="p" id="gocheck">Check matinal</button>
     </div>
-    <div class="bigbtns" id="startbtns">
-      <button class="p" id="connect">Conectar pulsera</button>
-      <button id="demo">Probar sin pulsera</button>
-    </div>
-    <div class="bigbtns" id="runbtns" hidden>
-      <button id="markbtn">Fin de esfuerzo</button>
-      <button id="stop">Terminar y guardar</button>
-    </div>
-    <div class="grid">
-      <div class="k"><small>Tiempo</small><b id="t">0:00</b></div>
-      <div class="k"><small>Media</small><b id="avg">--</b><span> ppm</span></div>
-      <div class="k"><small>Máximo</small><b id="max">--</b><span> ppm</span></div>
-      <div class="k"><small>% de tu máx</small><b id="pct">--</b></div>
-      <div class="k"><small>Calorías</small><b id="kcal">--</b><span id="kcalu"> kcal</span></div>
-      <div class="k"><small>Carga</small><b id="trimp">--</b><span> TRIMP</span></div>
-      <div class="k"><small>Zonas 4–5</small><b id="hard">0:00</b></div>
-      <div class="k"><small>HRV vivo</small><b id="rm">--</b></div>
-      <div class="k"><small>Últ. recup.</small><b id="lasthrr">--</b></div>
+    <div class="grid2">
+      <div class="tile"><h3>Recuperación</h3><div class="v" id="rtime">--</div><div class="d" id="rtimed">Sin entrenos recientes</div></div>
+      <div class="tile"><h3>Strain hoy <span class="est">est.</span></h3><div class="v" id="strainToday">0<small> /21</small></div><div class="bar"><i id="strainbar" style="width:0;background:var(--pink)"></i></div></div>
+      <div class="tile"><h3>Estado de forma</h3><div class="v" id="formv">--</div><div class="d" id="formd">Necesito unas sesiones</div></div>
+      <div class="tile"><h3>Min. intensidad</h3><div class="v" id="imin">0<small> /150</small></div><div class="bar"><i id="iminbar" style="width:0;background:var(--lime)"></i></div><div class="d">Esta semana · vigorosos cuentan doble</div></div>
     </div>
     <div class="card">
-      <h3>Tiempo por zonas</h3>
-      <div class="zbar" id="zbar"></div>
-      <div class="zleg" id="zleg"></div>
+      <div class="row sb"><h3>Carga 7 días</h3><span class="pill" id="acwrpill">--</span></div>
+      <div class="gauge"><i id="acwrmark" style="left:0"></i></div>
+      <div class="row sb msg"><span>Baja</span><span>Óptima</span><span>Alta</span><span>Sobrecarga</span></div>
+      <div class="msg" id="acwrtxt">Compara tu carga de los últimos 7 días con tu media de 4 semanas.</div>
     </div>
-    <div class="card">
-      <div class="row sb"><h3>Pulso</h3>
-        <div class="seg" role="group" aria-label="Ventana">
-          <button data-w="120" aria-pressed="false">2 min</button><button data-w="600" aria-pressed="true">10 min</button><button data-w="1800" aria-pressed="false">30 min</button>
-        </div></div>
-      <canvas id="cv" aria-label="Gráfica de pulso"></canvas>
+    <button class="p" id="gotrain" style="padding:18px;font-size:17px">Empezar entreno</button>
+    <div class="card"><h3>Última sesión</h3><div id="lastsess"><div class="empty">Aún no hay sesiones.</div></div></div>
+  </section>
+
+  <!-- ENTRENAR -->
+  <section class="view stack" id="v-train" hidden>
+    <div class="stack" id="prep">
+      <div class="card">
+        <h3>Tipo de entreno</h3>
+        <div class="chips" id="types"></div>
+        <h3>Timer</h3>
+        <div class="chips" id="tmodes"></div>
+        <div class="row" id="tcfg"></div>
+        <h3>Alerta de zona objetivo</h3>
+        <div class="chips" id="targets"></div>
+        <div class="msg">Pita si te sales de la zona elegida. Con «Voz» activada en Ajustes te canta el pulso cada 5 minutos.</div>
+      </div>
+      <div class="bigbtns"><button class="p" id="connect">Conectar pulsera</button><button id="demo">Probar sin pulsera</button></div>
+      <div class="msg">Primero activa «Transmitir frecuencia cardíaca» en la app de WHOOP (Configuración del dispositivo → Estado).</div>
+    </div>
+    <div class="stack" id="live" hidden>
+      <div class="hero">
+        <div class="bpm" id="bpm">--<small> ppm</small></div>
+        <div class="zline"><span class="zone" id="zone">Sin señal</span><span class="trend" id="trend"></span></div>
+        <div class="pctbar" aria-hidden="true"><i id="pctmark" style="left:0%"></i></div>
+      </div>
+      <div class="card" id="tcard" hidden>
+        <div class="phase" id="tphase">Listo</div>
+        <div class="clock" id="tclock">0:00</div>
+        <div class="row" style="justify-content:center;gap:14px"><span class="msg">Ronda <b id="tround" style="color:var(--fg)">–</b></span></div>
+        <div class="bigbtns"><button class="p" id="tstart">Empezar timer</button><button id="tlap">Ronda +</button></div>
+      </div>
+      <div class="grid3">
+        <div class="k"><small>Tiempo</small><b id="t">0:00</b></div>
+        <div class="k"><small>Media</small><b id="avg">--</b></div>
+        <div class="k"><small>Máximo</small><b id="max">--</b></div>
+        <div class="k"><small>Strain</small><b id="lstrain">0.0</b></div>
+        <div class="k"><small>Calorías</small><b id="kcal">--</b></div>
+        <div class="k"><small>Carga</small><b id="trimp">0</b></div>
+        <div class="k"><small>TE aeróbico</small><b id="teA">0.0</b></div>
+        <div class="k"><small>TE anaeróbico</small><b id="teN">0.0</b></div>
+        <div class="k"><small>Últ. recup.</small><b id="lasthrr">--</b></div>
+      </div>
+      <div class="card"><h3>Tiempo por zonas</h3><div class="zbar" id="zbar"></div><div class="zleg" id="zleg"></div></div>
+      <div class="card">
+        <div class="row sb"><h3>Pulso</h3><div class="seg" id="win"><button data-w="120" aria-pressed="false">2m</button><button data-w="600" aria-pressed="true">10m</button><button data-w="3600" aria-pressed="false">Todo</button></div></div>
+        <canvas id="cv" aria-label="Pulso en directo"></canvas>
+      </div>
+      <div class="card" id="rcard" hidden><h3>Pulso por ronda</h3><div class="tw"><table><thead><tr><th>#</th><th>Tiempo</th><th>Media</th><th>Máx</th><th>Final</th></tr></thead><tbody id="rounds"></tbody></table></div></div>
+      <div class="bigbtns"><button id="markbtn">Fin de esfuerzo</button><button class="p" id="stop">Terminar</button></div>
     </div>
   </section>
 
-  <section class="view stack" id="v-timer" hidden>
-    <div class="card">
-      <div class="modes" role="group" aria-label="Modo">
-        <button data-m="fortime" aria-pressed="true">For Time</button>
-        <button data-m="amrap" aria-pressed="false">AMRAP</button>
-        <button data-m="emom" aria-pressed="false">EMOM</button>
-        <button data-m="tabata" aria-pressed="false">Tabata</button>
-      </div>
-      <div class="row" id="tcfg"></div>
-    </div>
-    <div class="card">
-      <div class="phase" id="tphase">Listo</div>
-      <div class="clock" id="tclock">0:00</div>
-      <div class="row" style="justify-content:center;gap:16px">
-        <span class="msg">Ronda <b id="tround" style="color:var(--fg)">–</b></span>
-        <span class="msg">Pulso <b id="thr" style="color:var(--fg)">--</b></span>
-      </div>
-      <div class="bigbtns">
-        <button class="p" id="tstart">Empezar</button>
-        <button id="tlap">Ronda +</button>
-      </div>
-      <button id="treset">Reiniciar</button>
-      <div class="msg">Cuenta atrás de 10 s y pitidos en cada cambio. El pulso de cada ronda se guarda solo. «Ronda +» marca una ronda a mano en For Time y AMRAP.</div>
-    </div>
-    <div class="card">
-      <h3>Pulso por ronda</h3>
-      <div class="tw"><table><thead><tr><th>#</th><th>Tiempo</th><th>Media</th><th>Máx</th><th>Final</th></tr></thead><tbody id="rounds"></tbody></table></div>
-    </div>
-  </section>
-
+  <!-- RECUPERACION -->
   <section class="view stack" id="v-rec" hidden>
     <div class="card">
+      <div class="row sb"><h2>Check matinal</h2><span class="msg" id="chkstate"></span></div>
+      <div class="msg">Al despertar, tumbado y quieto, antes de mirar el móvil. 2 minutos. Mide tu pulso en reposo y, si la pulsera envía latido a latido, tu HRV.</div>
+      <h3>¿Cómo te sientes?</h3>
+      <div class="feel" id="feel"><button data-f="1">Fatal</button><button data-f="2">Mal</button><button data-f="3">Normal</button><button data-f="4">Bien</button><button data-f="5">Top</button></div>
+      <div class="big" id="chkout" style="font:600 40px var(--display);text-align:center">2:00</div>
+      <div class="bigbtns"><button class="p" id="chkstart">Empezar check</button><button id="chkconnect">Conectar pulsera</button></div>
+    </div>
+    <div class="card">
+      <h3>Tendencia de tus checks</h3>
+      <canvas id="cvchk" style="height:150px"></canvas>
+      <div class="tw"><table><thead><tr><th>Día</th><th>Prep.</th><th>HRV</th><th>Reposo</th><th>Sensación</th></tr></thead><tbody id="chkt"></tbody></table></div>
+    </div>
+    <div class="card">
       <h2>Recuperación entre esfuerzos</h2>
-      <div class="msg">Al acabar una ronda o un sprint pulsa <b>Fin de esfuerzo</b> en En vivo. Mido cuánto baja tu pulso en 30 y 60 s. También lo detecto solo al salir de zona 4–5. Más de 30 ppm en un minuto es una recuperación muy buena.</div>
-      <div class="tw"><table><thead><tr><th>#</th><th>Pico</th><th>−30 s</th><th>−60 s</th><th></th></tr></thead><tbody id="hrrt"></tbody></table></div>
-    </div>
-    <div class="card">
-      <div class="row sb"><h2>Test de HRV · 2 min</h2><button class="s" id="hrvbtn" disabled>Empezar</button></div>
-      <div class="msg">Al despertar, tumbado y quieto. Calcula tu RMSSD latido a latido al momento. Hazlo siempre igual para comparar. Necesita la pulsera conectada.</div>
-      <div class="big" id="hrvout">--</div>
-      <div class="tw"><table><thead><tr><th>Día</th><th>RMSSD</th><th>Pulso</th><th></th></tr></thead><tbody id="hrvt"></tbody></table></div>
-    </div>
-    <div class="card">
-      <h2>Pulso mínimo de la sesión</h2>
-      <div class="msg">Útil por la mañana como pulso en reposo. Guárdalo en Ajustes para afinar zonas y carga.</div>
-      <div class="big" id="minhr">--</div>
+      <div class="msg">Cuánto baja tu pulso 60 s después de un esfuerzo fuerte. Más de 30 ppm es muy buena; menos de 20, lenta. Si mejora con las semanas, tu motor mejora.</div>
+      <canvas id="cvhrr" style="height:140px"></canvas>
+      <div class="msg" id="hrrsum"></div>
     </div>
   </section>
 
-  <section class="view stack" id="v-hist" hidden>
+  <!-- PROGRESO -->
+  <section class="view stack" id="v-prog" hidden>
     <div class="card">
-      <div class="row sb"><h2>Sesiones</h2><span class="msg" id="histsum"></span></div>
-      <div class="stack" id="hist"></div>
+      <div class="row sb"><h2>Forma y fatiga</h2><span class="pill" id="tsbpill">--</span></div>
+      <div class="grid3">
+        <div class="k"><small>Forma física</small><b id="ctl">--</b><span> CTL</span></div>
+        <div class="k"><small>Fatiga</small><b id="atl">--</b><span> ATL</span></div>
+        <div class="k"><small>Frescura</small><b id="tsb">--</b><span> TSB</span></div>
+      </div>
+      <canvas id="cvpmc" style="height:170px"></canvas>
+      <div class="row msg" style="gap:14px"><span><b style="color:var(--sky)">━</b> Forma física (42 días)</span><span><b style="color:var(--pink)">━</b> Fatiga (7 días)</span><span><b style="color:var(--s3)">▮</b> Carga diaria</span></div>
+      <div class="msg" id="pmctxt"></div>
     </div>
+    <div class="card">
+      <div class="row sb"><h2>Minutos de intensidad</h2><span class="msg">objetivo 150/sem</span></div>
+      <canvas id="cvimin" style="height:150px"></canvas>
+    </div>
+    <div class="card">
+      <h2>Zonas · últimas 4 semanas</h2>
+      <div class="zbar" id="zbar4"></div><div class="zleg" id="zleg4"></div>
+      <div class="msg" id="zone4txt"></div>
+    </div>
+    <div class="grid2">
+      <div class="tile"><h3>VO2max <span class="est">est.</span></h3><div class="v" id="vo2">--</div><div class="d">Método Uth: pulso máx ÷ reposo. Orientativo.</div></div>
+      <div class="tile"><h3>Pulso reposo</h3><div class="v" id="rhrv">--</div><div class="d" id="rhrd">De tus checks matinales</div></div>
+    </div>
+    <div class="card"><h2>Récords</h2><div class="recs" id="recs"></div></div>
   </section>
 
-  <section class="view stack" id="v-set" hidden>
-    <div class="card">
-      <h2>Tus datos</h2>
-      <div class="msg">Para calcular zonas, calorías y carga. Se guardan solo en este móvil.</div>
-      <div class="row">
-        <label class="f">Pulso máximo<input type="number" id="s-max" inputmode="numeric"></label>
-        <label class="f">Pulso en reposo<input type="number" id="s-rest" inputmode="numeric"></label>
+  <!-- MAS -->
+  <section class="view stack" id="v-mas" hidden>
+    <div class="seg" id="masseg"><button data-m="hist" aria-pressed="true">Historial</button><button data-m="set" aria-pressed="false">Ajustes</button><button data-m="help" aria-pressed="false">Ayuda</button></div>
+    <div class="stack" id="m-hist"><div class="card"><div class="row sb"><h2>Sesiones</h2><span class="msg" id="histsum"></span></div><div class="stack" id="hist"></div></div></div>
+    <div class="stack" id="m-set" hidden>
+      <div class="card">
+        <h2>Tus datos</h2>
+        <div class="row"><label class="f">Pulso máximo<input type="number" id="s-max" inputmode="numeric"></label><label class="f">Pulso en reposo<input type="number" id="s-rest" inputmode="numeric"></label></div>
+        <div class="row"><label class="f">Peso (kg)<input type="number" id="s-kg" inputmode="decimal"></label><label class="f">Edad<input type="number" id="s-age" inputmode="numeric"></label><label class="f">Sexo<select id="s-sex"><option value="m">Hombre</option><option value="f">Mujer</option></select></label></div>
+        <label class="f">Modelo de zonas<select id="s-model"><option value="max">% del pulso máximo (como WHOOP)</option><option value="hrr">% de reserva cardiaca (Karvonen)</option></select></label>
+        <div class="row"><label class="f">Pitidos<select id="s-snd"><option value="1">Activados</option><option value="0">Desactivados</option></select></label><label class="f">Voz cada 5 min<select id="s-voice"><option value="0">No</option><option value="1">Sí</option></select></label><label class="f">Aviso al cambiar de zona<select id="s-zalert"><option value="0">No</option><option value="1">Sí</option></select></label></div>
+        <label class="f">Objetivo semanal de minutos de intensidad<input type="number" id="s-goal" inputmode="numeric"></label>
       </div>
-      <div class="row">
-        <label class="f">Peso (kg)<input type="number" id="s-kg" inputmode="decimal"></label>
-        <label class="f">Edad<input type="number" id="s-age" inputmode="numeric"></label>
-        <label class="f">Sexo<select id="s-sex"><option value="m">Hombre</option><option value="f">Mujer</option></select></label>
-      </div>
-      <label class="f">Modelo de zonas<select id="s-model"><option value="max">% del pulso máximo (como WHOOP)</option><option value="hrr">% de reserva cardiaca (Karvonen)</option></select></label>
-      <label class="f">Sonido del timer<select id="s-snd"><option value="1">Activado</option><option value="0">Desactivado</option></select></label>
+      <div class="card"><h2>Datos</h2><div class="row"><button class="s" id="csvall">Exportar sesiones (CSV)</button><button class="s" id="wipe">Borrar todo</button></div><div class="msg" id="wipemsg"></div></div>
     </div>
-    <div class="card">
-      <h2>Cómo conectar</h2>
-      <div class="msg">1. App de WHOOP → Configuración del dispositivo → Estado → activa <b>Transmitir frecuencia cardíaca</b>.<br>2. En iPhone abre esta página con <b>Bluefy</b>; en Android o PC, con Chrome.<br>3. Pulsa <b>Conectar pulsera</b> y elige tu WHOOP.</div>
-    </div>
-    <div class="card">
-      <h2>Datos</h2>
-      <div class="row"><button class="s" id="csvlast">CSV de la última sesión</button><button class="s" id="wipe">Borrar historial</button></div>
-      <div class="msg" id="wipemsg"></div>
+    <div class="stack" id="m-help" hidden>
+      <div class="card"><h2>Cómo conectar</h2><div class="msg">1. App de WHOOP → Configuración del dispositivo → Estado → activa <b>Transmitir frecuencia cardíaca</b>.<br>2. En iPhone abre esta página con <b>Bluefy</b>; en Android o PC, con Chrome.<br>3. En Entrenar, pulsa <b>Conectar pulsera</b> y elige tu WHOOP.</div></div>
+      <div class="card"><h2>Qué significa cada dato</h2><div class="msg">
+        <b>Preparación</b>: tu HRV y pulso en reposo frente a tu media de 7 días, cómo te sientes y tu frescura. Al estilo de la recuperación de WHOOP y el Training Readiness de Garmin.<br><br>
+        <b>Strain 0–21</b>: carga cardiovascular del día en escala logarítmica, como WHOOP. Estimado con tu carga TRIMP.<br><br>
+        <b>Carga (TRIMP)</b>: minutos ponderados por intensidad (Banister). Base de todo lo demás.<br><br>
+        <b>Training Effect</b>: de 0 a 5, como Garmin. Aeróbico según tu carga frente a tu forma; anaeróbico según el tiempo en zona 5 y los picos. Estimado.<br><br>
+        <b>Forma, fatiga y frescura</b>: media de carga de 42 días (forma), de 7 días (fatiga) y su diferencia (frescura). Como el Performance Management Chart de COROS y TrainingPeaks.<br><br>
+        <b>Carga 7 días</b>: carga aguda frente a crónica. Por encima de 1,3 sube el riesgo de pasarte.<br><br>
+        <b>Tiempo de recuperación</b>: horas hasta estar recuperado tras tu última sesión, como Garmin. Estimado con tu carga y tu frescura.<br><br>
+        <b>Minutos de intensidad</b>: zonas 2–3 suman 1, zonas 4–5 suman 2. Recomendación OMS: 150/semana.<br><br>
+        Las estimaciones usan fórmulas públicas; Garmin, COROS y WHOOP usan algoritmos propios, así que los números no coincidirán exactamente.</div></div>
     </div>
   </section>
 </div>
 
 <nav aria-label="Menú"><div class="in">
-  <button data-v="live" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>En vivo</button>
-  <button data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>Timer</button>
+  <button data-v="hoy" aria-current="page"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Hoy</button>
+  <button data-v="train" class="live" id="navtrain"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>Entrenar</button>
   <button data-v="rec"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>Recuperar</button>
-  <button data-v="hist"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Historial</button>
-  <button data-v="set"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>Ajustes</button>
+  <button data-v="prog"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progreso</button>
+  <button data-v="mas"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Más</button>
 </div></nav>
+
+<div class="sheet" id="sum" hidden><div class="in" id="sumin"></div></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
 const $=id=>document.getElementById(id);
 const ZC=["--z1","--z2","--z3","--z4","--z5"],ZN=["Zona 1","Zona 2","Zona 3","Zona 4","Zona 5"];
-const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const CFG=Object.assign({max:194,rest:46,kg:"",age:"",sex:"m",model:"max",snd:"1"},store.get("cfg",{}));
+const TYPES=[["wod","WOD"],["fuerza","Fuerza"],["halte","Halterofilia"],["carrera","Carrera"],["surf","Surf"],["otro","Otro"]];
+const store={get(k,d){try{const v=localStorage.getItem(k);const o=v==null?null:JSON.parse(v);return o==null?d:o}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const CFG=Object.assign({max:194,rest:46,kg:"",age:"",sex:"m",model:"max",snd:"1",voice:"0",zalert:"0",goal:150},store.get("cfg",{}));
 const mmss=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,"0");return h?h+":"+String(m).padStart(2,"0")+":"+x:m+":"+x};
+const fx=(v,d=1)=>(+v).toFixed(d).replace(".",",");
 const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const dayKey=t=>{const d=new Date(t);return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate()};
+const startOfDay=t=>{const d=new Date(t);d.setHours(0,0,0,0);return d.getTime()};
+const DAY=864e5;
 function toast(t){const e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2600)}
-
-const S={on:false,mode:null,t0:0,samples:[],rr:[],zones:[0,0,0,0,0],last:null,hrr:[],pending:null,synthetic:0,real:0,hrv:null,dev:null,demo:null,wl:null,retry:0,kcal:0,trimp:0,min:null,win:600};
+const sessions=()=>store.get("sess",[]);
+const checks=()=>store.get("chk",[]);
 
 function frac(h){return CFG.model==="hrr"?(h-CFG.rest)/(CFG.max-CFG.rest):h/CFG.max}
 function zoneOf(h){const p=frac(h);return p<.6?0:p<.7?1:p<.8?2:p<.9?3:4}
 function zoneHr(p){return CFG.model==="hrr"?CFG.rest+p*(CFG.max-CFG.rest):CFG.max*p}
 function kcalMin(h){const w=+CFG.kg,a=+CFG.age;if(!w||!a)return null;const v=CFG.sex==="f"?(-20.4022+0.4472*h-0.1263*w+0.074*a)/4.184:(-55.0969+0.6309*h+0.1988*w+0.2017*a)/4.184;return Math.max(v,1.2)}
 function trimpMin(h){const r=Math.max(0,Math.min(1,(h-CFG.rest)/(CFG.max-CFG.rest)));return CFG.sex==="f"?r*0.86*Math.exp(1.67*r):r*0.64*Math.exp(1.92*r)}
+const strainOf=tr=>21*(1-Math.exp(-tr/95));
+function loads(){const s=sessions(),m={};s.forEach(x=>{const k=startOfDay(x.id);m[k]=(m[k]||0)+x.trimp});return m}
+function pmc(days){const L=loads();const today=startOfDay(Date.now());let ctl=0,atl=0;const out=[];const first=Math.min(today,...Object.keys(L).map(Number));
+  for(let t=Math.min(first,today-days*DAY);t<=today;t+=DAY){const l=L[t]||0;ctl+=(l-ctl)/42;atl+=(l-atl)/7;if(t>today-days*DAY)out.push({t,l,ctl,atl,tsb:ctl-atl})}return out}
+function acwr(){const L=loads(),today=startOfDay(Date.now());let a=0,c=0;for(let i=0;i<28;i++){const v=L[today-i*DAY]||0;c+=v;if(i<7)a+=v}return c?{r:a/(c/4),a,c}:null}
+function teAer(tr){const ctl=pmc(1).slice(-1)[0]?.ctl||40;const k=Math.max(35,ctl*1.6);return Math.min(5,5*(1-Math.exp(-tr/k))*1.15)}
+function teAna(z5s,peaks){return Math.min(5,z5s/60/3+peaks*0.35)}
+function recoveryHours(s,tsb){if(!s)return 0;const base=s.trimp*0.18+s.teN*3;return Math.max(4,Math.min(72,base*(1+Math.max(0,-tsb)/60)))}
+function weekStart(t){const d=new Date(t);d.setHours(0,0,0,0);const wd=(d.getDay()+6)%7;return d.getTime()-wd*DAY}
+function iminOf(z){return Math.round((z[1]+z[2])/60+2*(z[3]+z[4])/60)}
 
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.removeAttribute("aria-current"));b.setAttribute("aria-current","page");
-  document.querySelectorAll(".view").forEach(v=>v.hidden=v.id!=="v-"+b.dataset.v);if(b.dataset.v==="hist")renderHist();if(b.dataset.v==="live")draw(true);scrollTo(0,0)});
+const TITLES={hoy:"Hoy",train:"Entrenar",rec:"Recuperación",prog:"Progreso",mas:"Más"};
+function go(v){document.querySelectorAll("nav button").forEach(x=>x.toggleAttribute("aria-current",x.dataset.v===v));document.querySelectorAll("nav button[aria-current]").forEach(x=>x.setAttribute("aria-current","page"));
+  document.querySelectorAll(".view").forEach(s=>s.hidden=s.id!=="v-"+v);$("title").textContent=TITLES[v];scrollTo(0,0);
+  if(v==="hoy")renderHoy();if(v==="prog")renderProg();if(v==="rec")renderRec();if(v==="mas")renderHist();if(v==="train")draw(true)}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.v));
+$("gotrain").onclick=()=>go("train");$("gocheck").onclick=()=>go("rec");
+document.querySelectorAll("#masseg button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#masseg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));["hist","set","help"].forEach(m=>$("m-"+m).hidden=m!==b.dataset.m)});
 
-if(!navigator.bluetooth){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth. En iPhone abre la página con Bluefy; en Android o PC, con Chrome. Puedes probarla con «Probar sin pulsera».";$("connect").disabled=true}
+const S={on:false,mode:null,t0:0,samples:[],rr:[],zones:[0,0,0,0,0],last:null,hrr:[],pending:null,synthetic:0,real:0,dev:null,demo:null,wl:null,retry:0,kcal:0,trimp:0,peaks:0,inPeak:false,min:null,win:600,type:"wod",target:-1,lastZone:-1,lastVoice:0,lastOut:0,listeners:[]};
+if(!navigator.bluetooth){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth. En iPhone abre la página con Bluefy; en Android o PC, con Chrome. Puedes probar con «Probar sin pulsera».";$("connect").disabled=true;$("chkconnect").disabled=true}
 function parseHR(dv){const f=dv.getUint8(0);let i=1;const hr=(f&1)?dv.getUint16(1,true):dv.getUint8(1);i+=(f&1)?2:1;if(f&8)i+=2;const rr=[];if(f&16){while(i+1<dv.byteLength){rr.push(dv.getUint16(i,true)/1024*1000);i+=2}}return{hr,rr}}
-async function connect(){try{S.dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}]});S.dev.addEventListener("gattserverdisconnected",onDisc);await gatt()}
-  catch(e){if(e.name!=="NotFoundError")status("No conecta: "+e.message,"off")}}
-async function gatt(){status("Conectando…","off");const srv=await S.dev.gatt.connect();const svc=await srv.getPrimaryService("heart_rate");const ch=await svc.getCharacteristic("heart_rate_measurement");await ch.startNotifications();
-  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);onBeat(m.hr,m.rr)});S.retry=0;start("ble");status("Conectado a "+(S.dev.name||"tu WHOOP"),"on")}
-function onDisc(){if(!S.on||S.mode!=="ble")return;if(S.retry<5){S.retry++;status("Reconectando ("+S.retry+"/5)…","off");setTimeout(()=>gatt().catch(onDisc),1500)}else status("Pulsera desconectada","off")}
-function status(t,k){$("status").textContent=t;$("dot").className="dot "+(k==="on"?"on":k==="demo"?"demo":"")}
+const BT={dev:null,on:false,cb:null,retry:0};
+async function btConnect(){try{BT.dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}]});BT.dev.addEventListener("gattserverdisconnected",btLost);await btGatt();return true}
+  catch(e){if(e.name!=="NotFoundError")status("No conecta: "+e.message,"off");return false}}
+async function btGatt(){status("Conectando…","off");const srv=await BT.dev.gatt.connect();const svc=await srv.getPrimaryService("heart_rate");const ch=await svc.getCharacteristic("heart_rate_measurement");await ch.startNotifications();
+  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);beat(m.hr,m.rr)});BT.on=true;BT.retry=0;status("Conectado a "+(BT.dev.name||"tu WHOOP"),"on")}
+function btLost(){BT.on=false;if(BT.retry<5&&(S.on||CHK.run)){BT.retry++;status("Reconectando ("+BT.retry+"/5)…","off");setTimeout(()=>btGatt().catch(btLost),1500)}else status("Pulsera desconectada","off")}
+function status(t,k){$("status").textContent=t;$("dot").className="dot "+(k==="on"?"on":k==="demo"?"demo":"");$("navtrain").classList.toggle("on",k==="on"||k==="demo")}
+let demoTimer=null;
+function startDemo(){if(demoTimer)return;status("Modo prueba","demo");let t=0,h=72;demoTimer=setInterval(()=>{t++;const p=t%120;const tg=S.on?(p<70?110+p*1.15:108):60;h+=(tg-h)*.09+(Math.random()-.5)*2;beat(Math.round(h),[60000/h+(Math.random()-.5)*45])},1000)}
+function stopDemo(){clearInterval(demoTimer);demoTimer=null}
+function beat(hr,rr){if(!hr)return;if(S.on)onBeat(hr,rr);if(CHK.run)CHK.beat(hr,rr)}
 
-function demo(){start("demo");status("Modo prueba","demo");let t=0,h=72;
-  S.demo=setInterval(()=>{t++;const p=t%120;const tg=p<70?100+p*1.2:105;h+=(tg-h)*.09+(Math.random()-.5)*2;onBeat(Math.round(h),[60000/h+(Math.random()-.5)*45])},1000)}
+const T={mode:"none",run:false,t0:0,cfg:Object.assign({fortime:{cap:20},amrap:{min:12},emom:{every:60,n:10},tabata:{work:20,rest:10,n:8}},store.get("tcfg",{})),rounds:[],hrs:[],rt0:0,raf:null};
+function chips(el,items,cur,cb){el.innerHTML=items.map(([k,l])=>`<button data-k="${k}" aria-pressed="${k===cur}">${l}</button>`).join("");el.querySelectorAll("button").forEach(b=>b.onclick=()=>{el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));cb(b.dataset.k)})}
+chips($("types"),TYPES,S.type,k=>S.type=k);
+chips($("tmodes"),[["none","Sin timer"],["fortime","For Time"],["amrap","AMRAP"],["emom","EMOM"],["tabata","Tabata"]],T.mode,k=>{T.mode=k;tcfgRender()});
+chips($("targets"),[["-1","Sin alerta"],["1","Z2 base"],["2","Z3"],["3","Z4 umbral"],["4","Z5"]],"-1",k=>S.target=+k);
+function tcfgRender(){const c=T.cfg[T.mode];if(!c){$("tcfg").innerHTML="";return}const F=(k,l)=>`<label class="f">${l}<input type="number" inputmode="numeric" data-k="${k}" value="${c[k]}"></label>`;
+  $("tcfg").innerHTML={fortime:F("cap","Límite (min)"),amrap:F("min","Minutos"),emom:F("every","Cada (s)")+F("n","Rondas"),tabata:F("work","Trabajo (s)")+F("rest","Descanso (s)")+F("n","Rondas")}[T.mode];
+  $("tcfg").querySelectorAll("input").forEach(i=>i.onchange=()=>{c[i.dataset.k]=Math.max(1,+i.value||1);store.set("tcfg",T.cfg)})}
+tcfgRender();
 
-function start(mode){if(S.on)return;Object.assign(S,{on:true,mode,t0:Date.now(),samples:[],rr:[],zones:[0,0,0,0,0],hrr:[],pending:null,kcal:0,trimp:0,min:null,synthetic:0,real:0,last:null});
-  $("startbtns").hidden=true;$("runbtns").hidden=false;$("hrvbtn").disabled=false;renderHRR();
-  if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>S.wl=w).catch(()=>{});}
-function stop(){if(!S.on)return;S.on=false;if(S.demo){clearInterval(S.demo);S.demo=null}try{S.dev?.gatt?.disconnect()}catch(e){}S.wl?.release?.().catch(()=>{});
-  $("startbtns").hidden=false;$("runbtns").hidden=true;$("hrvbtn").disabled=true;
-  const dur=(Date.now()-S.t0)/1000;
-  if(S.samples.length>20){const hs=S.samples.map(s=>s.hr);const sess={id:S.t0,dur,avg:Math.round(hs.reduce((a,b)=>a+b,0)/hs.length),max:Math.max(...hs),kcal:Math.round(S.kcal)||null,trimp:Math.round(S.trimp),zones:S.zones.map(Math.round),hrr:S.hrr.map(x=>x.peak-x.h60),demo:S.mode==="demo",rounds:T.rounds.length?T.rounds.length:null};
-    const h=store.get("sess",[]);h.unshift(sess);store.set("sess",h.slice(0,100));store.set("last",S.samples.map(s=>[s.t,s.hr,s.rr]));toast("Sesión guardada · "+mmss(dur))}
-  else toast("Sesión demasiado corta, no se guarda");status(S.mode==="demo"?"Prueba terminada":"Pulsera desconectada","off")}
+$("connect").onclick=async()=>{if(BT.on||await btConnect())startSession("ble")};
+$("demo").onclick=()=>{startDemo();startSession("demo")};
+function startSession(mode){if(S.on)return;Object.assign(S,{on:true,mode,t0:Date.now(),samples:[],rr:[],zones:[0,0,0,0,0],hrr:[],pending:null,kcal:0,trimp:0,peaks:0,inPeak:false,min:null,synthetic:0,real:0,last:null,lastZone:-1,lastVoice:Date.now(),lastOut:0});
+  $("prep").hidden=true;$("live").hidden=false;$("tcard").hidden=T.mode==="none";$("rcard").hidden=T.mode==="none";T.rounds=[];renderRounds();tReset();
+  if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>S.wl=w).catch(()=>{});draw(true)}
 let lastTick=0;
-function onBeat(hr,rr){if(!S.on||!hr)return;const now=Date.now();
+function onBeat(hr,rr){const now=Date.now();
   if(S.last){const dt=Math.min(5,(now-S.last.t)/1000);S.zones[zoneOf(S.last.hr)]+=dt;const k=kcalMin(S.last.hr);if(k)S.kcal+=k*dt/60;S.trimp+=trimpMin(S.last.hr)*dt/60}
+  const z=zoneOf(hr);if(z===4&&!S.inPeak){S.inPeak=true;S.peaks++}if(z<=2)S.inPeak=false;
   S.last={t:now,hr};S.min=S.min==null?hr:Math.min(S.min,hr);S.samples.push({t:now,hr,rr:rr.map(x=>Math.round(x)).join(" ")});
-  rr.forEach(x=>{if(x>300&&x<2000){if(Math.abs(x-60000/hr)<=1.5)S.synthetic++;else S.real++;S.rr.push({t:now,v:x});if(S.hrv)S.hrv.rr.push(x)}});
-  S.rr=S.rr.filter(x=>now-x.t<60000);autoHRR(now,hr);tickHRR(now,hr);if(T.run&&T.t0)T.hrs.push(hr);
+  rr.forEach(x=>{if(x>300&&x<2000){if(Math.abs(x-60000/hr)<=1.5)S.synthetic++;else S.real++}});
+  autoHRR(now,hr);tickHRR(now,hr);if(T.run&&T.t0)T.hrs.push(hr);alerts(now,hr,z);
   if(now-lastTick>250){lastTick=now;draw()}}
-
-function rmssd(a){const c=[];for(let i=1;i<a.length;i++){const d=a[i]-a[i-1];if(Math.abs(d)<a[i-1]*.2)c.push(d*d)}return c.length>=10?Math.sqrt(c.reduce((x,y)=>x+y,0)/c.length):null}
-const rrOK=()=>S.real>S.synthetic*2&&S.real>20;
-function hrvTest(){if(S.hrv||!S.on)return;S.hrv={t0:Date.now(),rr:[],hrs:[]};$("hrvbtn").disabled=true;
-  const iv=setInterval(()=>{if(!S.hrv){clearInterval(iv);return}const el=(Date.now()-S.hrv.t0)/1000;if(S.last)S.hrv.hrs.push(S.last.hr);$("hrvout").textContent="Midiendo… "+mmss(120-el);
-    if(el>=120){clearInterval(iv);const v=rmssd(S.hrv.rr),h=Math.round(S.hrv.hrs.reduce((a,b)=>a+b,0)/Math.max(1,S.hrv.hrs.length));
-      if(v==null||!rrOK())$("hrvout").innerHTML='Sin latido a latido<div class="msg">Tu pulsera no envía los intervalos entre latidos, así que no puedo calcular el HRV en vivo. Pulso, zonas y recuperación sí funcionan.</div>';
-      else{$("hrvout").textContent=Math.round(v)+" ms";const hist=store.get("hrv",[]);hist.unshift({d:Date.now(),v:Math.round(v),h});store.set("hrv",hist.slice(0,60));renderHRV()}
-      S.hrv=null;$("hrvbtn").disabled=!S.on}},1000)}
-function renderHRV(){const h=store.get("hrv",[]);const base=h.length>3?h.slice(1,8).reduce((a,b)=>a+b.v,0)/Math.min(7,h.length-1):null;
-  $("hrvt").innerHTML=h.length?h.slice(0,10).map((x,i)=>{const d=new Date(x.d).toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"});const st=base&&i===0?(x.v>=base*.95?"g":x.v>=base*.85?"w":"r"):"";
-    return`<tr><td>${d}</td><td>${x.v} ms</td><td>${x.h} ppm</td><td>${st?`<span class="pill ${st}">${x.v>=base?"+":""}${Math.round((x.v/base-1)*100)} %</span>`:""}</td></tr>`}).join(""):'<tr><td colspan="4" class="empty">Aún no hay tests.</td></tr>'}
+function alerts(now,hr,z){if(CFG.zalert==="1"&&S.lastZone>=0&&z!==S.lastZone)beep(z>S.lastZone?990:600,.15);S.lastZone=z;
+  if(S.target>=0&&now-S.lastOut>15000&&z!==S.target){S.lastOut=now;beep(z>S.target?1200:440,.3);beep(z>S.target?1200:440,.3,.35)}
+  if(CFG.voice==="1"&&now-S.lastVoice>300000){S.lastVoice=now;say(`Pulso ${hr}. ${ZN[z]}. ${Math.round((now-S.t0)/60000)} minutos.`)}}
+function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="es-ES";speechSynthesis.speak(u)}catch(e){}}
+function liveTE(){const z5s=S.zones[4];return{a:teAer(S.trimp),n:teAna(z5s,S.peaks)}}
+$("stop").onclick=()=>{if(!S.on)return;if(T.run){if(T.t0)closeRound();tStop()}S.on=false;S.wl?.release?.().catch(()=>{});
+  const dur=(Date.now()-S.t0)/1000;if(S.samples.length<20){toast("Sesión demasiado corta, no se guarda");endLive();return}
+  const hs=S.samples.map(s=>s.hr);const te=liveTE();
+  const series=[];for(let i=0;i<S.samples.length;i+=5)series.push(S.samples[i].hr);
+  const sess={id:S.t0,type:S.type,dur,avg:Math.round(hs.reduce((a,b)=>a+b,0)/hs.length),max:Math.max(...hs),min:S.min,kcal:Math.round(S.kcal)||null,trimp:Math.round(S.trimp),zones:S.zones.map(Math.round),hrr:S.hrr.map(x=>x.peak-x.h60),teA:+te.a.toFixed(1),teN:+te.n.toFixed(1),strain:+strainOf(S.trimp).toFixed(1),rounds:T.rounds.length||null,demo:S.mode==="demo",series,rpe:null,note:""};
+  S.lastSamples=S.samples.map(s=>[s.t,s.hr,s.rr]);summary(sess,true)};
+function endLive(){if(S.mode==="demo"){stopDemo();status("Pulsera desconectada","off")}$("prep").hidden=false;$("live").hidden=true}
+function summary(sess,isNew){const tsb=(pmc(1).slice(-1)[0]?.tsb)||0;const rh=Math.round(recoveryHours(sess,tsb));const tot=sess.zones.reduce((a,b)=>a+b,0)||1;
+  const teTxt=v=>v<1?"Sin efecto":v<2?"Leve":v<3?"Mantiene":v<4?"Mejora":v<5?"Mejora mucho":"Excesivo";
+  $("sumin").innerHTML=`<div class="row sb"><h2>${TYPES.find(t=>t[0]===sess.type)?.[1]||"Sesión"} · ${mmss(sess.dur)}</h2>${sess.demo?'<span class="pill w">prueba</span>':""}</div>
+  <div class="grid3"><div class="k"><small>Strain</small><b>${fx(sess.strain)}</b><span> /21</span></div><div class="k"><small>Carga</small><b>${sess.trimp}</b><span> TRIMP</span></div><div class="k"><small>Recuperación</small><b>${rh} h</b></div>
+  <div class="k"><small>TE aeróbico</small><b>${fx(sess.teA)}</b><span> ${teTxt(sess.teA)}</span></div><div class="k"><small>TE anaeróbico</small><b>${fx(sess.teN)}</b><span> ${teTxt(sess.teN)}</span></div><div class="k"><small>Calorías</small><b>${sess.kcal??"--"}</b></div>
+  <div class="k"><small>Media</small><b>${sess.avg}</b></div><div class="k"><small>Máximo</small><b>${sess.max}</b></div><div class="k"><small>Mejor recup.</small><b>${sess.hrr.length?"−"+Math.max(...sess.hrr):"--"}</b></div></div>
+  <div class="zbar">${sess.zones.map((z,i)=>`<div style="flex:${z||0.0001};background:var(${ZC[i]})"></div>`).join("")}</div>
+  <div class="zleg">${sess.zones.map((z,i)=>`<span><i style="background:var(${ZC[i]})"></i>Z${i+1}<b>${mmss(z)}</b>${Math.round(z/tot*100)}%</span>`).join("")}</div>
+  <canvas id="sumcv" style="height:140px"></canvas>
+  <h3>¿Qué tan duro ha sido? (RPE)</h3><div class="rpe" id="rpe">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button data-r="${n}" aria-pressed="${sess.rpe===n}">${n}</button>`).join("")}</div>
+  <label class="f">Nota (WOD, cargas, sensaciones)<textarea id="note" rows="2">${sess.note||""}</textarea></label>
+  <div class="bigbtns">${isNew?'<button id="discard">Descartar</button><button class="p" id="save">Guardar</button>':'<button id="delsess">Borrar</button><button class="p" id="save">Cerrar</button>'}</div>
+  <div class="msg">Strain, Training Effect y recuperación son estimaciones con fórmulas públicas.</div>`;
+  $("sum").hidden=false;setTimeout(()=>lineChart($("sumcv"),sess.series,5),30);
+  $("rpe").querySelectorAll("button").forEach(b=>b.onclick=()=>{sess.rpe=+b.dataset.r;$("rpe").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+  $("save").onclick=()=>{sess.note=$("note").value.trim();const h=sessions().filter(x=>x.id!==sess.id);h.unshift(sess);h.sort((a,b)=>b.id-a.id);store.set("sess",h.slice(0,300));if(isNew){if(S.lastSamples)store.set("last",S.lastSamples);toast("Sesión guardada");endLive()}$("sum").hidden=true;renderHoy();renderHist()};
+  if(isNew)$("discard").onclick=()=>{$("sum").hidden=true;toast("Sesión descartada");endLive()};
+  else{let arm=0;$("delsess").onclick=()=>{if(Date.now()-arm<4000){store.set("sess",sessions().filter(x=>x.id!==sess.id));$("sum").hidden=true;renderHist();renderHoy();toast("Sesión borrada")}else{arm=Date.now();toast("Pulsa otra vez para borrar")}}}}
 
 function peakRecent(now,ms){let p=0;for(let i=S.samples.length-1;i>=0&&now-S.samples[i].t<ms;i--)p=Math.max(p,S.samples[i].hr);return p}
 function mark(auto){if(!S.on||!S.last||S.pending)return;const now=Date.now();S.pending={t:now,peak:peakRecent(now,15000),auto};if(!auto)toast("Midiendo recuperación 60 s…")}
 let hiSince=null;
 function autoHRR(now,hr){const z=zoneOf(hr);if(z>=3){hiSince=hiSince||now}else if(hiSince){if(now-hiSince>30000&&peakRecent(now,20000)-hr>=12&&!S.pending)mark(true);hiSince=null}}
-function tickHRR(now,hr){const p=S.pending;if(!p)return;const el=now-p.t;if(el>=30000&&p.h30==null)p.h30=hr;if(el>=60000){p.h60=hr;S.hrr.unshift({...p});S.pending=null;renderHRR();toast("Recuperación: −"+(p.peak-p.h60)+" ppm en 60 s")}}
-function renderHRR(){const r=S.hrr;$("lasthrr").textContent=r.length?"−"+(r[0].peak-r[0].h60):"--";
-  $("hrrt").innerHTML=r.length?r.map((x,i)=>{const d=x.peak-x.h60;const c=d>=30?"g":d>=20?"w":"r";return`<tr><td>${r.length-i}${x.auto?" auto":""}</td><td>${x.peak}</td><td>−${x.peak-(x.h30??x.peak)}</td><td>−${d}</td><td><span class="pill ${c}">${d>=30?"Muy buena":d>=20?"Normal":"Lenta"}</span></td></tr>`}).join(""):'<tr><td colspan="5" class="empty">Aún no hay esfuerzos medidos.</td></tr>'}
+function tickHRR(now,hr){const p=S.pending;if(!p)return;if(now-p.t>=60000){p.h60=hr;S.hrr.unshift({...p});S.pending=null;const d=p.peak-p.h60;$("lasthrr").textContent="−"+d;toast("Recuperación: −"+d+" ppm en 60 s "+(d>=30?"· muy buena":d>=20?"· normal":"· lenta"))}}
+$("markbtn").onclick=()=>mark(false);
 
-const cv=$("cv"),cx=cv.getContext("2d");
-function draw(force){if(!$("v-timer").hidden&&S.last)$("thr").textContent=S.last.hr;
-  if($("v-live").hidden&&!force){if(!$("v-rec").hidden)$("minhr").textContent=S.min?S.min+" ppm":"--";return}
-  const L=S.last;if(!L)return;const z=zoneOf(L.hr);document.documentElement.style.setProperty("--zc",cssv(ZC[z]));
-  $("bpm").innerHTML=L.hr+"<small> ppm</small>";$("zone").textContent=ZN[z];
+const cv=$("cv");
+function draw(force){if($("v-train").hidden&&!force)return;const L=S.last;if(!S.on||!L)return;const z=zoneOf(L.hr);document.documentElement.style.setProperty("--zc",cssv(ZC[z]));
+  $("bpm").innerHTML=L.hr+"<small> ppm</small>";$("zone").textContent=ZN[z]+" · "+Math.round(L.hr/CFG.max*100)+"%";
   let old=null;for(let i=S.samples.length-1;i>=0;i--){if(L.t-S.samples[i].t>=15000){old=S.samples[i];break}}
   $("trend").textContent=old?((L.hr-old.hr>=0?"▲ +":"▼ ")+(L.hr-old.hr)+" en 15 s"):"";
   $("pctmark").style.left=Math.max(0,Math.min(100,(frac(L.hr)-.5)/.5*100))+"%";
-  $("t").textContent=mmss((Date.now()-S.t0)/1000);
-  const hs=S.samples.map(s=>s.hr);$("avg").textContent=Math.round(hs.reduce((a,b)=>a+b,0)/hs.length);$("max").textContent=Math.max(...hs);
-  $("pct").textContent=Math.round(L.hr/CFG.max*100)+"%";
-  const kk=kcalMin(L.hr);$("kcal").textContent=kk?Math.round(S.kcal):"--";$("kcalu").textContent=kk?" kcal":" (ajustes)";
-  $("trimp").textContent=Math.round(S.trimp);$("hard").textContent=mmss(S.zones[3]+S.zones[4]);
-  const live=rrOK()?rmssd(S.rr.map(x=>x.v)):null;$("rm").textContent=live?Math.round(live)+" ms":(S.synthetic>20&&!rrOK()?"n/d":"--");
-  if(S.pending)$("lasthrr").textContent="…";$("minhr").textContent=S.min?S.min+" ppm":"--";
-  renderZones();chart()}
-function renderZones(){const tot=S.zones.reduce((a,b)=>a+b,0)||1;
+  $("t").textContent=mmss((Date.now()-S.t0)/1000);const hs=S.samples.map(s=>s.hr);$("avg").textContent=Math.round(hs.reduce((a,b)=>a+b,0)/hs.length);$("max").textContent=Math.max(...hs);
+  $("lstrain").textContent=fx(strainOf(S.trimp));$("kcal").textContent=kcalMin(L.hr)?Math.round(S.kcal):"--";$("trimp").textContent=Math.round(S.trimp);
+  const te=liveTE();$("teA").textContent=fx(te.a);$("teN").textContent=fx(te.n);if(S.pending)$("lasthrr").textContent="…";
+  const tot=S.zones.reduce((a,b)=>a+b,0)||1;
   $("zbar").innerHTML=S.zones.map((s,i)=>`<div style="flex:${s||0.0001};background:var(${ZC[i]})"></div>`).join("");
-  $("zleg").innerHTML=S.zones.map((s,i)=>`<span><i style="background:var(${ZC[i]})"></i>Z${i+1} · ${Math.round(zoneHr([.5,.6,.7,.8,.9][i]))}+<b>${mmss(s)}</b>${Math.round(s/tot*100)}%</span>`).join("")}
-function chart(){const W=cv.clientWidth,H=cv.clientHeight,dpr=devicePixelRatio||1;if(!W)return;if(cv.width!==Math.round(W*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
-  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);const now=Date.now(),span=S.win*1000;
-  const pts=S.samples.filter(s=>now-s.t<span);const lo=Math.min(Math.round(zoneHr(.45)),...pts.map(p=>p.hr-5)),hi=Math.max(CFG.max+3,...pts.map(p=>p.hr+3));
-  const y=v=>H-16-(v-lo)/(hi-lo)*(H-24),x=t=>30+(t-(now-span))/span*(W-34);
-  cx.font="10px ui-monospace,Menlo,monospace";
-  [.6,.7,.8,.9].forEach(p=>{const v=zoneHr(p);cx.strokeStyle=cssv("--line");cx.lineWidth=1;cx.beginPath();cx.moveTo(30,y(v));cx.lineTo(W-4,y(v));cx.stroke();cx.fillStyle=cssv("--muted");cx.textAlign="right";cx.fillText(Math.round(v),26,y(v)+3)});
-  S.hrr.forEach(h=>{if(now-h.t<span){cx.fillStyle=cssv("--sky");cx.globalAlpha=.5;cx.fillRect(x(h.t)-1,8,2,H-24);cx.globalAlpha=1}});
-  cx.lineWidth=2.5;cx.lineCap="round";cx.lineJoin="round";
-  for(let i=1;i<pts.length;i++){cx.strokeStyle=cssv(ZC[zoneOf(pts[i].hr)]);cx.beginPath();cx.moveTo(x(pts[i-1].t),y(pts[i-1].hr));cx.lineTo(x(pts[i].t),y(pts[i].hr));cx.stroke()}
-  if(pts.length){const p=pts[pts.length-1];cx.fillStyle=cssv(ZC[zoneOf(p.hr)]);cx.beginPath();cx.arc(x(p.t),y(p.hr),4.5,0,7);cx.fill()}
-  cx.fillStyle=cssv("--muted");cx.textAlign="left";cx.fillText("−"+(S.win/60)+" min",30,H-3);cx.textAlign="right";cx.fillText("ahora",W-4,H-3)}
-document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.win=+b.dataset.w;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));chart()});
-addEventListener("resize",()=>chart());
+  $("zleg").innerHTML=S.zones.map((s,i)=>`<span><i style="background:var(${ZC[i]})"></i>Z${i+1} · ${Math.round(zoneHr([.5,.6,.7,.8,.9][i]))}+<b>${mmss(s)}</b>${Math.round(s/tot*100)}%</span>`).join("");
+  const span=S.win*1000,now=Date.now();lineChart(cv,S.samples.filter(s=>now-s.t<span).map(s=>[s.t,s.hr]),0,{span,now,marks:S.hrr.map(h=>h.t)})}
+document.querySelectorAll("#win button").forEach(b=>b.onclick=()=>{S.win=+b.dataset.w;document.querySelectorAll("#win button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));draw(true)});
+setInterval(()=>{if(S.on)draw()},1000);
 
-const T={mode:"fortime",run:false,t0:0,cfg:{fortime:{cap:20},amrap:{min:12},emom:{every:60,n:10},tabata:{work:20,rest:10,n:8}},rounds:[],hrs:[],rt0:0,raf:null};
-Object.assign(T.cfg,store.get("tcfg",{}));
-let AC=null;function beep(f,d){if(CFG.snd!=="1")return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(.3,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.start();o.stop(AC.currentTime+d)}catch(e){}}
-function tcfgRender(){const c=T.cfg[T.mode];const F=(k,l)=>`<label class="f">${l}<input type="number" inputmode="numeric" data-k="${k}" value="${c[k]}"></label>`;
-  $("tcfg").innerHTML={fortime:F("cap","Límite (min)"),amrap:F("min","Minutos"),emom:F("every","Cada (s)")+F("n","Rondas"),tabata:F("work","Trabajo (s)")+F("rest","Descanso (s)")+F("n","Rondas")}[T.mode];
-  $("tcfg").querySelectorAll("input").forEach(i=>i.onchange=()=>{c[i.dataset.k]=Math.max(1,+i.value||1);store.set("tcfg",T.cfg);tReset()});
-  $("tlap").disabled=!(T.mode==="fortime"||T.mode==="amrap")}
-document.querySelectorAll(".modes button").forEach(b=>b.onclick=()=>{if(T.run)return;T.mode=b.dataset.m;document.querySelectorAll(".modes button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));tcfgRender();tReset()});
+function prep(c){const W=c.clientWidth,H=c.clientHeight,dpr=devicePixelRatio||1;if(!W)return null;if(c.width!==Math.round(W*dpr)){c.width=Math.round(W*dpr);c.height=Math.round(H*dpr)}const x=c.getContext("2d");x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,W,H);x.font="10px ui-monospace,Menlo,monospace";return{x,W,H}}
+function lineChart(c,data,step,o={}){const P=prep(c);if(!P)return;const{x:cx,W,H}=P;
+  const pts=step?data.map((v,i)=>[i*step*1000,v]):data;if(pts.length<2){cx.fillStyle=cssv("--muted");cx.textAlign="center";cx.fillText("Esperando datos…",W/2,H/2);return}
+  const t0=o.span?o.now-o.span:pts[0][0],t1=o.span?o.now:pts[pts.length-1][0];const vs=pts.map(p=>p[1]);
+  const lo=Math.min(Math.round(zoneHr(.45)),...vs.map(v=>v-5)),hi=Math.max(Math.round(zoneHr(.95)),...vs.map(v=>v+3));
+  const y=v=>H-16-(v-lo)/(hi-lo)*(H-24),X=t=>30+(t-t0)/Math.max(1,t1-t0)*(W-34);
+  [.6,.7,.8,.9].forEach(p=>{const v=zoneHr(p);if(v<lo||v>hi)return;cx.strokeStyle=cssv("--line");cx.lineWidth=1;cx.beginPath();cx.moveTo(30,y(v));cx.lineTo(W-4,y(v));cx.stroke();cx.fillStyle=cssv("--muted");cx.textAlign="right";cx.fillText(Math.round(v),26,y(v)+3)});
+  (o.marks||[]).forEach(m=>{if(m>=t0){cx.fillStyle=cssv("--sky");cx.globalAlpha=.5;cx.fillRect(X(m)-1,8,2,H-24);cx.globalAlpha=1}});
+  cx.lineWidth=2.5;cx.lineCap="round";cx.lineJoin="round";
+  for(let i=1;i<pts.length;i++){cx.strokeStyle=cssv(ZC[zoneOf(pts[i][1])]);cx.beginPath();cx.moveTo(X(pts[i-1][0]),y(pts[i-1][1]));cx.lineTo(X(pts[i][0]),y(pts[i][1]));cx.stroke()}
+  const lp=pts[pts.length-1];cx.fillStyle=cssv(ZC[zoneOf(lp[1])]);cx.beginPath();cx.arc(X(lp[0]),y(lp[1]),4,0,7);cx.fill();
+  cx.fillStyle=cssv("--muted");cx.textAlign="left";cx.fillText(o.span?"−"+mmss(o.span/1000):"0:00",30,H-3);cx.textAlign="right";cx.fillText(o.span?"ahora":mmss((t1-t0)/1000),W-4,H-3)}
+function barChart(c,vals,labels,o={}){const P=prep(c);if(!P)return;const{x:cx,W,H}=P;const mx=Math.max(o.goal||0,...vals,1)*1.1;const n=vals.length,bw=(W-34)/n;
+  const y=v=>H-18-v/mx*(H-26);
+  if(o.goal){cx.strokeStyle=cssv("--muted");cx.setLineDash([4,4]);cx.beginPath();cx.moveTo(30,y(o.goal));cx.lineTo(W-4,y(o.goal));cx.stroke();cx.setLineDash([]);cx.fillStyle=cssv("--muted");cx.textAlign="right";cx.fillText(o.goal,26,y(o.goal)+3)}
+  vals.forEach((v,i)=>{const h=y(0)-y(v);cx.fillStyle=o.colorFn?o.colorFn(v,i):cssv("--pink");if(h>0){const x0=30+i*bw+2,w=Math.max(2,bw-4),r=Math.min(4,w/2,h);cx.beginPath();cx.moveTo(x0,y(0));cx.lineTo(x0,y(v)+r);cx.quadraticCurveTo(x0,y(v),x0+r,y(v));cx.lineTo(x0+w-r,y(v));cx.quadraticCurveTo(x0+w,y(v),x0+w,y(v)+r);cx.lineTo(x0+w,y(0));cx.fill()}
+    if(labels[i]){cx.fillStyle=cssv("--muted");cx.textAlign="center";cx.fillText(labels[i],30+i*bw+bw/2,H-4)}})}
+
+let AC=null;function beep(f,d,delay=0){if(CFG.snd!=="1")return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+delay;o.frequency.value=f;o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.start(t);o.stop(t+d)}catch(e){}}
 function tState(el){const c=T.cfg[T.mode];
   if(T.mode==="fortime")return{done:el>=c.cap*60,clock:el,phase:"work",round:T.rounds.length+1,label:"For Time · límite "+c.cap+" min"};
   if(T.mode==="amrap")return{done:el>=c.min*60,clock:c.min*60-el,phase:"work",round:T.rounds.length+1,label:"AMRAP "+c.min+" min"};
   if(T.mode==="emom"){const r=Math.floor(el/c.every);return{done:r>=c.n,clock:c.every-(el%c.every),phase:"work",round:r+1,label:"EMOM "+Math.min(r+1,c.n)+"/"+c.n,b:r}}
   const cyc=c.work+c.rest,r=Math.floor(el/cyc),inW=(el%cyc)<c.work;return{done:r>=c.n,clock:inW?c.work-(el%cyc):cyc-(el%cyc),phase:inW?"work":"rest",round:r+1,label:(inW?"Trabajo ":"Descanso ")+Math.min(r+1,c.n)+"/"+c.n,b:r*2+(inW?0:1)}}
 function closeRound(){const hs=T.hrs;const now=Date.now();if(!hs.length){T.rt0=now;return}T.rounds.push({n:T.rounds.length+1,dur:(now-T.rt0)/1000,avg:Math.round(hs.reduce((a,b)=>a+b,0)/hs.length),max:Math.max(...hs),end:hs[hs.length-1]});T.hrs=[];T.rt0=now;renderRounds()}
-function renderRounds(){$("rounds").innerHTML=T.rounds.length?T.rounds.map(r=>`<tr><td>${r.n}</td><td>${mmss(r.dur)}</td><td>${r.avg}</td><td style="color:var(${ZC[zoneOf(r.max)]})">${r.max}</td><td>${r.end}</td></tr>`).join(""):'<tr><td colspan="5" class="empty">Arranca el timer con la pulsera conectada para ver tus rondas.</td></tr>'}
-function tStart(){if(T.run)return;beep(660,.12);T.run=true;T.t0=0;T.cd=Date.now()+10000;T.rounds=[];T.hrs=[];T.lastB=null;T.lastCd=null;T.warn=null;renderRounds();$("tstart").textContent="Parar";
-  if(!S.on)toast("La pulsera no está conectada: el timer va, pero sin pulso");
+function renderRounds(){$("rounds").innerHTML=T.rounds.length?T.rounds.map(r=>`<tr><td>${r.n}</td><td>${mmss(r.dur)}</td><td>${r.avg}</td><td style="color:var(${ZC[zoneOf(r.max)]})">${r.max}</td><td>${r.end}</td></tr>`).join(""):'<tr><td colspan="5" class="empty">Las rondas aparecen al usar el timer.</td></tr>'}
+function tStart(){if(T.run||T.mode==="none")return;beep(660,.12);T.run=true;T.t0=0;T.cd=Date.now()+10000;T.rounds=[];T.hrs=[];T.lastB=null;T.lastCd=null;T.warn=null;renderRounds();$("tstart").textContent="Parar timer";
   const loop=()=>{if(!T.run)return;const now=Date.now();
     if(now<T.cd){const s=Math.ceil((T.cd-now)/1000);$("tclock").textContent=s;$("tphase").textContent="Prepárate";$("tphase").className="phase";if(T.lastCd!==s){T.lastCd=s;if(s<=3)beep(880,.12)}T.raf=requestAnimationFrame(loop);return}
     if(!T.t0){T.t0=T.cd;T.rt0=T.t0;beep(1320,.45)}
@@ -355,30 +460,99 @@ function tStart(){if(T.run)return;beep(660,.12);T.run=true;T.t0=0;T.cd=Date.now(
     const sl=Math.ceil(st.clock);if(T.mode!=="fortime"&&sl<=3&&sl>0&&T.warn!==sl+"-"+st.b){T.warn=sl+"-"+st.b;beep(880,.1)}
     if(st.done){closeRound();beep(1320,.9);tStop("¡Terminado!");return}
     $("tclock").textContent=mmss(T.mode==="fortime"?el:st.clock);$("tphase").textContent=st.label;$("tphase").className="phase "+st.phase;$("tround").textContent=st.round;
-    T.raf=requestAnimationFrame(loop)};
-  T.raf=requestAnimationFrame(loop)}
-function tStop(msg){T.run=false;cancelAnimationFrame(T.raf);$("tstart").textContent="Empezar";$("tphase").textContent=msg||"Parado";$("tphase").className="phase"}
-function tReset(){tStop("Listo");T.t0=0;T.rounds=[];T.hrs=[];renderRounds();$("tround").textContent="–";const c=T.cfg[T.mode];$("tclock").textContent=mmss(T.mode==="amrap"?c.min*60:T.mode==="emom"?c.every:T.mode==="tabata"?c.work:0)}
+    T.raf=requestAnimationFrame(loop)};T.raf=requestAnimationFrame(loop)}
+function tStop(msg){T.run=false;cancelAnimationFrame(T.raf);$("tstart").textContent="Empezar timer";$("tphase").textContent=msg||"Parado";$("tphase").className="phase"}
+function tReset(){tStop("Listo");T.t0=0;T.hrs=[];$("tround").textContent="–";const c=T.cfg[T.mode];if(c)$("tclock").textContent=mmss(T.mode==="amrap"?c.min*60:T.mode==="emom"?c.every:T.mode==="tabata"?c.work:0)}
 $("tstart").onclick=()=>{if(T.run){if(T.t0)closeRound();tStop()}else tStart()};
-$("tlap").onclick=()=>{if(T.run&&T.t0){closeRound();beep(990,.15);toast("Ronda "+T.rounds.length)}};$("treset").onclick=tReset;
+$("tlap").onclick=()=>{if(T.run&&T.t0&&(T.mode==="fortime"||T.mode==="amrap")){closeRound();beep(990,.15);toast("Ronda "+T.rounds.length)}};
 
-function renderHist(){const h=store.get("sess",[]);
-  if(!h.length){$("hist").innerHTML='<div class="empty">Cuando termines una sesión con «Terminar y guardar» aparecerá aquí.</div>';$("histsum").textContent="";return}
-  const wk=h.filter(s=>Date.now()-s.id<7*864e5&&!s.demo);$("histsum").textContent=wk.length?`7 días: ${wk.length} · ${mmss(wk.reduce((a,s)=>a+s.dur,0))} · carga ${wk.reduce((a,s)=>a+s.trimp,0)}`:"";
-  $("hist").innerHTML=h.slice(0,40).map(s=>{const d=new Date(s.id);const best=s.hrr&&s.hrr.length?Math.max(...s.hrr):null;
-    return`<div class="sess"><b>${d.toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"})} · ${d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}${s.demo?' <span class="pill w">prueba</span>':""}</b><b style="font-family:var(--mono)">${mmss(s.dur)}</b>
-    <span class="m">media ${s.avg} · máx ${s.max} · carga ${s.trimp}${s.kcal?" · "+s.kcal+" kcal":""}${best?" · mejor recup. −"+best:""}${s.rounds?" · "+s.rounds+" rondas":""}</span>
-    <div class="zbar">${s.zones.map((z,i)=>`<div style="flex:${z||0.0001};background:var(${ZC[i]})"></div>`).join("")}</div></div>`}).join("")}
+const CHK={run:false,t0:0,hrs:[],rr:[],real:0,syn:0,feel:null,iv:null,
+  beat(hr,rr){this.hrs.push(hr);rr.forEach(x=>{if(x>300&&x<2000){this.rr.push(x);if(Math.abs(x-60000/hr)<=1.5)this.syn++;else this.real++}})}};
+document.querySelectorAll("#feel button").forEach(b=>b.onclick=()=>{CHK.feel=+b.dataset.f;document.querySelectorAll("#feel button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+$("chkconnect").onclick=()=>btConnect();
+function rmssd(a){const c=[];for(let i=1;i<a.length;i++){const d=a[i]-a[i-1];if(Math.abs(d)<a[i-1]*.2)c.push(d*d)}return c.length>=10?Math.sqrt(c.reduce((x,y)=>x+y,0)/c.length):null}
+$("chkstart").onclick=()=>{if(CHK.run)return;if(!BT.on&&!demoTimer){toast("Conecta la pulsera primero");return}if(!CHK.feel){toast("Elige cómo te sientes");return}
+  Object.assign(CHK,{run:true,t0:Date.now(),hrs:[],rr:[],real:0,syn:0});$("chkstart").disabled=true;
+  CHK.iv=setInterval(()=>{const el=(Date.now()-CHK.t0)/1000;$("chkout").textContent=mmss(120-el);if(el<120)return;clearInterval(CHK.iv);CHK.run=false;$("chkstart").disabled=false;
+    const sorted=[...CHK.hrs].sort((a,b)=>a-b);const rhr=sorted.length?Math.round(sorted.slice(0,Math.max(1,Math.floor(sorted.length*.2))).reduce((a,b)=>a+b,0)/Math.max(1,Math.floor(sorted.length*.2))):null;
+    const hrv=CHK.real>CHK.syn*2&&CHK.real>20?Math.round(rmssd(CHK.rr)):null;
+    if(!rhr){$("chkout").textContent="Sin datos";return}
+    const c={d:Date.now(),rhr,hrv,feel:CHK.feel};c.score=readiness(c);const all=checks().filter(x=>dayKey(x.d)!==dayKey(c.d));all.unshift(c);store.set("chk",all.slice(0,120));
+    $("chkout").textContent=c.score+" %";toast("Check guardado"+(hrv?"":" · sin HRV: tu pulsera no envía latido a latido"));renderRec();renderHoy()},500)};
+function readiness(c){const prev=checks().filter(x=>dayKey(x.d)!==dayKey(c.d)).slice(0,7);let s=60;
+  const avg=(a)=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+  const bh=avg(prev.map(x=>x.hrv).filter(Boolean)),br=avg(prev.map(x=>x.rhr).filter(Boolean));
+  if(c.hrv&&bh)s+=Math.max(-25,Math.min(25,(c.hrv/bh-1)*100));
+  if(c.rhr&&br)s+=Math.max(-20,Math.min(15,(br-c.rhr)*3));else if(c.rhr)s+=Math.max(-15,Math.min(10,(CFG.rest-c.rhr)*2));
+  s+=(c.feel-3)*6;const tsb=(pmc(1).slice(-1)[0]?.tsb)||0;s+=Math.max(-15,Math.min(8,tsb*.4));
+  return Math.round(Math.max(1,Math.min(99,s)))}
 
-const SF={max:"s-max",rest:"s-rest",kg:"s-kg",age:"s-age",sex:"s-sex",model:"s-model",snd:"s-snd"};
-for(const k in SF){const el=$(SF[k]);el.value=CFG[k];el.onchange=()=>{CFG[k]=el.type==="number"?(el.value===""?"":+el.value):el.value;if(!(CFG.max>100))CFG.max=194;if(!(CFG.rest>25))CFG.rest=46;store.set("cfg",CFG);toast("Guardado");renderZones();draw(true)}}
-$("csvlast").onclick=()=>{const l=store.get("last",null);if(!l||!l.length){toast("No hay sesión guardada");return}const rows=["hora,pulso,rr_ms"].concat(l.map(r=>new Date(r[0]).toISOString()+","+r[1]+","+r[2]));
-  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([rows.join("\n")],{type:"text/csv"}));a.download="wod-live-"+new Date(l[0][0]).toISOString().slice(0,16).replace(":","")+".csv";a.click()};
-let wipeArm=0;$("wipe").onclick=()=>{if(Date.now()-wipeArm<4000){store.set("sess",[]);store.set("last",null);$("wipemsg").textContent="Historial borrado.";renderHist()}else{wipeArm=Date.now();$("wipemsg").textContent="Pulsa otra vez en 4 s para confirmar. No se puede deshacer."}};
+function zClass(v){return v>=67?"g":v>=34?"w":"r"}
+function renderHoy(){const ch=checks()[0];const today=ch&&dayKey(ch.d)===dayKey(Date.now())?ch:null;
+  if(today){const sc=today.score,c=zClass(sc);$("rdy").textContent=sc;$("rdyring").style.stroke=`var(--${c==="g"?"good":c==="w"?"warn":"bad"})`;$("rdyring").setAttribute("stroke-dashoffset",326.7*(1-sc/100));
+    $("rdypill").className="pill "+c;$("rdypill").textContent=c==="g"?"Verde":c==="w"?"Amarillo":"Rojo";
+    $("rdyh").textContent=sc>=80?"Día para apretar":sc>=67?"Dale caña":sc>=50?"Entreno controlado":sc>=34?"Técnica y zona 2":"Descanso activo";
+    $("rdyp").textContent=`Reposo ${today.rhr} ppm${today.hrv?" · HRV "+today.hrv+" ms":""} · sensación ${["","fatal","mal","normal","bien","top"][today.feel]}.`;$("gocheck").textContent="Repetir check"}
+  const ss=sessions().filter(s=>!s.demo);const last=sessions()[0];
+  const pm=pmc(60);const cur=pm[pm.length-1]||{ctl:0,atl:0,tsb:0};
+  if(last){const end=last.id+last.dur*1000;const rh=recoveryHours(last,cur.tsb);const left=Math.max(0,rh-(Date.now()-end)/36e5);
+    $("rtime").innerHTML=left>0?Math.ceil(left)+"<small> h</small>":"Listo";$("rtimed").textContent=left>0?"para recuperar de tu última sesión (est.)":"Recuperado de tu última sesión"}
+  const tr=sessions().filter(s=>startOfDay(s.id)===startOfDay(Date.now())).reduce((a,s)=>a+s.trimp,0);const st=strainOf(tr);
+  $("strainToday").innerHTML=fx(st)+"<small> /21</small>";$("strainbar").style.width=(st/21*100)+"%";
+  if(ss.length>=3){const f=formState(cur.tsb);$("formv").innerHTML=`<span class="${f.c}">${f.t}</span>`;$("formd").textContent=`Frescura ${Math.round(cur.tsb)} · forma ${Math.round(cur.ctl)}`}
+  const ws=weekStart(Date.now());const im=ss.filter(s=>s.id>=ws).reduce((a,s)=>a+iminOf(s.zones),0);$("imin").innerHTML=im+"<small> /"+CFG.goal+"</small>";$("iminbar").style.width=Math.min(100,im/CFG.goal*100)+"%";
+  const ac=acwr();if(ac&&ss.length>=3){const r=ac.r,pos=Math.max(0,Math.min(100,(r/2)*100));$("acwrmark").style.left=pos+"%";const s=r<.8?["Baja","w"]:r<=1.3?["Óptima","g"]:r<=1.5?["Alta","w"]:["Sobrecarga","r"];
+    $("acwrpill").className="pill "+s[1];$("acwrpill").textContent=s[0]+" · "+fx(r,2);$("acwrtxt").textContent=r>1.3?"Estás subiendo la carga muy rápido. Mete un día suave.":r<.8?"Semana más suave que tu media. Buen momento para apretar si te sientes bien.":"Carga en buen rango respecto a tus últimas 4 semanas."}
+  $("lastsess").innerHTML=last?sessCard(last):'<div class="empty">Aún no hay sesiones. Pulsa «Empezar entreno».</div>';bindSess($("lastsess"))}
+function formState(t){return t>10?{t:"Fresco",c:"g"}:t>-10?{t:"Óptimo",c:"g"}:t>-25?{t:"Cargado",c:"w"}:{t:"Sobrecarga",c:"r"}}
+function sessCard(s){const d=new Date(s.id);const best=s.hrr&&s.hrr.length?Math.max(...s.hrr):null;
+  return`<button class="sess" data-id="${s.id}"><b>${TYPES.find(t=>t[0]===s.type)?.[1]||"Sesión"} · ${d.toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"})} ${d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}${s.demo?' <span class="pill w">prueba</span>':""}</b><b style="font-family:var(--mono)">${mmss(s.dur)}</b>
+  <span class="m">strain ${fx(s.strain)} · TE ${fx(s.teA)}/${fx(s.teN)} · media ${s.avg} · máx ${s.max}${s.kcal?" · "+s.kcal+" kcal":""}${best?" · recup −"+best:""}${s.rpe?" · RPE "+s.rpe:""}</span>
+  <span class="zbar">${s.zones.map((z,i)=>`<span style="flex:${z||0.0001};background:var(${ZC[i]})"></span>`).join("")}</span>${s.note?`<span class="m" style="font-family:var(--body)">${s.note.replace(/[<>&]/g,"")}</span>`:""}</button>`}
+function bindSess(el){el.querySelectorAll(".sess").forEach(b=>b.onclick=()=>{const s=sessions().find(x=>x.id===+b.dataset.id);if(s)summary(s,false)})}
 
-$("connect").onclick=connect;$("demo").onclick=demo;$("stop").onclick=stop;$("markbtn").onclick=()=>mark(false);$("hrvbtn").onclick=hrvTest;
-setInterval(()=>{if(S.on)draw()},1000);
-renderHRV();renderHRR();renderZones();tcfgRender();tReset();
+function renderRec(){const c=checks();$("chkstate").textContent=c[0]&&dayKey(c[0].d)===dayKey(Date.now())?"Hecho hoy · "+c[0].score+"%":"Pendiente hoy";
+  $("chkt").innerHTML=c.length?c.slice(0,10).map(x=>`<tr><td>${new Date(x.d).toLocaleDateString("es-ES",{weekday:"short",day:"numeric"})}</td><td class="${zClass(x.score)}">${x.score}%</td><td>${x.hrv?x.hrv+" ms":"–"}</td><td>${x.rhr}</td><td>${["","Fatal","Mal","Normal","Bien","Top"][x.feel]}</td></tr>`).join(""):'<tr><td colspan="5" class="empty">Aún no hay checks.</td></tr>';
+  const cc=c.slice(0,14).reverse();barChart($("cvchk"),cc.map(x=>x.score),cc.map(x=>new Date(x.d).getDate()),{colorFn:v=>cssv(v>=67?"--good":v>=34?"--warn":"--bad")});
+  const hr=[];sessions().slice().reverse().forEach(s=>{if(s.hrr&&s.hrr.length)hr.push([s.id,Math.max(...s.hrr)])});const hh=hr.slice(-14);
+  barChart($("cvhrr"),hh.map(x=>x[1]),hh.map(x=>new Date(x[0]).getDate()),{goal:30,colorFn:v=>cssv(v>=30?"--good":v>=20?"--warn":"--bad")});
+  $("hrrsum").textContent=hh.length?`Mejor recuperación por sesión. Media: −${Math.round(hh.reduce((a,x)=>a+x[1],0)/hh.length)} ppm.`:"Aún no hay recuperaciones medidas. Pulsa «Fin de esfuerzo» al acabar una ronda dura."}
+
+function renderProg(){const pm=pmc(42);const cur=pm[pm.length-1];const ss=sessions().filter(s=>!s.demo);
+  $("ctl").textContent=Math.round(cur.ctl);$("atl").textContent=Math.round(cur.atl);$("tsb").textContent=Math.round(cur.tsb);const f=formState(cur.tsb);$("tsbpill").className="pill "+f.c;$("tsbpill").textContent=ss.length>=3?f.t:"Pocos datos";
+  $("pmctxt").textContent=ss.length<3?"Con unas cuantas sesiones guardadas verás cómo evoluciona tu forma.":cur.tsb<-25?"Fatiga muy por encima de tu forma: riesgo de pasarte. Prioriza dormir y un par de días suaves.":cur.tsb<-10?"Estás cargado: es el estado productivo de un bloque de entreno, pero no lo alargues mucho.":cur.tsb>10?"Muy fresco: ideal para competir o testear un PR.":"Equilibrio entre carga y recuperación.";
+  const P=prep($("cvpmc"));if(P){const{x:cx,W,H}=P;const mx=Math.max(20,...pm.map(p=>Math.max(p.l,p.ctl,p.atl)))*1.1;const n=pm.length,bw=(W-34)/n,y=v=>H-18-v/mx*(H-26),X=i=>30+i*bw+bw/2;
+    pm.forEach((p,i)=>{cx.fillStyle=cssv("--s3");const h=y(0)-y(p.l);if(h>0)cx.fillRect(30+i*bw+1,y(p.l),Math.max(1,bw-2),h)});
+    [["ctl","--sky"],["atl","--pink"]].forEach(([k,c])=>{cx.strokeStyle=cssv(c);cx.lineWidth=2.5;cx.beginPath();pm.forEach((p,i)=>i?cx.lineTo(X(i),y(p[k])):cx.moveTo(X(i),y(p[k])));cx.stroke()});
+    cx.fillStyle=cssv("--muted");cx.textAlign="left";cx.fillText("−6 sem",30,H-4);cx.textAlign="right";cx.fillText("hoy",W-4,H-4)}
+  const ws=weekStart(Date.now());const wk=[],lb=[];for(let i=7;i>=0;i--){const a=ws-i*7*DAY,b=a+7*DAY;wk.push(ss.filter(s=>s.id>=a&&s.id<b).reduce((x,s)=>x+iminOf(s.zones),0));lb.push(i?"−"+i:"esta")}
+  barChart($("cvimin"),wk,lb,{goal:+CFG.goal||150,colorFn:v=>cssv(v>=(+CFG.goal||150)?"--lime":"--sky")});
+  const z4=[0,0,0,0,0];ss.filter(s=>s.id>Date.now()-28*DAY).forEach(s=>s.zones.forEach((z,i)=>z4[i]+=z));const tot=z4.reduce((a,b)=>a+b,0);
+  $("zbar4").innerHTML=z4.map((z,i)=>`<div style="flex:${z||0.0001};background:var(${ZC[i]})"></div>`).join("");
+  $("zleg4").innerHTML=z4.map((z,i)=>`<span><i style="background:var(${ZC[i]})"></i>Z${i+1}<b>${Math.round(z/3600*10)/10} h</b>${tot?Math.round(z/tot*100):0}%</span>`).join("");
+  const pc=i=>tot?z4[i]/tot*100:0;$("zone4txt").textContent=!tot?"Sin sesiones en 4 semanas.":pc(2)>30?"Mucho tiempo en zona 3, la zona gris: separa más los días suaves de los duros.":pc(0)+pc(1)>70&&pc(3)+pc(4)<8?"Mucha base y poca intensidad. Si buscas motor, mete intervalos cortos.":"Buen reparto polarizado entre trabajo suave e intenso.";
+  const ch=checks();const rhr=ch.length?Math.round(ch.slice(0,7).reduce((a,c)=>a+c.rhr,0)/Math.min(7,ch.length)):CFG.rest;
+  $("vo2").innerHTML=Math.round(15.3*CFG.max/rhr)+"<small> ml/kg/min</small>";$("rhrv").innerHTML=rhr+"<small> ppm</small>";$("rhrd").textContent=ch.length?"Media de tus últimos checks":"Valor de Ajustes. Haz checks para afinarlo.";
+  const R=[];if(ss.length){const by=(f)=>ss.reduce((a,b)=>f(b)>f(a)?b:a);const d=s=>new Date(s.id).toLocaleDateString("es-ES",{day:"numeric",month:"short"});
+    const m=by(s=>s.max),l=by(s=>s.dur),st=by(s=>s.strain),hs=ss.filter(s=>s.hrr&&s.hrr.length);
+    R.push(["Pulso máximo",m.max+" ppm",d(m)],["Sesión más larga",mmss(l.dur),d(l)],["Strain más alto",fx(st.strain),d(st)]);
+    if(hs.length){const h=by(s=>Math.max(...s.hrr));R.push(["Mejor recuperación","−"+Math.max(...h.hrr)+" ppm",d(h)])}}
+  $("recs").innerHTML=R.length?R.map(r=>`<div class="k"><small>${r[0]}</small><b>${r[1]}</b><span> ${r[2]}</span></div>`).join(""):'<div class="empty" style="grid-column:1/-1">Tus récords aparecerán aquí.</div>'}
+
+function renderHist(){const h=sessions();if(!h.length){$("hist").innerHTML='<div class="empty">Cuando guardes una sesión aparecerá aquí.</div>';$("histsum").textContent="";return}
+  const ws=weekStart(Date.now()),wk=h.filter(s=>s.id>=ws&&!s.demo);$("histsum").textContent=wk.length?`Semana: ${wk.length} · ${mmss(wk.reduce((a,s)=>a+s.dur,0))}`:"";
+  $("hist").innerHTML=h.slice(0,60).map(sessCard).join("");bindSess($("hist"))}
+
+const SF={max:"s-max",rest:"s-rest",kg:"s-kg",age:"s-age",sex:"s-sex",model:"s-model",snd:"s-snd",voice:"s-voice",zalert:"s-zalert",goal:"s-goal"};
+for(const k in SF){const el=$(SF[k]);el.value=CFG[k];el.onchange=()=>{CFG[k]=el.type==="number"?(el.value===""?"":+el.value):el.value;if(!(CFG.max>100))CFG.max=194;if(!(CFG.rest>25))CFG.rest=46;if(!(CFG.goal>0))CFG.goal=150;store.set("cfg",CFG);toast("Guardado")}}
+$("csvall").onclick=()=>{const h=sessions();if(!h.length){toast("No hay sesiones");return}
+  const rows=["fecha,tipo,duracion_min,media,max,strain,trimp,te_aer,te_ana,kcal,z1_min,z2_min,z3_min,z4_min,z5_min,mejor_recup,rpe,nota"].concat(h.map(s=>[new Date(s.id).toISOString(),s.type,(s.dur/60).toFixed(1),s.avg,s.max,s.strain,s.trimp,s.teA,s.teN,s.kcal??"",...s.zones.map(z=>(z/60).toFixed(1)),s.hrr&&s.hrr.length?Math.max(...s.hrr):"",s.rpe??"",'"'+(s.note||"").replace(/"/g,"'")+'"'].join(",")));
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([rows.join("\n")],{type:"text/csv"}));a.download="wod-live-sesiones.csv";a.click()};
+let wipeArm=0;$("wipe").onclick=()=>{if(Date.now()-wipeArm<4000){["sess","chk","last"].forEach(k=>store.set(k,null));$("wipemsg").textContent="Todo borrado.";renderHoy()}else{wipeArm=Date.now();$("wipemsg").textContent="Pulsa otra vez en 4 s para confirmar. Borra sesiones y checks. No se puede deshacer."}};
+$("sum").onclick=e=>{if(e.target===$("sum")&&!S.on&&$("discard")===null)$("sum").hidden=true};
+addEventListener("resize",()=>{if(!$("v-prog").hidden)renderProg();if(!$("v-rec").hidden)renderRec()});
+
+renderRounds();renderHoy();
 </script>
 </body>
 </html>
