@@ -651,6 +651,17 @@ nav button{position:relative;z-index:1}
 .mbox .p{width:100%;padding:14px}
 @media(max-width:360px){.mgrid{grid-template-columns:1fr}}
 .rtring b{display:flex!important;align-items:baseline;justify-content:center;padding-top:24px}
+
+/* ---------- sesión recuperada ---------- */
+.lsess{position:fixed;inset:0;z-index:70;background:rgb(7 6 11/.84);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:grid;place-items:center;padding:20px;animation:fade .25s}
+.lsess.out{animation:fadeOut .28s forwards}
+.lbox{width:min(100%,380px);text-align:center;background:linear-gradient(170deg,#1f2a3a,#121722);border:1px solid rgb(100 199 255/.35);border-radius:28px;padding:24px 20px 18px;animation:popIn .5s cubic-bezier(.3,1.4,.5,1);display:flex;flex-direction:column;gap:10px}
+.lic{font-size:46px;line-height:1}
+.lbox small{font:800 11px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--sky)}
+.lbox h2{font-size:22px;margin:0}
+.lbox p{margin:0 0 6px;color:var(--muted);font-size:14px;line-height:1.4}
+.lbox p b{color:var(--fg)}
+.lbox button{width:100%;padding:14px}
 </style>
 </head>
 <body>
@@ -2580,10 +2591,10 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="21";let busy=false;
+const WL_BUILD="22";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
-  if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if(E&&E.on){if(manual)toast("Hay versión nueva: se instalará al terminar la carrera");return false}
+  if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if((E&&E.on)||(window.__busyUpd&&window.__busyUpd())){if(manual)toast("Hay versión nueva: se instalará cuando termines y guardes la actividad");return false}
     toast("Actualizando WOD Live…");setTimeout(()=>location.replace(location.pathname+"?"+(NATIVE?"app=ios&":"")+"v="+m[1]),500);return true}
   if(manual)toast("Tienes la última versión ("+WL_BUILD+")")}catch(e){}finally{busy=false}return false}
 const _nr=window.__nrefresh;window.__nrefresh=async()=>{if(await checkUpdate(true))return;if(_nr)await _nr()};
@@ -3139,6 +3150,78 @@ addBadges();
 const _rh=renderHoy;renderHoy=function(){_rh.apply(this,arguments);try{renderCards()}catch(e){console.error(e)}setTimeout(()=>{try{morning()}catch(e){console.error(e)}},1400)};
 if(!$("v-hoy").hidden){try{renderCards()}catch(e){}setTimeout(()=>{try{morning()}catch(e){}},1600)}
 window.WL=Object.assign(window.WL||{},{tstatus,imin,focus,suggest});
+})();
+</script>
+<script>
+// ---------- Sesiones a prueba de todo: guardado continuo, recuperación tras cierre/recarga, sin actualizaciones a mitad de WOD, rescate de entrenos perdidos ----------
+(function(){
+const KEY="livesess",DK="draftsess";const vib=()=>{try{if(NATIVE)nat("haptic").catch(()=>{});else navigator.vibrate&&navigator.vibrate(10)}catch(e){}};
+const hhmm=t=>new Date(t).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
+
+// ===== 1. nada de actualizar ni recargar con algo en marcha =====
+function busyNow(){try{if(S.on)return true;const E=window.__runE&&window.__runE();if(E&&E.on)return true;const sm=$("sum");if(sm&&!sm.hidden&&sm.dataset.closable==="0")return true;if(store.get(KEY,null)||store.get(DK,null))return true;if(document.querySelector(".lsess"))return true}catch(e){}return false}
+window.__busyUpd=busyNow;
+
+// ===== 2. guardado continuo de la sesión en vivo =====
+let lastSnap=0;
+function snap(force){try{if(!S.on||S.mode==="demo")return;const now=Date.now();if(!force&&now-lastSnap<4000)return;lastSnap=now;
+  store.set(KEY,{v:1,mode:S.mode,t0:S.t0,type:S.type,saved:now,smp:S.samples.map(s=>[s.t,s.hr,s.rr||""]),zones:S.zones.slice(),kcal:S.kcal,trimp:S.trimp,peaks:S.peaks,min:S.min,hrr:(S.hrr||[]).slice(),dfaLog:(S.dfaLog||[]).slice(-400),rounds:(T&&T.rounds||[]).slice()})}catch(e){}}
+const _ob=onBeat;onBeat=function(hr,rr){_ob(hr,rr);snap(false)};
+setInterval(()=>snap(false),5000);
+document.addEventListener("visibilitychange",()=>{if(document.hidden)snap(true)});
+addEventListener("pagehide",()=>snap(true));addEventListener("beforeunload",()=>snap(true));
+// al terminar: el resumen sin guardar pasa a borrador hasta que pulses Guardar o Descartar
+const _sum=summary;summary=function(sess,isNew){if(isNew&&sess&&!sess.demo){try{store.set(DK,{sess,last:S.lastSamples||null,lost:window.__lostPending||null,t:Date.now()});store.set(KEY,null)}catch(e){}}return _sum.apply(this,arguments)};
+const _el=endLive;endLive=function(){try{const d=store.get(DK,null);const lost=window.__lostPending;
+    if(lost){const h=sessions();const kept=h.find(x=>x.id===lost.a);if(kept){const nh=h.filter(x=>x===kept||!(x.id<lost.b&&x.id+x.dur*1000>lost.a&&(x.auto||x.src==="auto")&&!x.rpe&&!x.note));if(nh.length!==h.length)store.set("sess",nh)}else noLost(lost.a)}
+    window.__lostPending=null;store.set(KEY,null);store.set(DK,null)}catch(e){}return _el.apply(this,arguments)};
+
+// ===== 3. al abrir: recuperar la sesión que estaba en marcha o el resumen sin guardar =====
+async function restore(){
+  const d=store.get(DK,null);
+  if(d&&d.sess){if(Date.now()-d.t>72*36e5){store.set(DK,null)}else{S.lastSamples=d.last||null;window.__lostPending=d.lost||null;try{go("train")}catch(e){}setTimeout(()=>{_sum(d.sess,true);toast("He recuperado tu sesión sin guardar")},350);return}}
+  const L=store.get(KEY,null);if(!L||!L.t0)return;if(S.on)return;if(Date.now()-L.saved>16*36e5){store.set(KEY,null);return}
+  Object.assign(S,{on:false,mode:L.mode,t0:L.t0,type:L.type||"wod",samples:(L.smp||[]).map(a=>({t:a[0],hr:a[1],rr:a[2]||""})),rr:[],zones:(L.zones||[0,0,0,0,0]).slice(),hrr:L.hrr||[],pending:null,kcal:L.kcal||0,trimp:L.trimp||0,peaks:L.peaks||0,inPeak:false,min:L.min,last:null,lastZone:-1,lastVoice:Date.now(),lastOut:0,dfa:null,dfaLog:L.dfaLog||[],maxRun:0});
+  // rellenar el hueco con lo que la pulsera grabó en segundo plano
+  let lastT=S.samples.length?S.samples[S.samples.length-1].t:L.t0;let rows=[];
+  if(NATIVE){try{rows=(await nat("log",{since:lastT}))||[]}catch(e){}}
+  rows=rows.concat(AUTO.log.filter(x=>x[0]>lastT)).filter(r=>r&&r[1]>0).sort((a,b)=>a[0]-b[0]);
+  let prev=S.samples[S.samples.length-1]||null,added=0;
+  for(const r of rows){if(r[0]<=lastT+500)continue;const h=r[1];if(prev){const dt=Math.min(15,(r[0]-prev.t)/1000);S.zones[zoneOf(prev.hr)]+=dt;const k=kcalMin(prev.hr);if(k)S.kcal+=k*dt/60;S.trimp+=trimpMin(prev.hr)*dt/60}
+    const z=zoneOf(h);if(z===4&&!S.inPeak){S.inPeak=true;S.peaks++}if(z<=2)S.inPeak=false;S.min=S.min==null?h:Math.min(S.min,h);const sm={t:r[0],hr:h,rr:""};S.samples.push(sm);prev=sm;lastT=r[0];added++}
+  if(T&&L.rounds)T.rounds=L.rounds;
+  const endT=S.samples.length?S.samples[S.samples.length-1].t:L.saved;const min=Math.round((endT-L.t0)/60000);const hs=S.samples.map(s=>s.hr);const avg=hs.length?Math.round(mean(hs)):null;
+  const recent=Date.now()-endT<3*60000;
+  const o=document.createElement("div");o.className="lsess";o.innerHTML=`<div class="lbox"><div class="lic">💾</div><small>Sesión recuperada</small><h2>Tenías ${esc(typeOf(S.type)[1].toLowerCase())==="wod"?"un WOD":"una sesión"} en marcha</h2>
+    <p>Empezó a las <b>${hhmm(L.t0)}</b> · ${min} min${avg?` · media ${avg} ppm`:""}. No se ha perdido nada${added?`: he rellenado ${Math.round(added*10/60)} min con lo que grabó la pulsera en segundo plano`:""}.</p>
+    <button class="p" id="lgo">${recent?"▶ Seguir grabando":"▶ Seguir desde ahora"}</button><button id="lend">✓ Terminar y guardar</button><button class="ghost" id="ldel">Descartar sesión</button></div>`;
+  document.body.appendChild(o);vib();
+  const close=()=>{o.classList.add("out");setTimeout(()=>o.remove(),280)};
+  o.querySelector("#lgo").onclick=()=>{vib();close();S.on=true;S.last=prev&&Date.now()-prev.t<60000?{t:prev.t,hr:prev.hr}:null;try{go("train")}catch(e){}$("prep").hidden=true;$("live").hidden=false;try{$("tcard").hidden=true;$("rcard").hidden=!(T.rounds&&T.rounds.length);renderRounds()}catch(e){}
+    if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>S.wl=w).catch(()=>{});try{draw(true)}catch(e){}snap(true);if(!NATIVE&&S.mode==="ble"&&!(BT&&BT.on))toast("Vuelve a conectar la pulsera para seguir recibiendo pulso");else toast("Seguimos 💪")};
+  o.querySelector("#lend").onclick=()=>{vib();close();S.on=true;const rn=Date.now;Date.now=()=>Math.max(endT,S.t0+60000);try{go("train");$("stop").onclick()}catch(e){console.error(e)}finally{Date.now=rn}};
+  let arm=0;o.querySelector("#ldel").onclick=e=>{if(Date.now()-arm<3500){close();store.set(KEY,null);S.samples=[];toast("Sesión descartada")}else{arm=Date.now();e.target.textContent="Pulsa otra vez para descartar"}}}
+
+// ===== 4. rescate: entrenos que la pulsera grabó pero no quedaron guardados =====
+const noLost=a=>{const s=store.get("lostno",[])||[];s.push(Math.round(a));store.set("lostno",s.slice(-200))};
+function scanLost(){if(S.on||busyLive())return[];const Lg=AUTO.log;if(!Lg||Lg.length<60)return[];const no=new Set(store.get("lostno",[])||[]);const out=[];let j=0,sum=0,st=null;
+  const close=(a,b)=>{if(b-a<10*60000)return;const sm=samplesIn(a,b);if(sm.length<40)return;const hs=sm.map(x=>x[1]);if(rFrac(mean(hs))<.3)return;
+    if(no.has(Math.round(a))||tombHas("det",a)||tombHas("sess",a))return;const ov=sessions().filter(x=>!x.demo&&x.id<b&&x.id+x.dur*1000>a);
+    const cov=ov.reduce((t,x)=>t+Math.max(0,Math.min(b,x.id+x.dur*1000)-Math.max(a,x.id)),0);if(cov>(b-a)*.6&&ov.some(x=>!x.auto&&x.src!=="auto"))return;
+    if(ov.length&&ov.every(x=>(x.auto||x.src==="auto"))&&cov>(b-a)*.85)return;if(ov.some(x=>!x.auto&&x.src!=="auto"))return;
+    let c={type:"wod"};try{c=classify(sm)}catch(e){}out.push({a,b,type:c.type==="caminar"?"caminar":c.type,avg:Math.round(mean(hs)),max:Math.max(...hs),ov:ov.length})};
+  for(let i=0;i<Lg.length;i++){const t=Lg[i][0];if(i&&t-Lg[i-1][0]>180000){if(st!=null)close(st,Lg[i-1][0]);st=null;j=i;sum=0}
+    sum+=Lg[i][1];while(Lg[j][0]<t-120000){sum-=Lg[j][1];j++}const n=i-j+1,m=sum/n;
+    if(st==null&&n>=8&&rFrac(m)>=.27)st=Lg[j][0];else if(st!=null&&rFrac(m)<.18){close(st,t-60000);st=null}}
+  if(st!=null&&Date.now()-Lg[Lg.length-1][0]>10*60000)close(st,Lg[Lg.length-1][0]);
+  return out.filter(x=>Date.now()-x.b<36*36e5)}
+const busyLive=()=>{try{const E=window.__runE&&window.__runE();return!!(E&&E.on)||!!store.get(KEY,null)}catch(e){return false}};
+function openLost(x){const se=sessFromSamples(x.a,x.b,x.type);se.auto=false;se.src="rescate";window.__lostPending={a:x.a,b:x.b};S.lastSamples=null;try{go("train")}catch(e){}setTimeout(()=>summary(se,true),300)}
+window.__scanLost=scanLost;window.__openLost=openLost;
+(window.__feedX=window.__feedX||[]).push(out=>{let L=[];try{L=scanLost()}catch(e){}L.forEach(x=>out.push({id:"lost:"+Math.round(x.a),ic:"🛟",c:"--bad",h:`${typeOf(x.type)[1]} sin guardar · ${hhmm(x.a)}–${hhmm(x.b)}`,p:`${Math.round((x.b-x.a)/60000)} min · media ${x.avg} ppm · máx ${x.max}. La pulsera lo grabó: toca para recuperarlo.`,t:Date.now()+1,act:()=>openLost(x)}))});
+
+// ===== arranque =====
+setTimeout(()=>{restore().catch(e=>console.error(e))},900);
 })();
 </script>
 </body>
