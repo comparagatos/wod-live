@@ -2705,7 +2705,7 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="26";let busy=false;
+const WL_BUILD="27";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
   if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if((E&&E.on)||(window.__busyUpd&&window.__busyUpd())){if(manual)toast("Hay versión nueva: se instalará cuando termines y guardes la actividad");return false}
@@ -3564,6 +3564,24 @@ function headerBtn(){const h=document.querySelector("header");if(!h||$("hsbtn"))
 let apT=null;const later=()=>{clearTimeout(apT);apT=setTimeout(()=>{try{renderQuick();apply()}catch(e){}},230)};
 const _rh=renderHoy;const wrap=function(){const r=_rh.apply(this,arguments);try{renderQuick();apply()}catch(e){console.error(e)}later();return r};wrap.now=_rh.now;renderHoy=wrap;
 headerBtn();try{renderQuick();apply()}catch(e){}
+})();
+</script>
+<script>
+// ---------- Datos para los widgets del iPhone (app 1.5+) ----------
+(function(){
+const ok=()=>NATIVE&&parseFloat((window.NATIVE_APP||{}).version||0)>=1.5;let last="",lt=0;
+function data(){const c=checks()[0];const tc=c&&dayKey(c.d)===dayKey(Date.now())?c:null;const sl=tc&&tc.sleep&&tc.sleep.h?tc.sleep:null;
+  let need=null;try{need=sl&&(sl.need||sleepNeed(tc.d).need)}catch(e){}
+  const m=store.get("tgt",{})||{};const tg=m[new Date().toLocaleDateString("sv-SE")]||null;
+  let en=null,rt=null,st=null;try{en=WL.energy().now}catch(e){}try{rt=window.__ach.recTime().h}catch(e){}try{st=WL.tstatus().l}catch(e){}
+  return{rec:tc&&tc.score!=null?Math.round(tc.score):null,sleep:sl?hms(sl.h):null,sleepPct:sl&&need?Math.round(sl.h/need*100):null,strain:window.__ST!=null?Math.round(window.__ST*10)/10:null,
+    tgtLo:tg?Math.round(tg.lo*10)/10:null,tgtHi:tg?Math.round(tg.hi*10)/10:null,energy:en!=null?Math.round(en):null,rt:rt!=null?Math.round(rt):null,status:st,t:Date.now()}}
+function push(force){if(!ok())return;const d=data();const k=JSON.stringify({...d,t:0});const n=Date.now();if(!force&&k===last&&n-lt<15*60000)return;last=k;lt=n;
+  const clean={};for(const x in d)if(d[x]!=null)clean[x]=d[x];nat("widget",{data:clean}).catch(()=>{})}
+window.__widgetPush=push;
+const _rh=renderHoy;const w=function(){const r=_rh.apply(this,arguments);setTimeout(()=>{try{push(false)}catch(e){}},400);return r};w.now=_rh.now;renderHoy=w;
+document.addEventListener("visibilitychange",()=>{if(document.hidden)try{push(true)}catch(e){}});
+setTimeout(()=>{try{push(true)}catch(e){}},3000);
 })();
 </script>
 </body>
