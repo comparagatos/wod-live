@@ -65,6 +65,15 @@ button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
 .mring .n b{font:700 26px var(--display);line-height:1;letter-spacing:-.03em}
 .mring .n span{font:700 10px var(--body);color:var(--muted);margin-top:3px}
 .rings h3{margin-top:6px}
+.herocard{background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--hc,var(--violet)) 22%,transparent),transparent 60%),linear-gradient(180deg,var(--card2),var(--card))}
+.hero .ht{font:800 26px/1.1 var(--display);letter-spacing:-.02em;margin-top:4px;background:linear-gradient(90deg,var(--fg),color-mix(in srgb,var(--hc,var(--violet)) 70%,white));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .hp{color:var(--muted);font-size:14px;margin-top:4px}
+.hero{border-left:3px solid var(--hc,var(--violet));padding-left:12px}
+.tally{display:flex;flex-direction:column;gap:6px;margin-bottom:4px}.tb{display:flex;height:6px;border-radius:9px;overflow:hidden;gap:3px}.tb i{display:block;border-radius:9px}.tally .g{color:var(--good)}.tally .r{color:var(--bad)}
+.couple{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}.vs{font:800 12px var(--mono);color:var(--dim)}.cp{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.mring.sm{max-width:84px}.cn{font:700 15px var(--display)}.cm{display:flex;justify-content:space-between;width:100%;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:5px}.cm b{color:var(--fg);font-family:var(--mono);font-weight:600}
+.lbars{display:flex;flex-direction:column;gap:12px}.lb span{font-size:13px;color:var(--muted)}.lb b{font-family:var(--mono);font-size:14px}.lb .g{color:var(--good)}.lb .r{color:var(--bad)}.bt{position:relative;height:8px;border-radius:9px;background:rgb(255 255 255/.06);margin-top:6px}.bt i{display:block;height:100%;border-radius:9px}.bt u{position:absolute;top:-4px;width:2px;height:16px;background:var(--fg);opacity:.75;border-radius:2px;text-decoration:none}.lb small{display:block;margin-top:4px;color:var(--dim);font-size:11.5px}
+#labseg{flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:none}#labseg::-webkit-scrollbar{display:none}#labseg button{white-space:nowrap}
+.lr{display:flex;gap:11px;padding:11px 0;border-top:1px solid var(--line)}.lr:first-child{border-top:0}.lr i{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font:800 12px var(--body);font-style:normal;flex:none;margin-top:1px}.lr i.g{background:rgb(79 227 154/.14);color:var(--good)}.lr i.r{background:rgb(255 95 126/.14);color:var(--bad)}.lr i.n{background:rgb(100 199 255/.14);color:var(--sky)}.lr i.w{background:var(--warn);color:#1a0d1f}.lr b{font:700 15px var(--display);display:block}.lr p{margin:2px 0 0;color:var(--muted);font-size:13.5px}.labl{margin-top:6px}.labt td:first-child{color:var(--muted);font-size:13px}.labt .g{color:var(--good)}.labt .r{color:var(--bad)}#labseg{margin:6px 0 10px}
 .reco{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:rgb(255 255 255/.04);border:1px solid var(--line)}
 .reco .ic{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--grad);color:#1a0d1f;font:800 16px var(--display);flex:none}
 .reco b{font:700 16px var(--display);display:block}
@@ -201,10 +210,11 @@ nav .live.on::after{display:block}
     <div class="card cta" id="wcta" hidden>
       <div class="row sb"><h2>Conecta tu WHOOP</h2><span class="pill">1 minuto</span></div>
       <div class="msg">Una sola vez: pones la contraseña de tu servidor y a partir de ahí la app lee sola tu recuperación, HRV, sueño por fases, siestas, entrenos detectados por WHOOP y pasos. Y guarda tu historial en tu servidor.</div>
-      <button class="p" id="wctabtn">Conectar con WHOOP</button>
+      <button class="p" id="wctabtn">Conectar con WHOOP</button><button class="ghost" id="wctano" style="margin-top:8px;width:100%">Ahora no</button>
       <div class="small" id="wctamsg"></div>
     </div>
-    <div class="card">
+    <div class="card herocard">
+      <div class="hero" id="hero"></div>
       <div class="rings">
         <div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="r1" cx="60" cy="60" r="50" fill="none" stroke="var(--good)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="r1v">–</b><span>%</span></div></div><h3>Recuperación</h3></div>
         <div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="r2" cx="60" cy="60" r="50" fill="none" stroke="var(--sky)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="r2v">0</b><span>/ 21</span></div></div><h3>Strain <span class="est" id="r2est">est.</span></h3></div>
@@ -213,6 +223,8 @@ nav .live.on::after{display:block}
       <div class="reco"><div class="ic" id="recoic">→</div><div><b id="recoh">Haz tu check matinal</b><p id="recop">2 minutos tumbado al despertar y te digo cómo afrontar el día.</p></div></div>
       <div class="bigbtns"><button id="gocheck">Check matinal</button><button class="p" id="gotrain">Entrenar</button></div>
     </div>
+    <div class="card" id="couple" hidden></div>
+    <div class="card" id="labcard"><div class="row sb"><h2>Tu informe de hoy</h2><span class="pill" id="labpill"></span></div><div id="lablist"></div><button class="s ghost" id="golab" style="margin-top:6px">Ver laboratorio</button></div>
     <div class="card"><div class="reco" style="background:transparent;border:0;padding:0"><div class="ic" style="background:linear-gradient(135deg,#a98bff,#64c7ff)">☾</div><div style="flex:1"><b id="hsleeph">Esta noche</b><p id="hsleepp">Registra tu sueño en el check matinal.</p></div><button class="s ghost" id="gosleep">Ver</button></div></div>
     <div class="card" id="detcard" hidden><div class="row sb"><h2>Detectado automáticamente</h2><span class="pill" id="detn"></span></div><div class="stack" id="detlist"></div></div>
     <div class="card">
@@ -374,6 +386,7 @@ nav .live.on::after{display:block}
 
   <section class="view stack" id="v-prog" hidden>
     <div class="card" id="weekly"></div>
+    <div class="card" id="labtrend"><div class="row sb"><h2>Laboratorio</h2><span class="small">tu evolución</span></div><div class="seg" id="labseg"><button data-l="vo2" aria-pressed="true">VO2max</button><button data-l="hrr" aria-pressed="false">Recup.</button><button data-l="hrv" aria-pressed="false">HRV</button><button data-l="rhr" aria-pressed="false">Reposo</button><button data-l="deep" aria-pressed="false">Profundo</button></div><canvas id="cvlab" style="height:160px"></canvas><div class="msg" id="labtxt"></div></div>
     <div class="card">
       <div class="row sb"><h2>Forma y fatiga</h2><span class="pill" id="tsbpill">--</span></div>
       <div class="grid3"><div class="k"><small>Forma física</small><b id="ctl">--</b></div><div class="k"><small>Fatiga</small><b id="atl">--</b></div><div class="k"><small>Frescura</small><b id="tsb">--</b></div></div>
@@ -408,6 +421,7 @@ nav .live.on::after{display:block}
     <div class="stack" id="m-set" hidden>
       <div class="card">
         <div class="row sb"><h2>WHOOP y copia en la nube</h2><span class="pill" id="clpill">--</span></div>
+        <div class="row"><label class="f">Quién usa este móvil<select id="s-profile"><option value="">Mikel</option><option value="pareja">Pareja</option></select></label><label class="f">Nombre<input type="text" id="s-pname" placeholder="Tu nombre" autocomplete="off"></label></div>
         <label class="f">Tu servidor<input type="url" id="s-server" placeholder="https://…up.railway.app" autocomplete="off"></label>
         <div class="row"><button class="s p" id="clconn">Conectar</button><button class="s" id="clsync">Sincronizar ahora</button><button class="s" id="clout">Desconectar</button></div>
         <div class="small" id="clmsg"></div>
@@ -439,7 +453,7 @@ nav .live.on::after{display:block}
       <div class="card"><h2>Cómo conectar</h2><div class="msg">1. App de WHOOP → Configuración del dispositivo → Estado → activa <b>Transmitir frecuencia cardíaca</b>.<br>2. En iPhone abre esta página con <b>Bluefy</b>; en Android o PC, con Chrome.<br>3. Pulsa <b>Conectar pulsera</b> y elige tu WHOOP.</div></div>
       <div class="card"><h2>Qué significa cada dato</h2><div class="msg">
         <b>Recuperación</b>: HRV y pulso en reposo frente a tu media de 7 días, sueño frente a lo que necesitabas, sensación y frescura. Como la recuperación de WHOOP y el Training Readiness de Garmin.<br><br><b>Sueño necesario</b>: tu sueño base + extra por el strain del día + parte de la deuda de las 3 noches anteriores.<br><br><b>Estrés 0–3</b>: pulso y HRV sentado frente a tu base de reposo.<br><br><b>Coherencia</b>: cuánto oscila tu pulso con cada respiración (arritmia sinusal). Cuanto más amplia, más activo está tu sistema de recuperación.<br><br>
-        <b>WHOOP conectado</b>: la app lee cada pocos minutos de tu servidor la recuperación, HRV, pulso en reposo, SpO2, temperatura de la piel, respiración, sueño por fases, siestas, entrenos detectados por WHOOP, pasos y calorías. Tu historial de la app se guarda también en tu servidor: si cambias de móvil o se borra el navegador, vuelve solo al conectar.<br><br><b>Detección automática</b>: con la app abierta y conectada, clasifico cada bloque por tu pulso. Caminar: pulso moderado y estable. WOD: subidas repetidas y zona alta. Fuerza: picos con descansos largos. Carrera: esfuerzo alto y constante. Siesta: pulso pegado a tu reposo y estable al menos 15 minutos. Siempre te pido confirmar. Sin acelerómetro no distingo, por ejemplo, surf de carrera: cámbialo con un toque.<br><br><b>Strain 0–21</b>: carga cardiovascular del día en escala logarítmica, como WHOOP. Estimado con TRIMP.<br><br>
+        <b>App de iPhone</b>: lee tu pulsera por Bluetooth todo el día y toda la noche, con la app cerrada y el móvil bloqueado. Al despertar calcula tu sueño (duración, eficiencia y fases estimadas), tu HRV nocturna, tu pulso en reposo, tu respiración y tu recuperación; durante el día guarda solos tus entrenos, paseos y siestas y calcula tu strain. Todo se copia en tu servidor.<br><br><b>WHOOP conectado</b>: la app lee cada pocos minutos de tu servidor la recuperación, HRV, pulso en reposo, SpO2, temperatura de la piel, respiración, sueño por fases, siestas, entrenos detectados por WHOOP, pasos y calorías. Tu historial de la app se guarda también en tu servidor: si cambias de móvil o se borra el navegador, vuelve solo al conectar.<br><br><b>Detección automática</b>: con WHOOP conectado la hace WHOOP sola, sin tener la app abierta. Sin WHOOP conectado, con la app abierta y conectada por Bluetooth, clasifico cada bloque por tu pulso. Caminar: pulso moderado y estable. WOD: subidas repetidas y zona alta. Fuerza: picos con descansos largos. Carrera: esfuerzo alto y constante. Siesta: pulso pegado a tu reposo y estable al menos 15 minutos. Siempre te pido confirmar. Sin acelerómetro no distingo, por ejemplo, surf de carrera: cámbialo con un toque.<br><br><b>Strain 0–21</b>: carga cardiovascular del día en escala logarítmica, como WHOOP. Estimado con TRIMP.<br><br>
         <b>Carga (TRIMP)</b>: minutos ponderados por intensidad (Banister).<br><br>
         <b>Training Effect</b>: de 0 a 5, como Garmin. Aeróbico por tu carga frente a tu forma; anaeróbico por tiempo en zona 5 y picos.<br><br>
         <b>DFA α1</b>: mide la complejidad del latido a latido. Por encima de 0,75 estás por debajo de tu umbral aeróbico; entre 0,5 y 0,75, entre umbrales; por debajo de 0,5, por encima del umbral anaeróbico. Solo si tu pulsera envía latido a latido.<br><br>
@@ -467,14 +481,23 @@ nav .live.on::after{display:block}
   <button class="s" id="bmark" style="margin-top:2vh;font-size:16px;padding:14px 22px">Fin de esfuerzo</button>
 </div>
 <div class="sheet" id="sum" hidden><div class="in" id="sumin"></div></div>
+<div class="sheet" id="devsheet" hidden><div class="in"><div class="grab"></div>
+  <div class="row sb"><h2>Tu pulsera</h2><span class="pill" id="devstate">Buscando…</span></div>
+  <div class="msg">Ten activado «Transmitir frecuencia cardíaca» en tu WHOOP. La app se queda conectada sola, también con el móvil bloqueado.</div>
+  <div class="stack" id="devlist"></div>
+  <div class="bigbtns"><button id="devscan">Buscar otra vez</button><button class="p" id="devclose">Listo</button></div>
+</div></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
 const $=id=>document.getElementById(id);
 const ZC=["--z1","--z2","--z3","--z4","--z5"],ZN=["Zona 1","Zona 2","Zona 3","Zona 4","Zona 5"];
 const TYPES=[["wod","WOD","--pink"],["fuerza","Fuerza","--violet"],["halte","Halterofilia","--lemon"],["carrera","Carrera","--sky"],["surf","Surf","--z2"],["caminar","Caminar","--lime"],["otro","Otro","--muted"]];
-const store={get(k,d){try{const v=localStorage.getItem(k);const o=v==null?null:JSON.parse(v);return o==null?d:o}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}if(store.hook)store.hook(k)}};
-const CFG=Object.assign({server:"https://whoop-mcp-server-production-f102.up.railway.app",auto:"1",max:194,rest:46,kg:"",age:"",sex:"m",model:"max",snd:"1",voice:"0",zalert:"0",goal:150,automax:"1",vt1:null,sleepBase:7.5,wake:"07:00"},store.get("cfg",{}));
+const store={get(k,d){try{const v=localStorage.getItem(k);const o=v==null?null:JSON.parse(v);return o==null?d:o}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}if(k==="chk")BASEC=null;if(store.hook)store.hook(k)}};
+let BASEC=null;
+const NATIVE=!!(window.NATIVE_APP&&window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.native);
+const nat=(cmd,a={})=>NATIVE?window.webkit.messageHandlers.native.postMessage(Object.assign({cmd},a)):Promise.reject(new Error("noapp"));
+const CFG=Object.assign({profile:"",pname:"",server:"https://whoop-mcp-server-production-f102.up.railway.app",auto:"1",max:194,rest:46,kg:"",age:"",sex:"m",model:"max",snd:"1",voice:"0",zalert:"0",goal:150,automax:"1",vt1:null,sleepBase:7.5,wake:"07:00"},store.get("cfg",{}));
 const saveCfg=()=>{CFG.t=Date.now();store.set("cfg",CFG)};
 const mmss=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,"0");return h?h+":"+String(m).padStart(2,"0")+":"+x:m+":"+x};
 const fx=(v,d=1)=>(+v).toFixed(d).replace(".",",");
@@ -536,12 +559,12 @@ $("eyebrow").textContent=new Date().toLocaleDateString("es-ES",{weekday:"long",d
 
 const S={on:false,mode:null,t0:0,samples:[],rr:[],zones:[0,0,0,0,0],last:null,hrr:[],pending:null,kcal:0,trimp:0,peaks:0,inPeak:false,min:null,win:600,type:"wod",target:-1,lastZone:-1,lastVoice:0,lastOut:0,dfa:null,dfaLog:[],maxRun:0};
 const BT={dev:null,on:false,retry:0,name:null,battery:null,info:{},contact:null,contactSupported:false,rrSeen:0,beats:0,synth:0,real:0,firstT:0,lastPkt:0,pkts:0};
-if(!navigator.bluetooth){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth. En iPhone abre la página con Bluefy; en Android o PC, con Chrome. Puedes probar con «Probar sin pulsera».";["connect","chkconnect","sconnect","brconnect"].forEach(i=>$(i).disabled=true)}
+if(!navigator.bluetooth&&!NATIVE){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth. En iPhone abre la página con Bluefy; en Android o PC, con Chrome. Puedes probar con «Probar sin pulsera».";["connect","chkconnect","sconnect","brconnect"].forEach(i=>$(i).disabled=true)}
 function parseHR(dv){const f=dv.getUint8(0);let i=1;const hr=(f&1)?dv.getUint16(1,true):dv.getUint8(1);i+=(f&1)?2:1;const cs=!!(f&4),cc=!!(f&2);let en=null;if(f&8){en=dv.getUint16(i,true);i+=2}const rr=[];if(f&16){while(i+1<dv.byteLength){rr.push(dv.getUint16(i,true)/1024*1000);i+=2}}return{hr,rr,cs,cc,en}}
-async function btConnect(){try{BT.dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}],optionalServices:["battery_service","device_information"]});BT.dev.addEventListener("gattserverdisconnected",btLost);await btGatt();return true}
+async function btConnect(){if(NATIVE)return natConnect();try{BT.dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}],optionalServices:["battery_service","device_information"]});BT.dev.addEventListener("gattserverdisconnected",btLost);await btGatt();return true}
   catch(e){if(e.name!=="NotFoundError")status("No conecta: "+e.message,"off");return false}}
 async function btGatt(){status("Conectando…","off");const srv=await BT.dev.gatt.connect();const svc=await srv.getPrimaryService("heart_rate");const ch=await svc.getCharacteristic("heart_rate_measurement");await ch.startNotifications();
-  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);onPacket(m)});if(demoTimer&&!S.on)stopDemo();BT.on=true;BT.retry=0;BT.name=BT.dev.name||"WHOOP";try{store.set("btid",BT.dev.id)}catch(e){};if(CFG.auto==="1")AUTO.on=true;BT.firstT=Date.now();status(BT.name,"on");
+  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);onPacket(m)});if(demoTimer&&!S.on)stopDemo();BT.on=true;BT.retry=0;BT.name=BT.dev.name||"WHOOP";try{store.set("btid",BT.dev.id)}catch(e){};if(CFG.auto==="1"&&!CL.auth)AUTO.on=true;BT.firstT=Date.now();status(BT.name,"on");
   try{const bs=await srv.getPrimaryService("battery_service");const bl=await bs.getCharacteristic("battery_level");BT.battery=(await bl.readValue()).getUint8(0);try{await bl.startNotifications();bl.addEventListener("characteristicvaluechanged",e=>{BT.battery=e.target.value.getUint8(0);renderSensor()})}catch(e){}}catch(e){BT.battery=null}
   try{const di=await srv.getPrimaryService("device_information");for(const [k,n] of [["fab","manufacturer_name_string"],["modelo","model_number_string"],["firmware","firmware_revision_string"],["hardware","hardware_revision_string"]]){try{const c=await di.getCharacteristic(n);BT.info[k]=new TextDecoder().decode(await c.readValue()).replace(/\0/g,"").trim()}catch(e){}}}catch(e){}
   renderSensor()}
@@ -566,8 +589,9 @@ function renderSensor(){const el=$("sensor");if(!el)return;const ic=p=>`<div cla
     [ic('<path d="M4 12h3l2 6 3-12 2 6h6"/>'),"Latido a latido (RR)",rrTxt],
     [ic('<path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/>'),"Señal",BT.on?fx(rate)+" paquetes/s"+(ago!=null?" · hace "+ago+" s":""):"--"]];
   Object.entries(BT.info).forEach(([k,v])=>{if(v)rows.push([ic('<path d="M4 6h16M4 12h16M4 18h10"/>'),k[0].toUpperCase()+k.slice(1),esc(v)])});
-  el.innerHTML=rows.map(r=>r[0]+`<span>${r[1]}</span><b>${r[2]}</b>`).join("");$("sconnect").textContent=BT.on?"Conectada":"Conectar";$("sconnect").disabled=BT.on||!navigator.bluetooth}
-$("sconnect").onclick=()=>btConnect();
+  if(NATIVE&&NS)rows.push([ic('<path d="M12 3v18M3 12h18"/>'),"Grabación 24 h",NS.state==="on"?'<span class="g">Activa, también con la app cerrada</span>':"Se reanuda sola al conectar"]);
+  el.innerHTML=rows.map(r=>r[0]+`<span>${r[1]}</span><b>${r[2]}</b>`).join("");$("sconnect").textContent=NATIVE?(BT.on?"Cambiar":"Conectar"):BT.on?"Conectada":"Conectar";$("sconnect").disabled=NATIVE?false:(BT.on||!navigator.bluetooth)}
+$("sconnect").onclick=()=>{if(NATIVE)openDev();else btConnect()};
 
 const T={mode:"none",run:false,t0:0,cfg:Object.assign({fortime:{cap:20},amrap:{min:12},emom:{every:60,n:10},tabata:{work:20,rest:10,n:8}},store.get("tcfg",{})),rounds:[],hrs:[],rt0:0,raf:null};
 function chips(el,items,cur,cb){el.innerHTML=items.map(([k,l])=>`<button data-k="${k}" aria-pressed="${k===cur}">${l}</button>`).join("");el.querySelectorAll("button").forEach(b=>b.onclick=()=>{el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));cb(b.dataset.k)})}
@@ -618,6 +642,7 @@ function summary(sess,isNew){const rh=Math.round(recoveryHours(sess,curPmc().tsb
   <div class="zbar">${sess.zones.map((z,i)=>`<div style="flex:${z||0.0001};background:var(${ZC[i]})"></div>`).join("")}</div>
   <div class="zleg">${sess.zones.map((z,i)=>`<span><i style="background:var(${ZC[i]})"></i>Z${i+1}<b>${mmss(z)}</b>${Math.round(z/tot*100)}%</span>`).join("")}</div>
   <canvas id="sumcv" style="height:150px"></canvas>
+  ${labSessHTML(sess)}
   ${sess.rounds&&sess.rounds.length?`<div class="tw"><table><thead><tr><th>#</th><th>Tiempo</th><th>Media</th><th>Máx</th><th>Final</th></tr></thead><tbody>${sess.rounds.map(r=>`<tr><td>${r.n}</td><td>${mmss(r.dur)}</td><td>${r.avg}</td><td style="color:var(${ZC[zoneOf(r.max)]})">${r.max}</td><td>${r.end}</td></tr>`).join("")}</tbody></table></div>`:""}
   <h3>¿Qué tan duro ha sido? · RPE</h3><div class="rpe" id="rpe">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button data-r="${n}" aria-pressed="${sess.rpe===n}">${n}</button>`).join("")}</div>
   <label class="f">Nota (WOD, cargas, sensaciones)<textarea id="note" rows="2">${esc(sess.note||"")}</textarea></label>
@@ -728,7 +753,8 @@ function sleepNeed(wakeDay){const lb=checks().find(c=>c.sleep&&c.sleep.base);con
   return{need:Math.max(base*.85,base+sa+debt-nap),base,strain:sa,debt,raw,st,nap}}
 function sleepReg(){const b=checks().filter(c=>c.sleep&&tmin(c.sleep.bed)!=null).slice(0,7).map(c=>(tmin(c.sleep.bed)-720+1440)%1440);if(b.length<3)return null;const m=mean(b);const sd=Math.sqrt(mean(b.map(x=>(x-m)**2)));return{v:Math.round(clamp(0,100,100-sd*.7)),sd:Math.round(sd)}}
 const bedtimeFor=need=>hhmm((tmin(CFG.wake)??420)-need*60-15);
-function baseline(){const p=checks().slice(0,7);return{rhr:mean(p.map(x=>x.rhr).filter(Boolean)),hrv:mean(p.map(x=>x.hrv).filter(Boolean))}}
+function baseline(){if(BASEC)return BASEC;const p=checks().slice(0,7);const est=typeof AUTO!=="undefined"&&AUTO.log&&AUTO.log.length>1500?pct(AUTO.log.map(x=>x[1]),.03):null;BASEC={rhr:mean(p.map(x=>x.rhr).filter(Boolean))||est,hrv:mean(p.map(x=>x.hrv).filter(Boolean))};return BASEC}
+const pct=(a,q)=>{const b=[...a].sort((x,y)=>x-y);return b.length?b[Math.min(b.length-1,Math.floor(b.length*q))]:null};
 function stressOf(hr,hrv){const b=baseline();const rb=b.rhr||CFG.rest;let v=(hr/rb-1.05)/.35*3;if(hrv&&b.hrv)v=.5*v+.5*((1-hrv/b.hrv)/.6*3);return clamp(0,3,v)}
 const stressTxt=v=>v<1?"Calma":v<2?"Moderado":"Alto";
 const stressCls=v=>v<1?"g":v<2?"w":"r";
@@ -822,6 +848,7 @@ function insights(){const c=checks().filter(x=>Array.isArray(x.tags)&&x.score);c
   const tr=checks().filter(x=>x.score);const hd=tr.filter(x=>dayStrain(startOfDay(x.d)-DAY)>=14),ez=tr.filter(x=>{const st=dayStrain(startOfDay(x.d)-DAY);return st<14});if(hd.length>=3&&ez.length>=3)out.push(["Día anterior duro (strain ≥ 14)",Math.round(mean(hd.map(x=>x.score))-mean(ez.map(x=>x.score))),`${hd.length} días tras un día duro`]);
   return out.sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]))}
 function recCoach(td,sp,stv,tn){const bt=bedtimeFor(tn.need);
+  if(!td&&NATIVE)return["☾","Midiendo tu noche","Duerme con la pulsera puesta y el móvil cerca. Al despertar tendrás aquí tu sueño, tu HRV, tu pulso en reposo y tu recuperación, sin abrir la app."];
   if(!td)return CL.auth?["☾","Esperando a tu WHOOP","Cuando WHOOP puntúe tu noche verás aquí tu recuperación, tu sueño por fases y qué la explica. Sin hacer nada."]:["☀","Empieza el día con tu check","Registra cómo has dormido y mide 2 minutos tumbado. Con eso te digo cómo vas."];
   if(td.score<34)return["☾","Hoy toca recuperar",`Descanso activo, 10 minutos de Respira y a la cama a las ${bt}. Mañana lo notarás.`];
   if(sp!=null&&sp<80)return["☾","Te falta sueño",`Anoche cubriste el ${Math.round(sp)} % de lo que necesitabas. Acuéstate a las ${bt}; una siesta de 20 minutos también suma.`];
@@ -835,7 +862,7 @@ const AUTO={on:false,acc:[],rr:[],t:0,log:(store.get("day",[])||[]).filter(x=>Ar
   beat(hr,rr){const now=Date.now();this.acc.push(hr);rr.forEach(x=>this.rr.push([now,x]));this.rr=this.rr.filter(x=>now-x[0]<60000);if(!this.t)this.t=now;
     if(now-this.t>=10000){const hv=rrReal()?rmssd(cleanRR(this.rr.map(x=>x[1]))):null;this.push([now,Math.round(mean(this.acc)),hv?Math.round(hv):null]);this.acc=[];this.t=now}},
   push(smp){const L=this.log;const last=L[L.length-1];if(last&&smp[0]-last[0]>180000)closeAll(last[0]);L.push(smp);while(L.length&&smp[0]-L[0][0]>36*36e5)L.shift();
-    if(L.length%6===0)store.set("day",L);detect(smp[0]);if(L.length%3===0&&!$("v-hoy").hidden)renderDay()}};
+    if(!this.bulk&&L.length%6===0)store.set("day",L);detect(smp[0]);if(!this.bulk&&L.length%3===0&&!$("v-hoy").hidden)renderDay()}};
 const rFrac=h=>(h-(baseline().rhr||CFG.rest))/(CFG.max-(baseline().rhr||CFG.rest));
 function winS(now,ms){const L=AUTO.log;const o=[];for(let i=L.length-1;i>=0&&now-L[i][0]<ms;i--)o.push(L[i]);return o.reverse()}
 const sd=a=>{const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)**2)))};
@@ -844,12 +871,13 @@ function overlapsSession(a,b){return sessions().some(x=>x.id<b&&x.id+x.dur*1000>
 function detect(now){if(busy()){AUTO.bout=null;AUTO.slp=null;return}
   const w2=winS(now,120000),w3=winS(now,180000),w10=winS(now,600000);if(w2.length<8)return;const rest=baseline().rhr||CFG.rest;
   const m2=mean(w2.map(x=>x[1])),m3=mean(w3.map(x=>x[1]));
-  if(!AUTO.bout&&rFrac(m2)>=.25){AUTO.bout={start:w2[0][0]};AUTO.slp=null}
+  if(!AUTO.bout&&rFrac(m2)>=.27){AUTO.bout={start:w2[0][0]};AUTO.slp=null}
   else if(AUTO.bout&&rFrac(m3)<.18){finishAct(AUTO.bout.start,now-150000);AUTO.bout=null}
   if(!AUTO.bout&&w10.length>=50){const h10=w10.map(x=>x[1]);
-    if(!AUTO.slp&&mean(h10)<=rest+4&&sd(h10)<4)AUTO.slp={start:w10[0][0]};
-    else if(AUTO.slp&&m3>rest+12){finishSleep(AUTO.slp.start,now-180000);AUTO.slp=null}}}
-function closeAll(t){if(AUTO.bout){finishAct(AUTO.bout.start,t);AUTO.bout=null}if(AUTO.slp){finishSleep(AUTO.slp.start,t);AUTO.slp=null}}
+    if(!AUTO.slp&&mean(h10)<=rest+12&&sd(h10)<4){const e=AUTO.slpEnd;if(e&&w10[0][0]-e.end<45*60000){AUTO.slp={start:e.start}}else AUTO.slp={start:w10[0][0]};AUTO.slpEnd=null}
+    else if(AUTO.slp&&m3>rest+17){AUTO.slpEnd={start:AUTO.slp.start,end:now-180000};AUTO.slp=null}}
+  if(AUTO.slpEnd&&!AUTO.slp&&now-AUTO.slpEnd.end>45*60000){const e=AUTO.slpEnd;AUTO.slpEnd=null;finishSleep(e.start,e.end)}}
+function closeAll(t){if(AUTO.bout){finishAct(AUTO.bout.start,t);AUTO.bout=null}if(AUTO.slp){AUTO.slpEnd={start:AUTO.slp.start,end:t};AUTO.slp=null}if(AUTO.slpEnd&&t-AUTO.slpEnd.end>=0){const e=AUTO.slpEnd;AUTO.slpEnd=null;finishSleep(e.start,e.end)}}
 function samplesIn(a,b){return AUTO.log.filter(x=>x[0]>=a&&x[0]<=b)}
 function classify(all){const tr=all.length>90?15:0;const sm=all.slice(tr,all.length-tr);const hs=sm.map(x=>x[1]),rs=hs.map(rFrac);const mr=mean(rs),p90=[...rs].sort((a,b)=>a-b)[Math.floor(rs.length*.9)];const m30a=[];for(let i=0;i+3<=hs.length;i+=3)m30a.push(mean(hs.slice(i,i+3)));const cv=sd(m30a.length>3?m30a:hs)/mean(hs);
   const z4=hs.filter(h=>zoneOf(h)>=3).length/hs.length;const m30=[];for(let i=0;i+3<=hs.length;i+=3)m30.push(mean(hs.slice(i,i+3)));let surges=0;for(let i=2;i<m30.length;i++)if(m30[i]-Math.min(m30[i-1],m30[i-2])>=12)surges++;
@@ -861,11 +889,11 @@ function classify(all){const tr=all.length>90?15:0;const sm=all.slice(tr,all.len
   else if(cv>=.08){type="fuerza";why="picos con descansos largos"}
   else{type=mr>=.45?"carrera":"caminar";why="esfuerzo continuo"}
   return{type,why,mr,cv,z4,spm}}
-function finishAct(a,b){if(b-a<8*60000)return;const sm=samplesIn(a,b);if(sm.length<30||overlapsSession(a,b))return;const c=classify(sm);const hs=sm.map(x=>x[1]);
+function finishAct(a,b){if(b-a<10*60000)return;const sm=samplesIn(a,b);if(sm.length<30||overlapsSession(a,b))return;const c=classify(sm);if(c.type==="caminar"&&(c.mr<.3||b-a<12*60000))return;const hs=sm.map(x=>x[1]);
   addDet({kind:"act",start:a,end:b,type:c.type,why:c.why,avg:Math.round(mean(hs)),max:Math.max(...hs)})}
-function finishSleep(a,b){if(b-a<15*60000)return;const sm=samplesIn(a,b);if(sm.length<60)return;const sh=new Date(a).getHours();const night=(sh>=19||sh<5)&&b-a>=3*36e5;
+function finishSleep(a,b){if(b-a<15*60000)return;const sm=samplesIn(a,b);if(sm.length<60)return;const sh=new Date(a).getHours();const night=(sh>=19||sh<6)&&b-a>=3*36e5||b-a>=5*36e5;if(night&&(NATIVE||CFG.profile)){sensorNight(a,b);return}if(!night){if(b-a<20*60000)return;const rest=baseline().rhr||CFG.rest;const hv=sm.map(x=>x[2]).filter(v=>v!=null);const aw=AUTO.log.filter(x=>x[0]<a&&a-x[0]<6*36e5&&x[1]>rest+15&&x[2]!=null).map(x=>x[2]);if(hv.length>20&&aw.length>60&&pct(hv,.5)<pct(aw,.5)*1.15)return}
   addDet({kind:night?"night":"nap",start:a,end:b,avg:Math.round(mean(sm.map(x=>x[1]))),hrv:Math.round(mean(sm.map(x=>x[2]).filter(Boolean)))||null})}
-function addDet(d){const L=dets();if(L.some(x=>x.start<d.end&&x.end>d.start))return;d.id=d.start;L.unshift(d);store.set("det",L.slice(0,60));store.set("day",AUTO.log);renderDet();renderDay();
+function addDet(d){const L=dets();if(L.some(x=>x.start<d.end&&x.end>d.start))return;d.id=d.start;if(NATIVE&&d.kind!=="night"&&!tombHas("det",d.start)){autoSave(d);return}L.unshift(d);store.set("det",L.slice(0,60));store.set("day",AUTO.log);renderDet();renderDay();
   beep(990,.15);toast(d.kind==="act"?`Detectado: ${typeOf(d.type)[1]} · ${Math.round((d.end-d.start)/60000)} min`:d.kind==="nap"?`Siesta detectada · ${Math.round((d.end-d.start)/60000)} min`:"Noche de sueño detectada")}
 function sessFromSamples(a,b,type){const sm=samplesIn(a,b);const z=[0,0,0,0,0];let tr=0,kc=0,peaks=0,inP=false;
   sm.forEach((x,i)=>{const dt=i?Math.min(60,(x[0]-sm[i-1][0])/1000):10;const zz=zoneOf(x[1]);z[zz]+=dt;tr+=trimpMin(x[1])*dt/60;const k=kcalMin(x[1]);if(k)kc+=k*dt/60;if(zz===4&&!inP){inP=true;peaks++}if(zz<=2)inP=false});
@@ -890,18 +918,22 @@ function confirmDet(id){const L=dets();const d=L.find(x=>x.id===id);if(!d)return
 function renderDay(){const c=$("cvday");const P=prep(c);if(!P)return;const{x:cx,W,H}=P;const t0=startOfDay(Date.now()),t1=t0+DAY;const X=t=>30+(t-t0)/DAY*(W-34);
   const sm=AUTO.log.filter(x=>x[0]>=t0);const lo=40,hi=Math.max(140,...sm.map(x=>x[1]+5));const y=v=>H-16-(v-lo)/(hi-lo)*(H-24);
   const band=(a,b,col,al)=>{if(b<t0||a>t1)return;cx.globalAlpha=al;cx.fillStyle=col;cx.fillRect(X(Math.max(a,t0)),6,Math.max(2,X(Math.min(b,t1))-X(Math.max(a,t0))),H-22);cx.globalAlpha=1};
-  sessions().forEach(x=>band(x.id,x.id+x.dur*1000,cssv(x.type==="caminar"?"--lime":"--pink"),.22));naps().forEach(n=>band(n.start,n.end,cssv("--violet"),.25));
+  WH().sleeps.forEach(z=>{if(!z.nap)band(Date.parse(z.start),Date.parse(z.end),cssv("--violet"),.25)});checks().forEach(c=>{const z=c.sleep;if(z&&z.src==="sensor"&&z.start)band(z.start,z.end,cssv("--violet"),.25)});sessions().forEach(x=>band(x.id,x.id+x.dur*1000,cssv(x.type==="caminar"?"--lime":"--pink"),.22));naps().forEach(n=>band(n.start,n.end,cssv("--violet"),.25));
   dets().forEach(d=>band(d.start,d.end,cssv("--dim"),.25));if(AUTO.bout)band(AUTO.bout.start,Date.now(),cssv("--pink"),.12);if(AUTO.slp)band(AUTO.slp.start,Date.now(),cssv("--violet"),.12);
   [6,12,18].forEach(h=>{cx.fillStyle=cssv("--dim");cx.textAlign="center";cx.fillText(String(h).padStart(2,"0")+":00",X(t0+h*36e5),H-3);cx.strokeStyle="rgba(255,255,255,.05)";cx.beginPath();cx.moveTo(X(t0+h*36e5),6);cx.lineTo(X(t0+h*36e5),H-16);cx.stroke()});
   [60,100,140].forEach(v=>{if(v>hi)return;cx.fillStyle=cssv("--dim");cx.textAlign="right";cx.fillText(v,26,y(v)+3)});
   cx.lineWidth=1.6;cx.lineJoin="round";for(let i=1;i<sm.length;i++){if(sm[i][0]-sm[i-1][0]>180000)continue;cx.strokeStyle=cssv(ZC[zoneOf(sm[i][1])]);cx.beginPath();cx.moveTo(X(sm[i-1][0]),y(sm[i-1][1]));cx.lineTo(X(sm[i][0]),y(sm[i][1]));cx.stroke()}
   const nx=X(Date.now());cx.strokeStyle=cssv("--fg");cx.globalAlpha=.4;cx.setLineDash([3,3]);cx.beginPath();cx.moveTo(nx,6);cx.lineTo(nx,H-16);cx.stroke();cx.setLineDash([]);cx.globalAlpha=1;
-  const hrs=sm.length*10/3600;$("autobtn").textContent=AUTO.on?"Desactivar":"Activar";$("autobtn").className="s"+(AUTO.on?"":" p");
+  const hrs=sm.length*10/3600;
+  if(NATIVE){$("autobtn").hidden=true;const t0d=startOfDay(Date.now());const sT=sessions().filter(x=>x.id>=t0d),nT=naps().filter(n=>n.start>=t0d);$("autotxt").textContent=`Grabando 24 h con la app cerrada · ${fx(hrs)} h registradas hoy · ${sT.length} ${sT.length===1?"entreno":"entrenos"}${nT.length?", "+nT.length+(nT.length===1?" siesta":" siestas"):""}. Todo se detecta y se guarda solo.`;return}
+  if(CL.auth){$("autobtn").hidden=true;const t0d=startOfDay(Date.now());const sT=sessions().filter(x=>x.id>=t0d),nT=naps().filter(n=>n.start>=t0d);$("autotxt").textContent=`WHOOP detecta solo tus entrenos, siestas y sueño, aunque no abras la app ni tengas Bluefy abierto. Hoy: ${sT.length} ${sT.length===1?"entreno":"entrenos"}${nT.length?", "+nT.length+(nT.length===1?" siesta":" siestas"):""}.`+(sm.length?" La línea es tu pulso en directo cuando la app estuvo conectada.":"");return}
+  $("autobtn").hidden=false;
+  $("autobtn").textContent=AUTO.on?"Desactivar":"Activar";$("autobtn").className="s"+(AUTO.on?"":" p");
   $("autotxt").textContent=AUTO.on?(BT.on||demoTimer?`Detección automática activa · ${fx(hrs)} h registradas hoy. ${AUTO.bout?"Ahora mismo: actividad en curso.":AUTO.slp?"Ahora mismo: parece que duermes.":"Deja Bluefy abierto con la pantalla encendida."}`:"Detección activada, pero la pulsera no está conectada. Pulsa Activar de nuevo para reconectar."):"Activa la detección y deja Bluefy abierto con la pantalla encendida (por ejemplo, cargando en el box o en la mesilla). Detecto solo tus paseos, WODs, sesiones de fuerza y carrera, siestas y la noche, y te pido confirmarlos."}
 $("autobtn").onclick=async()=>{if(AUTO.on&&(BT.on||demoTimer)){AUTO.on=false;CFG.auto="0";saveCfg();closeAll(Date.now());store.set("day",AUTO.log);AUTO.wl?.release?.().catch(()=>{});renderDay();toast("Detección desactivada");return}
   if(!BT.on&&!demoTimer&&!(await btConnect()))return;AUTO.on=true;CFG.auto="1";saveCfg();if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>AUTO.wl=w).catch(()=>{});renderDay();toast("Detección automática activada")};
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&AUTO.on&&navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>AUTO.wl=w).catch(()=>{});if(document.hidden)store.set("day",AUTO.log)});
-AUTO.on=CFG.auto==="1";
+AUTO.on=CFG.auto==="1"&&!store.get("auth",null);
 
 
 // ---------- De un vistazo ----------
@@ -927,12 +959,35 @@ function renderGlance(){glHR();const now=Date.now();
   else{setRing("glslr",0);$("glslv").textContent="–";const nps=naps().filter(n=>startOfDay(n.start)===startOfDay(now));$("glsld").textContent=nps.length?"Siesta "+Math.round(nps.reduce((a,n)=>a+(n.end-n.start),0)/60000)+" min":"Regístralo en el check"}
   const hv=c.filter(x=>x.hrv).slice(0,7);const b=mean(hv.slice(td&&td.hrv?1:0).map(x=>x.hrv));$("glhv").textContent=td&&td.hrv?td.hrv:"--";$("glhv").style.color=td&&td.hrv&&b?cssv(td.hrv>=b*.95?"--good":td.hrv>=b*.8?"--warn":"--bad"):"";
   $("glhvd").textContent=b?"tu media "+Math.round(b)+" ms":"necesita latido a latido";const hr7=hv.slice().reverse();barChart($("glhvc"),hr7.map(x=>x.hrv),[],{min:Math.max(0,Math.min(...hr7.map(x=>x.hrv),999)-10),colorFn:()=>cssv("--sky")});
-  const cy=curCycle();const fresh=cy&&Date.now()-Date.parse(cy.start)<30*36e5;$("glstepv").textContent=fresh&&cy.step_count!=null?cy.step_count.toLocaleString("es-ES"):"--";$("glstepd").textContent=fresh&&cy.step_count!=null?"desde que te levantaste":CL.auth?"WHOOP aún no los manda":"conecta WHOOP";
-  $("glkcalv").textContent=fresh?Math.round(cy.score.kilojoule/4.184).toLocaleString("es-ES"):"--";$("glkcald").textContent=fresh?"gasto del día · media "+Math.round(cy.score.average_heart_rate)+" ppm":"conecta WHOOP";
+  const cy=curCycle();const fresh=cy&&Date.now()-Date.parse(cy.start)<30*36e5;const t0g=startOfDay(now);const todayLog=AUTO.log.filter(x=>x[0]>=t0g);const actMin=Math.round(todayLog.filter(x=>rFrac(x[1])>=.25).length/6);if(fresh&&cy.step_count!=null){$("gl-steps").querySelector("h3").innerHTML='<span style="color:var(--lime)">◉</span> Pasos';$("glstepv").textContent=cy.step_count.toLocaleString("es-ES");$("glstepd").textContent="desde que te levantaste"}else{$("gl-steps").querySelector("h3").innerHTML='<span style="color:var(--lime)">◉</span> Tiempo activo';$("glstepv").textContent=todayLog.length?actMin+" min":"--";$("glstepd").textContent=todayLog.length?"pulso por encima de paseo":"conecta tu pulsera"}
+  const kAct=todayLog.reduce((a,x)=>{const k=rFrac(x[1])>=.25?kcalMin(x[1]):null;return a+(k?k*10/60:0)},0);$("glkcalv").textContent=fresh?Math.round(cy.score.kilojoule/4.184).toLocaleString("es-ES"):kAct?Math.round(kAct).toLocaleString("es-ES"):"--";$("glkcald").textContent=fresh?"gasto del día · media "+Math.round(cy.score.average_heart_rate)+" ppm":kAct?"activas · estimadas":(+CFG.kg&&+CFG.age?"sin actividad aún":"pon peso y edad en Ajustes");
   $("glsub").textContent=BT.on?"en directo":demoTimer?"modo prueba":CL.auth&&CL.status==="ok"?"WHOOP sincronizado":""}
 ["gl-hr","gl-st","gl-sl","gl-hv","gl-steps","gl-kcal"].forEach((id,i)=>$(id).onclick=()=>{if(i===0)go("train");else if(i>=4)go("prog");else go("rec")});
 
 
+
+// ---------- App de iPhone: Bluetooth nativo en segundo plano ----------
+let NS=null,DEVWAIT=null;
+function natConnect(){return new Promise(res=>{if(NS&&NS.state==="on"){res(true);return}DEVWAIT=res;openDev()})}
+function openDev(){$("devsheet").hidden=false;nat("scan").catch(()=>{});renderDevSheet()}
+function closeDev(ok){$("devsheet").hidden=true;nat("stopScan").catch(()=>{});if(DEVWAIT){const f=DEVWAIT;DEVWAIT=null;f(!!ok)}}
+function renderDevSheet(){if($("devsheet").hidden||!NS)return;const st=NS.state;$("devstate").textContent=st==="on"?"Conectada":st==="connecting"?"Conectando…":NS.scanning?"Buscando…":"Sin conectar";$("devstate").className="pill "+(st==="on"?"g":"");
+  const L=NS.devices||[];$("devlist").innerHTML=(st==="on"?`<div class="reco"><div class="ic">♥</div><div style="flex:1"><b>${esc(NS.name||"Pulsera")}</b><p>Conectada · ${NS.hr||"--"} ppm${NS.battery>=0?" · batería "+NS.battery+" %":""}</p></div></div>`:"")+
+    (L.length?L.map(d=>`<button class="sess" data-dev="${esc(d.id)}" style="grid-template-columns:1fr auto"><b>${esc(d.name||"Pulsera")}</b><span class="m" style="grid-column:auto">${d.rssi>-60?"muy cerca":d.rssi>-80?"cerca":"lejos"}</span></button>`).join(""):(st==="on"?"":'<div class="empty">Buscando pulseras… Acerca la WHOOP al móvil.</div>'));
+  $("devlist").querySelectorAll("[data-dev]").forEach(b=>b.onclick=()=>{nat("connect",{id:b.dataset.dev});$("devstate").textContent="Conectando…";nat("haptic").catch(()=>{})});
+  if(st==="on"&&DEVWAIT)setTimeout(()=>closeDev(true),700)}
+$("devscan").onclick=()=>{nat("scan").catch(()=>{})};$("devclose").onclick=()=>closeDev(NS&&NS.state==="on");
+$("devsheet").onclick=e=>{if(e.target===$("devsheet"))closeDev(NS&&NS.state==="on")};
+window.__nstatus=st=>{NS=st;const on=st.state==="on";BT.on=on;BT.name=st.name||"WHOOP";BT.battery=st.battery>=0?st.battery:null;BT.contact=st.contact<0?null:!!st.contact;
+  status(on?BT.name:st.state==="connecting"?"Buscando pulsera…":"Desconectada",on?"on":"off");renderDevSheet();if(!$("m-sensor").hidden)renderSensor()};
+window.__nb=(hr,rr)=>{onPacket({hr,rr,cs:BT.contact!=null,cc:BT.contact})};
+window.__nsample=s=>{const L=AUTO.log;if(L.length&&s[0]<=L[L.length-1][0])return;AUTO.push(s)};
+let pulling=false;
+async function nativePull(){if(!NATIVE||pulling)return;pulling=true;try{const L=AUTO.log;const since=L.length?L[L.length-1][0]:Date.now()-36*36e5;const rows=await nat("log",{since});
+    if(rows&&rows.length){AUTO.bulk=rows.length>30;for(const r of rows)AUTO.push([r[0],r[1],r[2]<0?null:r[2]]);AUTO.bulk=false;store.set("day",AUTO.log);if(rows.length>30){renderDay();renderVisible()}}}
+  catch(e){}finally{AUTO.bulk=false;pulling=false}}
+window.__nrefresh=async()=>{await nativePull();if(CL.auth){await syncWhoop();cloudSync().catch(()=>{})}renderVisible()};
+async function natHandOff(){if(!NATIVE||!CL.auth)return;if(CL.auth.rt){await nat("setAuth",{server:clSrv(),profile:CFG.profile||"",at:CL.auth.at,rt:CL.auth.rt,cid:CL.auth.cid,exp:CL.auth.exp});CL.auth={cid:CL.auth.cid,native:true};store.set("auth",CL.auth)}else nat("setAuth",{server:clSrv(),profile:CFG.profile||""}).catch(()=>{})}
 // ---------- WHOOP en la nube: login, sincronización y copia ----------
 const REDIR=location.origin+location.pathname;
 const CL={auth:store.get("auth",null),busy:null,status:"off",last:store.get("whsync",0),msg:""};
@@ -949,14 +1004,16 @@ async function clCallback(){const q=new URLSearchParams(location.search);const c
   history.replaceState(null,"",REDIR);const p=store.get("oauthPending",null);store.set("oauthPending",null);
   if(q.get("error")||!p||p.st!==q.get("state")){toast("Conexión cancelada");return false}
   try{const r=await fetch(p.srv+"/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({grant_type:"authorization_code",code,code_verifier:p.ver,client_id:p.client_id,redirect_uri:REDIR})});
-    if(!r.ok)throw new Error("token "+r.status);saveAuth(p.client_id,await r.json());toast("WHOOP conectado");return true}catch(e){toast("No se pudo conectar: "+e.message);return false}}
+    if(!r.ok)throw new Error("token "+r.status);saveAuth(p.client_id,await r.json());await natHandOff();toast(CFG.profile?"Conectado a tu servidor":"WHOOP conectado");return true}catch(e){toast("No se pudo conectar: "+e.message);return false}}
 function saveAuth(cid,t){CL.auth={cid,at:t.access_token,rt:t.refresh_token||(CL.auth&&CL.auth.rt),exp:Date.now()+(t.expires_in||3600)*1000};store.set("auth",CL.auth)}
 async function refreshAuth(){if(CL.busy)return CL.busy;CL.busy=(async()=>{const a=CL.auth;if(!a||!a.rt)throw new Error("noauth");
   const r=await fetch(clSrv()+"/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({grant_type:"refresh_token",refresh_token:a.rt,client_id:a.cid})});
   if(!r.ok){if(r.status>=400&&r.status<500){CL.auth=null;store.set("auth",null);CL.status="off"}throw new Error("noauth")}saveAuth(a.cid,await r.json())})();try{return await CL.busy}finally{CL.busy=null}}
-async function api(path,opt={}){if(!CL.auth)throw new Error("noauth");if(Date.now()>CL.auth.exp-60000)await refreshAuth();
-  const send=()=>fetch(clSrv()+path,{...opt,headers:{...(opt.headers||{}),Authorization:"Bearer "+CL.auth.at}});let r=await send();if(r.status===401){await refreshAuth();r=await send()}return r}
-function clLogout(){CL.auth=null;store.set("auth",null);CL.status="off";renderCloud();renderHoy();toast("Desconectado. Tus datos siguen en este móvil y en tu servidor.")}
+async function api(path,opt={}){if(!CL.auth)throw new Error("noauth");const P=(CFG.profile&&!path.includes("profile=")&&(path.startsWith("/api/store")||path.startsWith("/api/log")))?(path.includes("?")?"&":"?")+"profile="+encodeURIComponent(CFG.profile):"";
+  if(CL.auth.native){let t;try{t=await nat("token")}catch(e){if(String(e.message||e).includes("noauth")){CL.auth=null;store.set("auth",null);CL.status="off"}throw new Error("noauth")}return fetch(clSrv()+path+P,{...opt,headers:{...(opt.headers||{}),Authorization:"Bearer "+t}})}
+  if(Date.now()>CL.auth.exp-60000)await refreshAuth();
+  const send=()=>fetch(clSrv()+path+P,{...opt,headers:{...(opt.headers||{}),Authorization:"Bearer "+CL.auth.at}});let r=await send();if(r.status===401){await refreshAuth();r=await send()}return r}
+function clLogout(){if(NATIVE)nat("logout").catch(()=>{});CL.auth=null;store.set("auth",null);CL.status="off";renderCloud();renderHoy();toast("Desconectado. Tus datos siguen en este móvil y en tu servidor.")}
 
 // --- copia de tus datos en tu servidor ---
 const SYNC={sess:x=>x.id,chk:x=>dayKey(x.d),str:x=>x.d,brt:x=>x.d,naps:x=>x.wid||x.start,det:x=>x.id};
@@ -979,7 +1036,7 @@ async function cloudSync(){if(!CL.auth)return;const r=await api("/api/store");if
 const SPORT=[[/functional|crossfit|hiit|circuit|boot ?camp|f45|orange/i,"wod"],[/olympic|weightlift/i,"halte"],[/powerlift|strength|lifting|weight/i,"fuerza"],[/run|track|treadmill/i,"carrera"],[/walk|hik|stroll/i,"caminar"],[/surf/i,"surf"]];
 const sportType=n=>{for(const[r,t] of SPORT)if(r.test(n||""))return t;return"otro"};
 const WH=()=>store.get("wh",{cycles:[],recoveries:[],sleeps:[],workouts:[]});
-async function syncWhoop(days){if(!CL.auth)return;CL.status="sync";renderCloud();
+async function syncWhoop(days){if(!CL.auth||CFG.profile)return;CL.status="sync";renderCloud();
   try{const r=await api("/api/whoop?days="+(days||(CL.last&&Date.now()-CL.last<5*DAY?7:30)));
     if(r.status===409){CL.status="nowhoop";CL.msg="Tu servidor no tiene WHOOP conectado. Pídeme que lo reconecte.";renderCloud();return}
     if(!r.ok)throw new Error("whoop "+r.status);const j=await r.json();const w=WH();
@@ -1017,27 +1074,174 @@ function applyWhoop(w){const dels=new Set(store.get("delw",[]));const tb=new Set
   const busyRanges=[...w.workouts.map(o=>[Date.parse(o.start),Date.parse(o.end)]),...nps.map(n=>[n.start,n.end])];
   const dd=dets().filter(d=>!busyRanges.some(([a,b])=>a<d.end&&b>d.start));if(dd.length!==dets().length)store.set("det",dd)}
 const curCycle=()=>{const c=WH().cycles.filter(x=>x.score_state==="SCORED"&&x.score).sort((a,b)=>Date.parse(b.start)-Date.parse(a.start));return c[0]||null};
-function renderCloud(){const on=!!CL.auth;$("wcta").hidden=on;if(!on){$("wctamsg").textContent=CL.msg||""}
+function renderCloud(){const on=!!CL.auth;$("wcta").hidden=on||store.get("ctano",0)>Date.now();if(!on){$("wctamsg").textContent=CL.msg||"";$("wcta").querySelector("h2").textContent=CFG.profile?"Guarda tus datos":"Conecta tu WHOOP";$("wctabtn").textContent=CFG.profile?"Conectar con el servidor":"Conectar con WHOOP"}
   $("clpill").className="pill "+(on?(CL.status==="err"||CL.status==="nowhoop"?"w":"g"):"");$("clpill").textContent=on?(CL.status==="sync"?"Sincronizando…":CL.status==="err"?"Sin conexión":CL.status==="nowhoop"?"WHOOP desconectado":"Conectado"):"Sin conectar";
   if(document.activeElement!==$("s-server"))$("s-server").value=CFG.server||"";
   const w=WH();const ago=t=>{const m=Math.round((Date.now()-t)/60000);return m<1?"ahora":m<60?"hace "+m+" min":m<1440?"hace "+Math.round(m/60)+" h":"hace "+Math.round(m/1440)+" d"};
   $("clmsg").textContent=CL.msg||(on?`Lectura de WHOOP ${CL.last?ago(CL.last):"pendiente"} · ${w.sleeps.filter(x=>!x.nap).length} noches, ${w.sleeps.filter(x=>x.nap).length} siestas, ${w.workouts.length} entrenos.${CL.saved?" Copia guardada "+ago(CL.saved)+".":""}`:"Conecta para leer WHOOP solo y guardar tu historial en tu servidor.");
-  $("eyebrow").innerHTML=esc(new Date().toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"}))+(on&&CL.status==="ok"?'<span class="wdot" title="WHOOP sincronizado"></span>':"")}
+  $("eyebrow").innerHTML=(CFG.pname?esc(CFG.pname)+" · ":"")+esc(new Date().toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"}))+(on&&CL.status==="ok"?'<span class="wdot" title="WHOOP sincronizado"></span>':"")}
 function renderVisible(){if(!$("v-hoy").hidden)renderHoy();if(!$("v-rec").hidden)renderRec();if(!$("v-prog").hidden)renderProg();if(!$("v-mas").hidden)renderHist()}
-$("wctabtn").onclick=clConnect;$("clconn").onclick=clConnect;$("clout").onclick=clLogout;
+$("wctabtn").onclick=clConnect;$("wctano").onclick=()=>{store.set("ctano",Date.now()+14*DAY);$("wcta").hidden=true};$("clconn").onclick=clConnect;$("clout").onclick=clLogout;
 $("clsync").onclick=async()=>{if(!CL.auth){clConnect();return}await syncWhoop(30);try{await cloudSync();toast("Sincronizado")}catch(e){toast("No he podido guardar la copia")}};
 $("s-server").onchange=()=>{CFG.server=$("s-server").value.trim().replace(/\/(mcp)?\/*$/,"");saveCfg()};
+$("s-profile").value=CFG.profile||"";$("s-pname").value=CFG.pname||"";
+$("s-profile").onchange=()=>{CFG.profile=$("s-profile").value;saveCfg();if(NATIVE)nat("setAuth",{profile:CFG.profile}).catch(()=>{});toast("Perfil cambiado");if(CL.auth)cloudSync().catch(()=>{});renderCloud();renderVisible()};
+$("s-pname").onchange=()=>{CFG.pname=$("s-pname").value.trim().slice(0,24);saveCfg();renderHoy()};
 async function autoBT(){try{if(BT.on||!navigator.bluetooth||!navigator.bluetooth.getDevices)return;const ds=await navigator.bluetooth.getDevices();const id=store.get("btid",null);const d=ds.find(x=>x.id===id)||ds[0];if(!d)return;
   BT.dev=d;d.addEventListener("gattserverdisconnected",btLost);await btGatt()}catch(e){}}
-async function boot(){const fresh=await clCallback();renderCloud();if(CL.auth){try{await cloudSync()}catch(e){}await syncWhoop(fresh?30:undefined);try{await cloudSync()}catch(e){}}renderVisible();autoBT()}
+async function boot(){const fresh=await clCallback();if(NATIVE){$("bt").hidden=true;try{window.__nstatus(await nat("status"))}catch(e){}await nativePull();await natHandOff()}renderCloud();if(CL.auth){try{await cloudSync()}catch(e){}await syncWhoop(fresh?30:undefined);try{await cloudSync()}catch(e){}}renderVisible();autoBT()}
 setInterval(()=>{if(CL.auth&&!document.hidden&&Date.now()-CL.last>15*60000)syncWhoop()},60000);
-document.addEventListener("visibilitychange",()=>{if(document.hidden){if(CL.auth){clearTimeout(pushT);cloudSync().catch(()=>{})}}else if(CL.auth&&Date.now()-CL.last>5*60000)syncWhoop()});
+document.addEventListener("visibilitychange",()=>{if(document.hidden){if(NATIVE)nat("upload").catch(()=>{});if(CL.auth){clearTimeout(pushT);cloudSync().catch(()=>{})}}else{if(NATIVE)nativePull().then(()=>{renderVisible()});if(CL.auth&&Date.now()-CL.last>5*60000)syncWhoop()}});
 
+
+// ---------- Noche medida por tu pulsera (sin WHOOP) ----------
+function tombHas(k,id){return (store.get("tomb",[])||[]).includes(k+":"+id)}
+function autoSave(d){if(d.kind==="act"){const se=sessFromSamples(d.start,d.end,d.type);se.why=d.why;const h=sessions().filter(x=>x.id!==se.id);h.unshift(se);h.sort((a,b)=>b.id-a.id);store.set("sess",h.slice(0,600));if(!AUTO.bulk)toast(`${typeOf(d.type)[1]} guardado · ${Math.round((d.end-d.start)/60000)} min`)}
+  else{const n=naps();if(!n.some(x=>Math.abs(x.start-d.start)<6e5)){n.unshift({start:d.start,end:d.end,avg:d.avg,hrv:d.hrv,src:"sensor"});store.set("naps",n.slice(0,300))}if(!AUTO.bulk)toast(`Siesta registrada · ${Math.round((d.end-d.start)/60000)} min`)}
+  if(!AUTO.bulk){renderDay();renderVisible()}}
+function stagesOf(sm){const hs=sm.map(x=>x[1]);const p25=pct(hs,.25),p50=pct(hs,.5),p75=pct(hs,.75);const hvs=sm.map(x=>x[2]).filter(v=>v!=null);const hvMed=pct(hvs,.5);
+  const st={awake:0,light:0,sws:0,rem:0};const seq=[];
+  for(let i=0;i<sm.length;i++){const w=hs.slice(Math.max(0,i-6),i+7);const s2=sd(w);const h=hs[i],hv=sm[i][2];let k;
+    if(h>p75+8||h>p50+12)k="awake";else if(h<=p25+1&&s2<1.6&&(hv==null||hvMed==null||hv>=hvMed*.9))k="sws";else if(s2>=2.4&&h>=p50)k="rem";else k="light";
+    const dt=i?Math.min(60000,sm[i][0]-sm[i-1][0]):10000;st[k]+=dt;seq.push(k)}
+  let cyc=0;for(let i=1;i<seq.length;i++)if(seq[i]==="rem"&&seq[i-1]!=="rem"&&seq.slice(Math.max(0,i-60),i).includes("sws"))cyc++;
+  let dist=0;for(let i=1;i<seq.length;i++)if(seq[i]==="awake"&&seq[i-1]!=="awake")dist++;
+  return{st,cyc:Math.max(1,Math.min(7,cyc)),dist}}
+async function sensorNight(a,b){const sm=samplesIn(a,b);if(sm.length<200)return;const k=dayKey(b);const ex=checks().find(x=>dayKey(x.d)===k);if(ex&&ex.src==="whoop")return;
+  const hs=sm.map(x=>x[1]);let rhr=999;for(let i=0;i+30<=hs.length;i+=3)rhr=Math.min(rhr,mean(hs.slice(i,i+30)));rhr=Math.round(rhr);
+  const hvs=sm.slice(Math.floor(sm.length*.25)).map(x=>x[2]).filter(v=>v!=null&&v>3);const hrv=hvs.length>30?Math.round(pct(hvs,.5)):null;
+  const S=stagesOf(sm);const inBed=(b-a)/36e5,asleep=(S.st.light+S.st.sws+S.st.rem)/36e5;
+  let resp=null,irr=null;if(NATIVE){try{const rr=await nat("rr",{since:a,until:b});if(rr&&rr.length>200){const v=rr.map(x=>x[1]);const m=Math.floor(v.length*.4);resp=respRate(v.slice(m,m+2400));irr=irrOf(v)}}catch(e){}}
+  const dayS=AUTO.log.filter(x=>x[0]>=a-14*36e5&&x[0]<=a-2*36e5);const dip=dayS.length>=500?+(1-mean(hs)/mean(dayS.map(x=>x[1]))).toFixed(3):null;
+  const need=sleepNeed(b);const c=Object.assign({d:b,feel:null,tags:null},ex||{},{src:"sensor",rhr,hrv,irr,dip,resp:resp?+resp.toFixed(1):(ex&&ex.resp)||null,
+    sleep:{src:"sensor",bed:tod(a),wake:tod(b),start:a,end:b,h:+asleep.toFixed(2),need:+need.need.toFixed(2),base:+need.base.toFixed(2),q:ex&&ex.sleep?ex.sleep.q:null,
+      eff:Math.round(asleep/inBed*100),perf:Math.round(Math.min(100,asleep/need.need*100)),cons:null,st:S.st,cyc:S.cyc,dist:S.dist}});
+  finalizeCheck(c);if(!AUTO.bulk)toast(`Noche medida: ${hm(asleep)} · recuperación ${c.score}%`)}
+// ---------- Laboratorio: análisis día a día comparándote contigo mismo ----------
+function irrOf(v){const x=v.filter(r=>r>=300&&r<=2000);if(x.length<3000)return null;let bad=0,n=0;
+  for(let i=4;i<x.length-4;i++){const w=x.slice(i-4,i+5).sort((a,b)=>a-b);const m=w[4];n++;if(Math.abs(x[i]-m)/m>.2)bad++}return n?+(bad/n).toFixed(3):null}
+function labSess(s){const end=s.id+s.dur*1000;if(s.lab&&s.lab.v===2&&(s.lab.hrr60!=null||Date.now()-end>3*36e5))return s.lab;
+  const hs=s.series;if(!hs||hs.length<12)return null;const st=s.step||5,n=hs.length,pk=Math.max(...hs);
+  const sm=hs.map((_,i)=>mean(hs.slice(Math.max(0,i-1),i+2)));const hi=.85*CFG.max;
+  let rise=null;for(let i=0;i<n;i++)if(sm[i]>=.9*pk){rise=i*st;break}
+  let high=0,run=0,sus=0;for(const h of sm){if(h>=hi){high+=st;run+=st;sus=Math.max(sus,run)}else run=0}
+  const w=Math.max(2,Math.round(60/st));const drops=[];let i=w;const thr=zoneHr(.8);
+  while(i<n-w){const v=sm[i];let isPk=v>=thr;if(isPk)for(let k=i-w;k<=i+w;k++)if(sm[k]>v){isPk=false;break}
+    if(isPk){const lo=Math.min(...sm.slice(i,i+w+1));if(v-lo>=8){drops.push(v-lo);i+=w;continue}}i++}
+  let drop60=drops.length?Math.round(mean(drops)):null;if(drop60==null&&s.hrr&&s.hrr.length)drop60=Math.round(mean(s.hrr));
+  let hrr60=null;const L=AUTO.log.filter(x=>x[0]>=end-6*60000&&x[0]<=end+4*60000);
+  if(L.length>=30){let pi=0;L.forEach((x,k)=>{if(x[0]<=end+60000&&x[1]>L[pi][1])pi=k});const t60=L[pi][0]+60000;const a=L.filter(x=>Math.abs(x[0]-t60)<=15000);if(a.length&&L[pi][1]>=zoneHr(.7))hrr60=Math.round(L[pi][1]-mean(a.map(x=>x[1])))}
+  if(hrr60==null){const tail=Math.max(0,n-Math.round(360/st));let pi=tail;for(let k=tail;k<n;k++)if(sm[k]>sm[pi])pi=k;if(pi+w<n&&sm[pi]>=zoneHr(.7))hrr60=Math.round(sm[pi]-sm[pi+w])}
+  let drift=null;if((s.type==="carrera"||s.type==="caminar"||s.type==="bici"||s.type==="remo")&&n*st>=20*60){const a=sm.slice(Math.round(300/st));const h=Math.floor(a.length/2);drift=+((mean(a.slice(h))/mean(a.slice(0,h))-1)*100).toFixed(1)}
+  s.lab={v:2,rise,high,sus,drop60,nPk:drops.length,hrr60,drift,peak:pk,avg:s.avg};return s.lab}
+function labAll(){const ss=store.get("sess",[])||[];let ch=false;ss.forEach(s=>{if(!s||s.demo)return;const b=JSON.stringify(s.lab||null);labSess(s);if(JSON.stringify(s.lab||null)!==b)ch=true});if(ch)store.set("sess",ss);return ss.filter(s=>s&&!s.demo)}
+const LABM=[
+  ["hrr60","Bajada del pulso 1 min después","ppm",1,3,v=>"−"+v],
+  ["drop60","Recuperación entre esfuerzos","ppm/min",1,3,v=>"−"+v],
+  ["sus","Tiempo seguido arriba (>85 %)","",1,45,v=>mmss(v)],
+  ["high","Tiempo total arriba (>85 %)","",0,90,v=>mmss(v)],
+  ["rise","Tiempo hasta tu pico","",0,40,v=>mmss(v)],
+  ["peak","Pulso máximo","ppm",0,5,v=>v],
+  ["drift","Deriva cardiaca","%",-1,2,v=>fx(v)+" %"]];
+function labCmp(s,ss){const L=labSess(s);if(!L)return null;const prev=ss.filter(x=>x.type===s.type&&x.id<s.id&&x.lab).slice(0,8);
+  const rows=[],say=[];const tl=typeOf(s.type)[1];const tipo=tl===tl.toUpperCase()?tl:tl.toLowerCase();
+  LABM.forEach(([k,lab,u,better,thr,f])=>{const v=L[k];if(v==null)return;const vs=prev.map(x=>x.lab[k]).filter(x=>x!=null);const a=vs.length>=2?mean(vs):null;
+    const d=a==null?0:v-a;const sig=a!=null&&Math.abs(d)>=Math.max(thr,k==="rise"||k==="sus"||k==="high"?a*.2:0);
+    const good=better===0?null:sig?(better>0?d>0:d<0):null;rows.push({k,lab,v:f(v)+(u&&k!=="drift"?" "+u:""),a:a==null?"--":f(k==="drift"?+a.toFixed(1):Math.round(a)),good,sig,d});
+    if(!sig)return;const A=k==="drift"?fx(a)+" %":Math.round(a),D=Math.abs(Math.round(d));
+    if(k==="hrr60")say.push(d>0?["g","Recuperas mejor después del esfuerzo",`Tu pulso bajó ${v} ppm en el primer minuto, ${D} más que tu media (${A}).`,D*3]:["r","Tu pulso tardó más en bajar",`Bajó ${v} ppm en el primer minuto tras el ${tipo}, ${D} menos que tu media (${A}). Suele indicar fatiga o poco descanso.`,D*3]);
+    if(k==="drop60")say.push(d>0?["g","Te recuperas antes entre esfuerzos",`Dentro del ${tipo} bajas ${v} ppm por minuto tras cada pico (tu media ${A}).`,D*2.5]:["r","Te cuesta más recuperar entre esfuerzos",`Bajas ${v} ppm por minuto tras cada pico (tu media ${A}). Hoy el motor va más justo.`,D*2.5]);
+    if(k==="sus")say.push(d>0?["g","Aguantas más tiempo arriba",`${mmss(v)} seguidos por encima del 85 % de tu máximo (media ${mmss(a)}).`,d/20]:["r","Te ha costado más estar arriba",`Solo ${mmss(v)} seguidos por encima del 85 % de tu máximo (media ${mmss(a)}).`,-d/20]);
+    if(k==="rise")say.push(d<0?["n","Has subido antes a tu pico",`Tardaste ${mmss(v)} en llegar arriba (media ${mmss(a)}): arranque más fuerte o el cuerpo respondió más rápido.`,-d/25]:["n","Has tardado más en subir",`${mmss(v)} hasta tu pico (media ${mmss(a)}): arranque más progresivo o piernas más cargadas.`,d/25]);
+    if(k==="peak")say.push(d>0?["n","Has llegado más arriba que de costumbre",`Pico de ${v} ppm (media ${A}).`,D]:["r","Tu pulso no ha subido tanto",`Pico de ${v} ppm, ${D} menos que tu media (${A}). Cuando no consigues subir, suele ser fatiga acumulada.`,D*1.5]);
+    if(k==="drift")say.push(d<0?["g","Menos deriva cardiaca",`El pulso subió un ${fx(v)} % en la segunda mitad (media ${A}): mejor base aeróbica.`,-d*3]:["r","Más deriva cardiaca",`El pulso subió un ${fx(v)} % en la segunda mitad (media ${A}). Calor, poca agua o base aeróbica justa.`,d*3])});
+  return{rows,say,n:prev.length}}
+function vo2At(t){const c=checks().filter(x=>x.rhr&&x.d<=t&&x.d>t-7*DAY);return c.length?15.3*CFG.max/mean(c.map(x=>x.rhr)):null}
+function deepPct(c){const z=c.sleep&&c.sleep.st;if(!z)return null;const tot=(z.light||0)+(z.sws||0)+(z.rem||0);return tot?{sws:z.sws/tot*100,rem:z.rem/tot*100}:null}
+function labDay(){const out=[];const add=(k,t,p,w)=>out.push({k,t,p,w});const now=Date.now();const C=checks();const c=C[0]&&dayKey(C[0].d)===dayKey(now)?C[0]:null;
+  if(c){const P=C.filter(x=>x!==c&&x.d<c.d&&x.d>c.d-15*DAY);const av=f=>{const v=P.map(f).filter(x=>x!=null&&isFinite(x));return v.length>=3?mean(v):null};
+    const bh=av(x=>x.hrv),br=av(x=>x.rhr),bs=av(x=>x.resp),bsl=av(x=>x.sleep&&x.sleep.h),be=av(x=>x.sleep&&x.sleep.eff),bsc=av(x=>x.score);
+    if(c.rhr&&br&&c.hrv&&bh&&c.rhr>=br+3&&c.hrv<=bh*.88&&(!c.resp||!bs||c.resp>=bs+.6))add("w","Ojo: tu cuerpo está peleando con algo",`Pulso en reposo +${Math.round(c.rhr-br)} ppm, HRV −${Math.round((1-c.hrv/bh)*100)} %${c.resp&&bs?`, respiración ${c.resp>=bs?"+":""}${fx(c.resp-bs)} rpm`:""} respecto a tu media. Es el patrón típico de los 1-2 días antes de un resfriado o de sobreentrenamiento. Hoy, suave.`,100);
+    if(c.score&&bsc&&Math.abs(c.score-bsc)>=8)add(c.score>bsc?"g":"r",c.score>bsc?"Recuperas mejor que estos días":"Recuperas peor que estos días",`${c.score} % frente a tu media de ${Math.round(bsc)} % en las últimas 2 semanas.`,Math.abs(c.score-bsc));
+    if(c.sleep&&c.sleep.h&&bsl&&Math.abs(c.sleep.h-bsl)>=1/3){const d=Math.round((c.sleep.h-bsl)*60);add(d>0?"g":"r",d>0?"Has dormido más":"Has dormido menos",`${hm(c.sleep.h)}, ${Math.abs(d)} min ${d>0?"más":"menos"} que tu media.`,Math.abs(d)/4)}
+    const dp=deepPct(c);const P2=P.map(deepPct).filter(Boolean);if(dp&&P2.length>=3){const ms=mean(P2.map(x=>x.sws)),mr=mean(P2.map(x=>x.rem));const ds=dp.sws-ms,dr=dp.rem-mr;
+      if(Math.abs(ds)>=3)add(ds>0?"g":"r",ds>0?"Más sueño profundo":"Menos sueño profundo",`${Math.round(dp.sws)} % de la noche en profundo (media ${Math.round(ms)} %). Es donde se recupera el músculo.`,Math.abs(ds)*2);
+      if(Math.abs(dr)>=3)add(dr>0?"g":"r",dr>0?"Más sueño REM":"Menos sueño REM",`${Math.round(dp.rem)} % en REM (media ${Math.round(mr)} %). El REM recupera la cabeza y la coordinación.`,Math.abs(dr)*1.5)}
+    if(c.sleep&&c.sleep.eff&&be&&Math.abs(c.sleep.eff-be)>=4)add(c.sleep.eff>be?"g":"r",c.sleep.eff>be?"Noche más tranquila":"Noche más movida",`Eficiencia del ${c.sleep.eff} % (media ${Math.round(be)} %).`,Math.abs(c.sleep.eff-be));
+    if(c.hrv&&bh&&Math.abs(c.hrv/bh-1)>=.1)add(c.hrv>bh?"g":"r",c.hrv>bh?"HRV por encima de tu media":"HRV por debajo de tu media",`${c.hrv} ms frente a ${Math.round(bh)} ms. ${c.hrv>bh?"Sistema nervioso recuperado.":"El cuerpo aún está gestionando carga o estrés."}`,Math.abs(c.hrv/bh-1)*60);
+    if(c.rhr&&br&&Math.abs(c.rhr-br)>=3)add(c.rhr<br?"g":"r",c.rhr<br?"Pulso en reposo más bajo":"Pulso en reposo más alto",`${c.rhr} ppm frente a tu media de ${Math.round(br)}.`,Math.abs(c.rhr-br)*3);
+    if(c.resp&&bs&&Math.abs(c.resp-bs)>=1)add(c.resp>bs?"r":"g",c.resp>bs?"Respiración nocturna más alta":"Respiración nocturna más baja",`${fx(c.resp)} rpm (media ${fx(bs)}).`,Math.abs(c.resp-bs)*6);
+    if(c.dip!=null){if(c.dip<.08)add("r","Tu pulso apenas bajó por la noche",`Solo un ${Math.round(c.dip*100)} % menos que de día (lo normal, 10-20 %). Suele pasar con alcohol, cena tarde, calor o estrés.`,20);else if(c.dip>=.15)add("g","Buena bajada del pulso nocturno",`Un ${Math.round(c.dip*100)} % por debajo de tu pulso de día: el cuerpo ha descansado de verdad.`,6)}
+    const beds=C.slice(0,7).filter(x=>x.sleep&&x.sleep.start).map(x=>{const d=new Date(x.sleep.start);let m=d.getHours()*60+d.getMinutes();if(m<12*60)m+=1440;return m});
+    if(beds.length>=5){const v=sd(beds);if(v>60)add("r","Horarios de sueño irregulares",`Te acuestas con ±${Math.round(v)} min de diferencia entre días. La regularidad mejora la recuperación tanto como dormir más.`,v/6);else if(v<=30)add("g","Horarios muy regulares",`Solo ±${Math.round(v)} min de diferencia al acostarte esta semana.`,4)}
+    const ir=C.slice(0,5).filter(x=>x.irr!=null);if(ir.length>=3&&ir.filter(x=>x.irr>.12).length>=3)add("w","Ritmo irregular varias noches",`He visto latidos muy irregulares en ${ir.filter(x=>x.irr>.12).length} de las últimas ${ir.length} noches. Puede ser la pulsera floja; si se repite con la pulsera bien ajustada, coméntaselo a tu médico. No es un diagnóstico.`,90)}
+  const ss=labAll();const rec=ss.filter(s=>now-s.id<30*36e5).slice(0,2);
+  rec.forEach(s=>{const r=labCmp(s,ss);if(!r)return;const when=dayKey(s.id)===dayKey(now)?"Hoy":"Ayer";r.say.forEach(x=>add(x[0],x[1],when+" · "+typeOf(s.type)[1]+": "+x[2],x[3]+5))});
+  const v1=vo2At(now),v0=vo2At(now-28*DAY);if(v1&&v0&&Math.abs(v1-v0)>=1)add(v1>v0?"g":"r",v1>v0?"Tu VO2max estimado sube":"Tu VO2max estimado baja",`${Math.round(v1)} ml/kg/min, ${v1>v0?"+":"−"}${fx(Math.abs(v1-v0))} en 4 semanas.`,Math.abs(v1-v0)*4);
+  const o={w:0,r:1,g:2,n:3};return out.sort((a,b)=>a.k==="w"&&b.k!=="w"?-1:b.k==="w"&&a.k!=="w"?1:b.w-a.w).slice(0,7)}
+const LABI={g:"▲",r:"▼",n:"•",w:"!"};
+function labList(L){return L.map(x=>`<div class="lr"><i class="${x.k}">${LABI[x.k]}</i><div><b>${esc(x.t)}</b><p>${esc(x.p)}</p></div></div>`).join("")}
+function renderLab(){const el=$("labcard");if(!el)return;const L=labDay();const nchk=checks().length,nss=sessions().filter(s=>!s.demo).length;
+  $("lablist").innerHTML=L.length?labList(L):`<div class="empty">${nchk<3&&nss<3?"Estoy aprendiendo cómo eres. Con 3-4 días de pulsera empiezo a compararte contigo mismo: sueño, recuperación y cómo respondes en cada WOD.":"Hoy todo está en tu media: ni mejor ni peor que de costumbre."}</div>`;
+  $("labpill").textContent=new Date().toLocaleDateString("es-ES",{day:"numeric",month:"short"})}
+function labSessHTML(s){if(s.demo)return"";const ss=labAll();const r=labCmp(s,ss);if(!r)return"";
+  const arr=x=>x.good===true?'<span class="g">▲</span>':x.good===false?'<span class="r">▼</span>':x.sig?'<span style="color:var(--muted)">•</span>':"";
+  const L=labSess(s);const prev=ss.filter(x=>x.type===s.type&&x.id<s.id&&x.lab).slice(0,8);
+  return`<h3>Laboratorio · vs tus últimos ${typeOf(s.type)[1]}</h3><div class="lbars">${r.rows.map(x=>{const vs=prev.map(p=>p.lab[x.k]).filter(v=>v!=null);const a=vs.length>=2?mean(vs):null;const v=L[x.k];const mx=Math.max(Math.abs(v),Math.abs(a||0))*1.25||1;const col=x.good===true?"var(--good)":x.good===false?"var(--bad)":"var(--sky)";
+    return`<div class="lb"><div class="row sb"><span>${x.lab}</span><b>${x.v} ${arr(x)}</b></div><div class="bt"><i style="width:${Math.max(3,Math.abs(v)/mx*100)}%;background:${col}"></i>${a!=null?`<u style="left:${Math.abs(a)/mx*100}%"></u>`:""}</div>${a!=null?`<small>tu media ${x.a}</small>`:""}</div>`}).join("")}</div>
+  ${r.say.length?`<div class="labl">${labList(r.say.map(x=>({k:x[0],t:x[1],p:x[2]})))}</div>`:`<div class="small">${r.n<2?`Comparo con tus ${typeOf(s.type)[1].toLowerCase()}s anteriores: en cuanto tenga 2 o más, te digo qué ha cambiado.`:"Sesión en tu línea: nada fuera de lo normal."}</div>`}`}
+let labMetric="vo2";
+function trendChart(c,pts,o={}){const P=prep(c);if(!P)return;const{x:cx,W,H}=P;if(pts.length<2){cx.fillStyle=cssv("--muted");cx.textAlign="center";cx.fillText("Aún no hay datos suficientes",W/2,H/2);return}
+  const vs=pts.map(p=>p[1]);let lo=Math.min(...vs),hi=Math.max(...vs);const pad=Math.max(1,(hi-lo)*.15);lo-=pad;hi+=pad;const t0=pts[0][0],t1=pts[pts.length-1][0];
+  const X=t=>30+(t-t0)/Math.max(1,t1-t0)*(W-40),Y=v=>H-18-(v-lo)/(hi-lo)*(H-28);const col=cssv(o.col||"--sky");
+  [lo+pad,hi-pad].forEach(v=>{cx.fillStyle=cssv("--dim");cx.textAlign="right";cx.fillText(o.f?o.f(v):Math.round(v),26,Y(v)+3);cx.strokeStyle="rgba(255,255,255,.05)";cx.beginPath();cx.moveTo(30,Y(v));cx.lineTo(W-6,Y(v));cx.stroke()});
+  const g=cx.createLinearGradient(0,Y(hi),0,Y(lo));g.addColorStop(0,col+"55");g.addColorStop(1,col+"00");cx.beginPath();cx.moveTo(X(t0),Y(lo));pts.forEach(p=>cx.lineTo(X(p[0]),Y(p[1])));cx.lineTo(X(t1),Y(lo));cx.closePath();cx.fillStyle=g;cx.fill();
+  cx.strokeStyle=col;cx.lineWidth=2.4;cx.lineJoin="round";cx.beginPath();pts.forEach((p,i)=>i?cx.lineTo(X(p[0]),Y(p[1])):cx.moveTo(X(p[0]),Y(p[1])));cx.stroke();
+  pts.forEach(p=>{cx.fillStyle=col;cx.beginPath();cx.arc(X(p[0]),Y(p[1]),2.6,0,7);cx.fill()});
+  cx.fillStyle=cssv("--dim");cx.textAlign="left";cx.fillText(new Date(t0).toLocaleDateString("es-ES",{day:"numeric",month:"short"}),30,H-3);cx.textAlign="right";cx.fillText(new Date(t1).toLocaleDateString("es-ES",{day:"numeric",month:"short"}),W-6,H-3)}
+function renderLabTrend(){const c=$("cvlab");if(!c)return;const now=Date.now();const C=checks().slice().reverse();const ss=labAll().slice().reverse();let pts=[],o={},txt="";
+  if(labMetric==="vo2"){for(let t=startOfDay(now)-84*DAY;t<=now;t+=7*DAY){const v=vo2At(t+DAY-1);if(v)pts.push([t,+v.toFixed(1)])}o={col:"--lime",f:v=>Math.round(v)};txt="VO2max estimado cada semana con tu pulso en reposo (método Uth). Sube cuando mejora tu forma aeróbica."}
+  else if(labMetric==="hrr"){pts=ss.filter(s=>s.lab&&s.lab.hrr60!=null&&now-s.id<120*DAY).map(s=>[s.id,s.lab.hrr60]);o={col:"--pink"};txt="Cuántas pulsaciones bajas en el primer minuto tras terminar. Más es mejor: indica un corazón que se recupera rápido."}
+  else if(labMetric==="hrv"){pts=C.filter(x=>x.hrv&&now-x.d<90*DAY).map(x=>[x.d,x.hrv]);o={col:"--violet"};txt="HRV nocturna. Fíjate en la tendencia, no en un día suelto."}
+  else if(labMetric==="rhr"){pts=C.filter(x=>x.rhr&&now-x.d<90*DAY).map(x=>[x.d,x.rhr]);o={col:"--sky"};txt="Pulso en reposo. Bajar con el tiempo es señal de mejor forma; subir de golpe, de fatiga o de que estás incubando algo."}
+  else if(labMetric==="deep"){pts=C.filter(x=>deepPct(x)&&now-x.d<90*DAY).map(x=>[x.d,+deepPct(x).sws.toFixed(1)]);o={col:"--lemon",f:v=>Math.round(v)+"%"};txt="Porcentaje de la noche en sueño profundo."}
+  trendChart(c,pts,o);$("labtxt").textContent=txt}
+// ---------- Portada, pareja y detalles premium ----------
+function heroOf(){const C=checks();const c=C[0]&&dayKey(C[0].d)===dayKey(Date.now())?C[0]:null;const L=labDay();const g=L.filter(x=>x.k==="g").length,r=L.filter(x=>x.k==="r").length,w=L.some(x=>x.k==="w");
+  const h=new Date().getHours();const hi=h<6?"Buenas noches":h<13?"Buenos días":h<21?"Buenas tardes":"Buenas noches";const nm=(CFG.pname||"").trim();
+  let t,p,col;if(!c){t="Aún sin datos de anoche";p="Duerme con la pulsera puesta y mañana te digo cómo vienes.";col="--violet"}
+  else if(w){t="Hoy, cuídate";p="Hay señales de que el cuerpo está peleando con algo. Entreno suave o descanso.";col="--warn"}
+  else if(c.score>=67){t=r>g+1?"Buen día, con matices":"Listo para apretar";p=`Recuperación ${c.score} %. ${g?g+" señal"+(g>1?"es":"")+" a favor":"Todo en tu media"}${r?" · "+r+" en contra":""}.`;col="--good"}
+  else if(c.score>=34){t="Día de ritmo controlado";p=`Recuperación ${c.score} %. Técnica, volumen moderado y sin buscar PRs.`;col="--warn"}
+  else{t="Hoy toca recuperar";p=`Recuperación ${c.score} %. Movilidad, paseo o descanso: mañana lo agradecerás.`;col="--bad"}
+  return{hi:hi+(nm?", "+nm:""),t,p,col,g,r}}
+function renderHero(){const el=$("hero");if(!el)return;const H=heroOf();el.style.setProperty("--hc",cssv(H.col));
+  el.innerHTML=`<div class="eyebrow">${esc(H.hi)}</div><div class="ht">${esc(H.t)}</div><div class="hp">${esc(H.p)}</div>`}
+let labOpen=false;
+function renderLabFold(){const L=labDay();if(!L.length)return;const g=L.filter(x=>x.k==="g").length,r=L.filter(x=>x.k==="r"||x.k==="w").length,n=L.length-g-r;
+  const head=`<div class="tally"><div class="tb">${g?`<i style="flex:${g};background:var(--good)"></i>`:""}${n?`<i style="flex:${n};background:var(--sky)"></i>`:""}${r?`<i style="flex:${r};background:var(--bad)"></i>`:""}</div><div class="small"><b class="g">${g} a favor</b> · <b class="r">${r} en contra</b>${n?" · "+n+" neutras":""}</div></div>`;
+  const show=labOpen?L:L.slice(0,3);$("lablist").innerHTML=head+labList(show)+(L.length>3?`<button class="s ghost" id="labmore" style="width:100%;margin-top:4px">${labOpen?"Ver menos":"Ver "+(L.length-3)+" más"}</button>`:"");
+  const b=$("labmore");if(b)b.onclick=()=>{labOpen=!labOpen;renderLabFold()}}
+// pareja
+const PEER={busy:false};
+function peerProfile(){return CFG.profile?"":"pareja"}
+async function peerPull(force){if(!CL.auth||PEER.busy)return;const c=store.get("peer",null);if(!force&&c&&Date.now()-c.t<20*60000)return;PEER.busy=true;
+  try{const r=await api("/api/store?profile="+encodeURIComponent(peerProfile()));if(!r.ok)return;const d=(await r.json()).data||{};const ch=(d.chk||[]).filter(x=>x&&x.d).sort((a,b)=>b.d-a.d);
+    const k=startOfDay(Date.now());const ss=(d.sess||[]).filter(x=>x&&!x.demo&&startOfDay(x.id)===k);
+    store.set("peer",{t:Date.now(),name:(d.cfg&&d.cfg.pname)||(CFG.profile?"Mikel":"Tu pareja"),c:ch[0]||null,strain:+strainOf(ss.reduce((a,x)=>a+(x.trimp||0),0)).toFixed(1),n:ss.length});renderCouple()}catch(e){}finally{PEER.busy=false}}
+function coupleCol(nm,c,strain){const sc=c&&dayKey(c.d)===dayKey(Date.now())?c.score:null;const off=314.2*(1-(sc||0)/100);
+  return`<div class="cp"><div class="mring sm"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="${sc!=null?zColor(sc):"transparent"}" stroke-width="12" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="${off}"/></svg><div class="n"><b>${sc??"–"}</b><span>%</span></div></div>
+    <b class="cn">${esc(nm)}</b><div class="cm"><span>Sueño</span><b>${c&&c.sleep&&c.sleep.h?hm(c.sleep.h):"--"}</b></div><div class="cm"><span>HRV</span><b>${c&&c.hrv?c.hrv+" ms":"--"}</b></div><div class="cm"><span>Strain hoy</span><b>${fx(strain||0)}</b></div></div>`}
+function renderCouple(){const el=$("couple");if(!el)return;const P=store.get("peer",null);if(!CL.auth||!P||!P.c||Date.now()-P.c.d>3*DAY){el.hidden=true;return}el.hidden=false;
+  const C=checks();const me=C[0]||null;const myName=(CFG.pname||"").trim()||(CFG.profile?"Tú":"Mikel");const ms=me&&dayKey(me.d)===dayKey(Date.now())?me.score:null,ps=dayKey(P.c.d)===dayKey(Date.now())?P.c.score:null;
+  let line="";if(ms!=null&&ps!=null){const d=ms-ps;line=Math.abs(d)<5?"Hoy estáis igual de recuperados: buen día para entrenar juntos.":`Hoy recupera mejor ${d>0?esc(myName):esc(P.name)} (+${Math.abs(d)} %). ${d>0?esc(P.name):esc(myName)}, WOD con cabeza.`}
+  const mh=me&&me.sleep&&me.sleep.h,ph=P.c.sleep&&P.c.sleep.h;if(mh&&ph&&Math.abs(mh-ph)>=.5)line+=` ${mh>ph?esc(myName):esc(P.name)} ha dormido ${hm(Math.abs(mh-ph))} más.`;
+  el.innerHTML=`<div class="row sb"><h2>Vosotros</h2><span class="small">${new Date(P.t).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}</span></div><div class="couple">${coupleCol(myName,me,dayStrain(Date.now()))}<div class="vs">vs</div>${coupleCol(P.name,P.c,P.strain)}</div>${line?`<div class="msg">${line}</div>`:""}`}
 function streak(){const days=new Set([...sessions().filter(s=>!s.demo).map(s=>dayKey(s.id)),...checks().map(c=>dayKey(c.d))]);let n=0,t=Date.now();if(!days.has(dayKey(t)))t-=DAY;while(days.has(dayKey(t))){n++;t-=DAY}return n}
 function setRing(id,frac,col){$(id).setAttribute("stroke-dashoffset",314.2*(1-Math.max(0,Math.min(1,frac))));if(col)$(id).style.stroke=col}
 function renderHoy(){const ch=checks()[0];const today=ch&&dayKey(ch.d)===dayKey(Date.now())?ch:null;const ss=sessions().filter(s=>!s.demo);const cur=curPmc();
   if(today){setRing("r1",today.score/100,zColor(today.score));$("r1v").textContent=today.score;$("gocheck").textContent=today.src==="whoop"?"Sensación y hábitos":"Repetir check"}else{setRing("r1",0);$("r1v").textContent="–"}
-  const tr=ss.filter(s=>startOfDay(s.id)===startOfDay(Date.now())).reduce((a,s)=>a+s.trimp,0);const cyc=curCycle();const st=cyc&&Date.now()-Date.parse(cyc.start)<30*36e5?cyc.score.strain:strainOf(tr);setRing("r2",st/21);$("r2v").textContent=fx(st);$("r2est").hidden=!!(cyc&&Date.now()-Date.parse(cyc.start)<30*36e5);
+  const tr=ss.filter(s=>startOfDay(s.id)===startOfDay(Date.now())).reduce((a,s)=>a+s.trimp,0);const cyc=curCycle();const t0h=startOfDay(Date.now());const logTr=AUTO.log.filter(x=>x[0]>=t0h).reduce((a,x)=>a+trimpMin(x[1])*10/60,0);const st=cyc&&Date.now()-Date.parse(cyc.start)<30*36e5?cyc.score.strain:strainOf(Math.max(tr,logTr));setRing("r2",st/21);$("r2v").textContent=fx(st);$("r2est").hidden=!!(cyc&&Date.now()-Date.parse(cyc.start)<30*36e5);
   const ws=weekStart(Date.now());const im=ss.filter(s=>s.id>=ws).reduce((a,s)=>a+iminOf(s.zones),0);setRing("r3",im/CFG.goal);$("r3v").textContent=im;$("r3u").textContent="/ "+CFG.goal+" min";
   const last=sessions()[0];let left=0;
   if(last){const rh=recoveryHours(last,cur.tsb);left=Math.max(0,rh-(Date.now()-(last.id+last.dur*1000))/36e5);$("rtime").innerHTML=left>0?Math.ceil(left)+"<small> h</small>":"Listo";$("rtimed").textContent=left>0?"hasta recuperarte de tu última sesión":"Recuperado de tu última sesión"}
@@ -1048,8 +1252,9 @@ function renderHoy(){const ch=checks()[0];const today=ch&&dayKey(ch.d)===dayKey(
     $("acwrpill").className="pill "+s[1];$("acwrpill").textContent=s[0]+" · "+fx(r,2);$("acwrtxt").textContent=r>1.3?"Estás subiendo la carga muy rápido. Mete un día suave.":r<.8?"Semana más suave que tu media. Buen momento para apretar si te sientes bien.":"Carga en buen rango respecto a tus últimas 4 semanas."}
   const rec=recommend(today,left,cur.tsb,ac);if(today&&today.sleep&&today.sleep.need&&today.sleep.h/today.sleep.need<.75)rec.p+=" Has dormido poco: evita buscar máximos.";$("recoh").textContent=rec.h;$("recop").textContent=rec.p;$("recoic").textContent=rec.i;
   const tn=sleepNeed(startOfDay(Date.now())+DAY);const ln=today&&today.sleep;$("hsleeph").textContent="Esta noche necesitas "+hm(tn.need);$("hsleepp").textContent=`A la cama a las ${bedtimeFor(tn.need)} para levantarte a las ${CFG.wake||"07:00"}.`+(ln?` Anoche dormiste ${hm(ln.h)}${ln.need?" ("+Math.round(ln.h/ln.need*100)+" %)":""}.`:"")+(tn.raw>.25?` Arrastras ${hm(tn.raw)} de deuda.`:"");
-  renderDet();renderDay();renderGlance();$("lastsess").innerHTML=last?sessCard(last):'<div class="empty">Aún no hay sesiones. Pulsa «Entrenar».</div>';bindSess($("lastsess"))}
+  renderDet();renderDay();renderGlance();renderLab();renderLabFold();renderHero();renderCouple();peerPull();$("lastsess").innerHTML=last?sessCard(last):'<div class="empty">Aún no hay sesiones. Pulsa «Entrenar».</div>';bindSess($("lastsess"))}
 function recommend(today,left,tsb,ac){
+  if(!today&&NATIVE)return{i:"☾",h:"Tu recuperación llega sola",p:"Duerme con la pulsera puesta y el móvil cerca: por la mañana verás aquí tu recuperación."};
   if(!today)return CL.auth?{i:"☾",h:"Esperando a tu WHOOP",p:"En cuanto WHOOP puntúe tu noche aparece aquí tu recuperación. No tienes que hacer nada."}:{i:"☀",h:"Haz tu check matinal",p:"2 minutos tumbado al despertar y te digo cómo afrontar el día."};
   const sc=today.score,hi=ac&&ac.r>1.3;
   if(sc>=80&&left<6&&!hi)return{i:"⚡",h:"Día para apretar",p:"Todo en verde. Buen día para un WOD intenso, un test o buscar un PR."};
@@ -1075,13 +1280,13 @@ function renderRec(){const c=checks();const td=c[0]&&dayKey(c[0].d)===dayKey(Dat
   if(ls){setRing("rr2",sp/100,cssv(sp>=90?"--violet":sp>=75?"--warn":"--bad"));$("rr2v").textContent=hms(ls.h);$("rr2u").textContent="de "+hms(ls.need||tn.base)}else{setRing("rr2",0);$("rr2v").textContent="–";$("rr2u").textContent="sueño"}
   if(stv!=null){setRing("rr3",stv/3,cssv(stv<1?"--good":stv<2?"--warn":"--bad"));$("rr3v").textContent=fx(stv)}else{setRing("rr3",0);$("rr3v").textContent="–"}
   const co=recCoach(td,sp,stv,tn);$("recic").textContent=co[0];$("rech").textContent=co[1];$("recp").textContent=co[2];
-  const wv=td&&td.src==="whoop";$("vitals").hidden=!(wv&&(td.spo2||td.skin||td.resp));if(wv){const sk=c.filter(x=>x.skin!=null).slice(1,15).map(x=>x.skin);const sb=mean(sk);$("vspo2").textContent=td.spo2!=null?fx(td.spo2):"--";$("vskin").textContent=td.skin!=null?fx(td.skin)+"°":"--";$("vskind").textContent=td.skin!=null&&sb!=null?" "+(td.skin-sb>=0?"+":"−")+fx(Math.abs(td.skin-sb))+"°":"";$("vresp").textContent=td.resp?fx(td.resp):"--"}
-  $("recpill").textContent=td?(td.score+"% · "+(td.score>=67?"Verde":td.score>=34?"Amarillo":"Rojo")+(wv&&td.wscore!=null?" · WHOOP":"")+(td.calib?" (calibrando)":"")):"Pendiente";
-  $("whnote").hidden=!wv;$("manualsleep").hidden=wv;$("manualmeasure").hidden=wv;$("whnote").textContent=wv?"WHOOP ya ha medido tu noche: recuperación, HRV, pulso en reposo, respiración y sueño. No tienes que medir nada. Si quieres, marca cómo te sientes y tus hábitos de ayer para ver qué te afecta.":"";$("chksave").textContent=wv?"Guardar sensación y hábitos":"Guardar sin medir";
+  const wv=td&&(td.src==="whoop"||td.src==="sensor");$("vitals").hidden=!(wv&&(td.spo2||td.skin||td.resp));$("vspo2").parentElement.hidden=!(td&&td.spo2);$("vskin").parentElement.hidden=!(td&&td.skin!=null);if(wv){const sk=c.filter(x=>x.skin!=null).slice(1,15).map(x=>x.skin);const sb=mean(sk);$("vspo2").textContent=td.spo2!=null?fx(td.spo2):"--";$("vskin").textContent=td.skin!=null?fx(td.skin)+"°":"--";$("vskind").textContent=td.skin!=null&&sb!=null?" "+(td.skin-sb>=0?"+":"−")+fx(Math.abs(td.skin-sb))+"°":"";$("vresp").textContent=td.resp?fx(td.resp):"--"}
+  $("recpill").textContent=td?(td.score+"% · "+(td.score>=67?"Verde":td.score>=34?"Amarillo":"Rojo")+(td&&td.src==="whoop"&&td.wscore!=null?" · WHOOP":td&&td.src==="sensor"?" · tu pulsera":"")+(td.calib?" (calibrando)":"")):"Pendiente";
+  $("whnote").hidden=!wv;$("manualsleep").hidden=wv;$("manualmeasure").hidden=wv;$("whnote").textContent=wv?(td.src==="whoop"?"WHOOP ya ha medido tu noche":"Tu pulsera ya ha medido tu noche")+": recuperación, HRV, pulso en reposo, respiración y sueño. No tienes que medir nada. Si quieres, marca cómo te sientes y tus hábitos de ayer para ver qué te afecta.":"";$("chksave").textContent=wv?"Guardar sensación y hábitos":"Guardar sin medir";
   const ls2=td&&td.sleep&&td.sleep.st;$("stages").hidden=!ls2;if(ls2){const S2=td.sleep.st,tot=S2.awake+S2.light+S2.sws+S2.rem||1;const seg=[["Despierto",S2.awake,"--dim"],["Ligero",S2.light,"--sky"],["Profundo",S2.sws,"--violet"],["REM",S2.rem,"--pink"]];
     $("stages").innerHTML=`<h3>Fases de anoche · ${td.sleep.bed}–${td.sleep.wake}</h3><div class="stg">${seg.map(x=>`<i style="flex:${x[1]||0.0001};background:var(${x[2]})"></i>`).join("")}</div><div class="stleg">${seg.map(x=>`<span><i style="background:var(${x[2]})"></i>${x[0]}<b>${hms(x[1]/36e5)}</b>${Math.round(x[1]/tot*100)}%</span>`).join("")}</div>
     <div class="grid3"><div class="k"><small>Rendimiento</small><b>${td.sleep.perf??"--"}</b><span> %</span></div><div class="k"><small>Eficiencia</small><b>${td.sleep.eff??"--"}</b><span> %</span></div><div class="k"><small>Constancia</small><b>${td.sleep.cons??"--"}</b><span> %</span></div></div>
-    <div class="small">${td.sleep.cyc??"-"} ciclos de sueño · ${td.sleep.dist??"-"} interrupciones · datos oficiales de WHOOP.</div>`}
+    <div class="small">${td.sleep.cyc??"-"} ciclos de sueño · ${td.sleep.dist??"-"} interrupciones · ${td.sleep.src==="whoop"?"datos oficiales de WHOOP.":"fases estimadas con tu pulso y tu HRV (est.)."}</div>`}
   // sueño
   const reg=sleepReg();$("slast").textContent=ls?hms(ls.h):"--";$("slastd").textContent=ls?" "+Math.round(sp)+" %":"";$("sdebt").textContent=tn.raw>0?hms(tn.raw):"0:00";$("sreg").textContent=ls&&ls.cons!=null?ls.cons+" %":reg?reg.v+" %":"--";$("sregd").textContent=ls&&ls.cons!=null?"":reg?" ±"+reg.sd+" min":"";
   $("sleeppill").className="pill "+(sp==null?"":sp>=90?"g":sp>=75?"w":"r");$("sleeppill").textContent=sp==null?"Sin registrar":sp>=90?"Óptimo":sp>=75?"Suficiente":"Escaso";
@@ -1107,7 +1312,7 @@ function renderRec(){const c=checks();const td=c[0]&&dayKey(c[0].d)===dayKey(Dat
   barChart($("cvhrr"),hh.map(x=>x[1]),hh.map(x=>new Date(x[0]).getDate()),{goal:30,colorFn:v=>cssv(v>=30?"--good":v>=20?"--warn":"--bad")});
   $("hrrsum").textContent=hh.length?`Mejor recuperación de cada sesión. Media: −${Math.round(hh.reduce((a,x)=>a+x[1],0)/hh.length)} ppm.`:"Aún no hay recuperaciones. Pulsa «Fin de esfuerzo» al acabar una ronda dura."}
 
-function renderProg(){const pm=pmc(42);const cur=pm[pm.length-1];const ss=sessions().filter(s=>!s.demo);
+function renderProg(){renderLabTrend();const pm=pmc(42);const cur=pm[pm.length-1];const ss=sessions().filter(s=>!s.demo);
   const ws=weekStart(Date.now()),pws=ws-7*DAY;const a=ss.filter(s=>s.id>=ws),b=ss.filter(s=>s.id>=pws&&s.id<ws);const sum=(arr,f)=>arr.reduce((x,s)=>x+f(s),0);
   const dlt=(x,y,u="")=>y?`<span class="${x>=y?"g":"r"}">${x>=y?"▲":"▼"} ${Math.abs(Math.round((x/y-1)*100))}%</span>`:"";
   const ch=checks();const wkch=ch.filter(c=>c.d>=ws);
@@ -1163,6 +1368,10 @@ addEventListener("resize",()=>{if(!$("v-hoy").hidden){renderDay();renderGlance()
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.on&&navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>S.wl=w).catch(()=>{})});
 
 renderRounds();recPrefill();renderHoy();renderSensor();renderCloud();boot();
+</script>
+<script>
+$("golab").onclick=()=>{const b=[...document.querySelectorAll('nav button')].find(x=>/Progreso/.test(x.textContent));if(b)b.click();setTimeout(()=>$("labtrend").scrollIntoView({behavior:"smooth",block:"start"}),120)};
+document.querySelectorAll("#labseg button").forEach(b=>b.onclick=()=>{labMetric=b.dataset.l;document.querySelectorAll("#labseg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));renderLabTrend()});
 </script>
 </body>
 </html>
