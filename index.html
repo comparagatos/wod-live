@@ -662,6 +662,30 @@ nav button{position:relative;z-index:1}
 .lbox p{margin:0 0 6px;color:var(--muted);font-size:14px;line-height:1.4}
 .lbox p b{color:var(--fg)}
 .lbox button{width:100%;padding:14px}
+
+/* ---------- Premium v23: tinte de recuperación, números, tarjetas, barra flotante ---------- */
+:root{--mono:"Sora","SF Pro Display",system-ui,sans-serif;--amb:169 139 255}
+body{background:radial-gradient(130% 60% at 50% -14%,rgb(var(--amb)/.22),transparent 60%),radial-gradient(70% 40% at 105% 8%,rgb(169 139 255/.07),transparent 65%),radial-gradient(60% 35% at -5% 40%,rgb(255 126 182/.05),transparent 65%),var(--bg)!important;background-attachment:fixed!important}
+.k b,.estats b,.mv b,.dial .dv b,td,.rtring b,.mrow b,.dhero b{font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+.estats b,.k b{font-family:var(--display)!important;font-weight:700!important}
+.card:not(.herocard),.mycard{background:linear-gradient(180deg,rgb(255 255 255/.05),rgb(255 255 255/.018))!important;border:1px solid rgb(255 255 255/.07)!important;box-shadow:0 1px 0 rgb(255 255 255/.06) inset,0 26px 50px -34px rgb(0 0 0/.95)!important}
+.herocard{border:1px solid rgb(255 255 255/.08)!important;box-shadow:0 1px 0 rgb(255 255 255/.07) inset,0 40px 80px -40px rgb(var(--amb)/.45)!important}
+.mycard{border-radius:26px!important;padding:18px 16px!important}
+.mycard p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mycard small{letter-spacing:.11em!important}
+.mycard .mv b{letter-spacing:-.035em}
+.sgic{width:54px!important;height:54px!important;border-radius:18px!important;background:radial-gradient(120% 120% at 30% 20%,color-mix(in srgb,var(--c) 30%,transparent),color-mix(in srgb,var(--c) 8%,transparent))!important;border:1px solid color-mix(in srgb,var(--c) 30%,transparent)!important;box-shadow:0 10px 24px -14px var(--c)}
+.sgic svg{width:26px;height:26px;stroke:var(--c);fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.sgic[style*="--muted"] svg{stroke:#cfc6e4}
+header h1{font-size:31px!important;font-weight:800!important;letter-spacing:-.04em!important}
+body>nav{left:12px!important;right:12px!important;bottom:calc(10px + env(safe-area-inset-bottom))!important;border-radius:28px!important;border:1px solid rgb(255 255 255/.09)!important;padding:6px!important;background:rgb(20 15 28/.74)!important;box-shadow:0 18px 40px -16px rgb(0 0 0/.85),0 1px 0 rgb(255 255 255/.06) inset!important}
+body>nav .tabpill{border-radius:22px!important}
+.fcard{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.dial .glow{opacity:.32!important}
+button.p{box-shadow:0 1px 0 rgb(255 255 255/.35) inset,0 12px 28px -12px rgb(255 126 182/.6)!important}
+.facts span,.tsscale span,.sgz{backdrop-filter:blur(6px)}
+@media (prefers-reduced-motion:reduce){body{background-attachment:scroll!important}}
+.view{padding-bottom:calc(36px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
@@ -960,7 +984,7 @@ nav button{position:relative;z-index:1}
 const $=id=>document.getElementById(id);
 const ZC=["--z1","--z2","--z3","--z4","--z5"],ZN=["Zona 1","Zona 2","Zona 3","Zona 4","Zona 5"];
 const TYPES=[["wod","WOD","--pink"],["fuerza","Fuerza","--violet"],["halte","Halterofilia","--lemon"],["carrera","Carrera","--sky"],["surf","Surf","--z2"],["caminar","Caminar","--lime"],["otro","Otro","--muted"]];
-const store={get(k,d){try{const v=localStorage.getItem(k);const o=v==null?null:JSON.parse(v);return o==null?d:o}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}if(k==="chk")BASEC=null;if(store.hook)store.hook(k)}};
+const store={get(k,d){try{const v=localStorage.getItem(k);const o=v==null?null:JSON.parse(v);return o==null?d:o}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}if(k==="chk")BASEC=null;if(window.__memoReset)window.__memoReset(k);if(store.hook)store.hook(k)}};
 let BASEC=null;
 const NATIVE=!!(window.NATIVE_APP&&window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.native);
 const nat=(cmd,a={})=>NATIVE?window.webkit.messageHandlers.native.postMessage(Object.assign({cmd},a)):Promise.reject(new Error("noapp"));
@@ -974,8 +998,10 @@ const startOfDay=t=>{const d=new Date(t);d.setHours(0,0,0,0);return d.getTime()}
 const DAY=864e5;
 const esc=s=>String(s).replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]));
 function toast(t){const e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2800)}
-const sessions=()=>(store.get("sess",[])||[]).filter(x=>x&&x.id).map(x=>{const n=v=>typeof v==="number"&&isFinite(v)?v:0;x.trimp=n(x.trimp);x.dur=n(x.dur);x.avg=n(x.avg);x.max=n(x.max);if(typeof x.strain!=="number"||!isFinite(x.strain))x.strain=+(21*(1-Math.exp(-x.trimp/95))).toFixed(1);x.teA=n(x.teA);x.teN=n(x.teN);if(!Array.isArray(x.zones))x.zones=[0,0,0,0,0];if(!Array.isArray(x.hrr))x.hrr=[];if(!Array.isArray(x.series))x.series=[];return x});
-const checks=()=>(store.get("chk",[])||[]).filter(c=>c&&c.d).sort((a,b)=>b.d-a.d);
+const MEMO=(()=>{const C={};const f=(k,fn)=>{const n=performance.now();const c=C[k];if(c&&n-c.t<2500)return c.v.slice();const v=fn();C[k]={v,t:n};return v.slice()};f.reset=k=>{if(k)delete C[k];else for(const x in C)delete C[x]};return f})();
+window.__memoReset=k=>{MEMO.reset(k);(window.__memoHooks||[]).forEach(f=>{try{f(k)}catch(e){}})};addEventListener("storage",()=>window.__memoReset());
+const sessions=()=>MEMO("sess",()=>(store.get("sess",[])||[]).filter(x=>x&&x.id).map(x=>{const n=v=>typeof v==="number"&&isFinite(v)?v:0;x.trimp=n(x.trimp);x.dur=n(x.dur);x.avg=n(x.avg);x.max=n(x.max);if(typeof x.strain!=="number"||!isFinite(x.strain))x.strain=+(21*(1-Math.exp(-x.trimp/95))).toFixed(1);x.teA=n(x.teA);x.teN=n(x.teN);if(!Array.isArray(x.zones))x.zones=[0,0,0,0,0];if(!Array.isArray(x.hrr))x.hrr=[];if(!Array.isArray(x.series))x.series=[];return x}));
+const checks=()=>MEMO("chk",()=>(store.get("chk",[])||[]).filter(c=>c&&c.d).sort((a,b)=>b.d-a.d));
 const stresses=()=>(store.get("str",[])||[]).filter(x=>x&&x.d);
 const breaths=()=>(store.get("brt",[])||[]).filter(x=>x&&x.d);
 const naps=()=>(store.get("naps",[])||[]).filter(x=>x&&x.start);
@@ -992,7 +1018,7 @@ function loads(){const m={};sessions().forEach(x=>{if(x.demo)return;const k=star
 function pmc(days){const L=loads();const today=startOfDay(Date.now());let ctl=0,atl=0;const out=[];const ks=Object.keys(L).map(Number);const first=ks.length?Math.min(...ks):today;
   for(let t=Math.min(first,today-days*DAY);t<=today;t+=DAY){const l=L[t]||0;ctl+=(l-ctl)/42;atl+=(l-atl)/7;if(t>today-days*DAY)out.push({t,l,ctl,atl,tsb:ctl-atl})}return out}
 const curPmc=()=>pmc(1).slice(-1)[0]||{ctl:0,atl:0,tsb:0};
-function acwr(){const L=loads(),today=startOfDay(Date.now());let a=0,c=0;for(let i=0;i<28;i++){const v=L[today-i*DAY]||0;c+=v;if(i<7)a+=v}return c?{r:a/(c/4),a,c}:null}
+function acwr(){const L=loads(),today=startOfDay(Date.now());const ks=Object.keys(L).map(Number).filter(k=>L[k]>0);if(!ks.length)return null;const span=Math.round((today-Math.min(...ks))/DAY)+1;if(span<10)return null;const W=Math.min(28,span);let a=0,c=0;for(let i=0;i<W;i++){const v=L[today-i*DAY]||0;c+=v;if(i<7)a+=v}return c?{r:a/(c*7/W),a,c,span}:null}
 function teAer(tr){const k=Math.max(35,(curPmc().ctl||40)*1.6);return Math.min(5,5*(1-Math.exp(-tr/k))*1.15)}
 function teAna(z5s,peaks){return Math.min(5,z5s/60/3+peaks*0.35)}
 function recoveryHours(s,tsb){if(!s)return 0;const base=s.trimp*0.18+(s.teN||0)*3;return Math.max(4,Math.min(72,base*(1+Math.max(0,-tsb)/60)))}
@@ -1906,7 +1932,7 @@ function streak(){const days=new Set([...sessions().filter(s=>!s.demo).map(s=>da
 function setRing(id,frac,col){$(id).setAttribute("stroke-dashoffset",314.2*(1-Math.max(0,Math.min(1,frac))));if(col)$(id).style.stroke=col}
 function renderHoy(){const ch=checks()[0];const today=ch&&dayKey(ch.d)===dayKey(Date.now())?ch:null;const ss=sessions().filter(s=>!s.demo);const cur=curPmc();
   if(today){setRing("r1",today.score/100,zColor(today.score));$("r1v").textContent=today.score;$("gocheck").textContent=today.src==="whoop"?"Sensación y hábitos":"Repetir check"}else{setRing("r1",0);$("r1v").textContent="–"}
-  const tr=ss.filter(s=>startOfDay(s.id)===startOfDay(Date.now())).reduce((a,s)=>a+s.trimp,0);const cyc=curCycle();const t0h=startOfDay(Date.now());const logTr=AUTO.log.filter(x=>x[0]>=t0h).reduce((a,x)=>a+trimpMin(x[1])*10/60,0);const st=cyc&&Date.now()-Date.parse(cyc.start)<30*36e5?cyc.score.strain:strainOf(Math.max(tr,logTr));setRing("r2",st/21);$("r2v").textContent=fx(st);$("r2est").hidden=!!(cyc&&Date.now()-Date.parse(cyc.start)<30*36e5);
+  const tr=ss.filter(s=>startOfDay(s.id)===startOfDay(Date.now())).reduce((a,s)=>a+s.trimp,0);const cyc=curCycle();const t0h=startOfDay(Date.now());const logTr=AUTO.log.filter(x=>x[0]>=t0h).reduce((a,x)=>a+trimpMin(x[1])*10/60,0);const ownSt=strainOf(Math.max(tr,logTr));const st=cyc&&Date.now()-Date.parse(cyc.start)<30*36e5?Math.max(cyc.score.strain||0,ownSt):ownSt;window.__ST=st;setRing("r2",st/21);$("r2v").textContent=fx(st);$("r2est").hidden=!!(cyc&&Date.now()-Date.parse(cyc.start)<30*36e5);
   const ws=weekStart(Date.now());const im=ss.filter(s=>s.id>=ws).reduce((a,s)=>a+iminOf(s.zones),0);setRing("r3",im/CFG.goal);$("r3v").textContent=im;$("r3u").textContent="/ "+CFG.goal+" min";
   const last=sessions()[0];let left=0;
   if(last){const rh=recoveryHours(last,cur.tsb);left=Math.max(0,rh-(Date.now()-(last.id+last.dur*1000))/36e5);$("rtime").innerHTML=left>0?Math.ceil(left)+"<small> h</small>":"Listo";$("rtimed").textContent=left>0?"hasta recuperarte de tu última sesión":"Recuperado de tu última sesión"}
@@ -2591,7 +2617,7 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="22";let busy=false;
+const WL_BUILD="23";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
   if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if((E&&E.on)||(window.__busyUpd&&window.__busyUpd())){if(manual)toast("Hay versión nueva: se instalará cuando termines y guardes la actividad");return false}
@@ -2697,7 +2723,7 @@ function renderDials(){const hc=document.querySelector(".herocard");if(!hc)retur
   const tc=tcheck(),yc=tcheck(1);const ls=tc&&tc.sleep&&tc.sleep.h?tc.sleep:null;const need=ls?(ls.need||sleepNeed(tc.d).need||8):null;
   const sp=ls?Math.round(ls.h/need*100):null;const ysp=yc&&yc.sleep&&yc.sleep.h?Math.round(yc.sleep.h/(yc.sleep.need||8)*100):null;
   const rec=tc&&tc.score!=null?tc.score:null,yrec=yc&&yc.score!=null?yc.score:null;
-  const st=parseFloat(($("r2v").textContent||"0").replace(",","."));const yst=dayStrain(Date.now()-DAYMS);
+  const st=(window.__ST||0);const yst=dayStrain(Date.now()-DAYMS);
   const rc=rec==null?"--muted":rec>=67?"--good":rec>=34?"--warn":"--bad";
   const delta=(a,b,u="")=>a==null||b==null||Math.abs(a-b)<(u?.3:1)?"":`<i class="${a>b?"up":"dn"}">${a>b?"▲":"▼"}${u?fx(Math.abs(a-b)):Math.abs(Math.round(a-b))}</i>`;
   const D=[{k:"sleep",id:"ds",h:"Sueño",v:sp!=null?sp:"--",u:sp!=null?"%":"",sub:ls?hms(ls.h):"sin datos",f:sp!=null?sp/100:0,c:["#7a6cff","#b9a6ff"],d:delta(sp,ysp)},
@@ -2781,7 +2807,7 @@ if(CFG.notifyActs==null)CFG.notifyActs=true;if(CFG.notifyTarget==null)CFG.notify
 function target(){const R=window.WL&&WL.readiness?WL.readiness():null;const c=checks()[0];const tc=c&&dayKey(c.d)===dayKey(Date.now())?c:null;
   const s=R?R.s:tc&&tc.score!=null?tc.score:55;const mid=clamp(5,17,4+.13*s);
   const lo=Math.round((mid-1.5)*10)/10,hi=Math.round((mid+1.5)*10)/10;return{lo,hi,ex:Math.max(hi+4,17),s,src:R?"tu preparación ("+R.s+")":tc?"tu recuperación ("+tc.score+" %)":"un día normal"}}
-const curStrain=()=>{const v=parseFloat(($("r2v")&&$("r2v").textContent||"0").replace(",","."));return isFinite(v)?v:0};
+const curStrain=()=>window.__ST||0;
 function state(st,T){return st>=T.ex?{k:"ex",l:"Carga extrema",c:"--bad"}:st>T.hi+.4?{k:"hi",l:"Te has pasado",c:"--warn"}:st>=T.lo?{k:"ok",l:"En tu objetivo",c:"--good"}:{k:"lo",l:"Por debajo",c:"--sky"}}
 const trOf=st=>-95*Math.log(1-Math.min(20.9,st)/21);
 const hrAt=p=>Math.round(CFG.max*p);
@@ -2959,7 +2985,7 @@ function dismiss(id){const s=[...dis(),id].slice(-300);store.set("fdis",s)}
 function feedItems(){const now=Date.now(),day=dkey(now),out=[];const D=dis();const A=store.get("ach",null);
   if(A)A.log.filter(e=>now-e.t<3*DAYMS).forEach(e=>out.push({id:"a:"+e.id,ic:e.ic,c:"--lemon",h:e.title,p:e.sub||"",t:e.t,act:()=>e.ref?openSess(e.ref):openDetail("ach")}));
   realS().filter(s=>s.src==="auto"&&now-(s.id+s.dur*1000)<20*36e5).forEach(s=>out.push({id:"s:"+s.id,ic:s.type==="carrera"?"🏃":s.type==="caminar"?"🚶":s.type==="bici"?"🚴":"💪",c:"--sky",h:typeOf(s.type)[1]+" detectada · "+Math.round(s.dur/60)+" min",p:`${s.avg} ppm de media · strain ${fx(s.strain)}${s.dist>100?" · "+km(s.dist,2)+" km":""}`,t:s.id+s.dur*1000,act:()=>openSess(s.id)}));
-  try{const T=window.WL&&WL.readiness?null:null;const st=parseFloat(($("r2v").textContent||"0").replace(",","."));const m=store.get("tgt",{})||{};const tg=m[day];if(tg&&isFinite(st)){const ex=Math.max(tg.hi+4,17);
+  try{const T=window.WL&&WL.readiness?null:null;const st=(window.__ST||0);const m=store.get("tgt",{})||{};const tg=m[day];if(tg&&isFinite(st)){const ex=Math.max(tg.hi+4,17);
     if(st>=ex)out.push({id:"tx:"+day,ic:"🔥",c:"--bad",h:"Carga extrema hoy",p:`Strain ${fx(st)} con objetivo ${fx(tg.lo)}–${fx(tg.hi)}. Hidrátate y prioriza dormir.`,t:now,act:()=>openDetail("target")});
     else if(st>tg.hi+.4)out.push({id:"th:"+day,ic:"😮",c:"--warn",h:"Hoy te has pasado",p:`Strain ${fx(st)} y tu objetivo era ${fx(tg.lo)}–${fx(tg.hi)}. El resto del día, suave.`,t:now,act:()=>openDetail("target")})}}catch(e){}
   const R=recTime();if(R.h<=0&&realS().some(s=>now-s.id<4*DAYMS))out.push({id:"rr:"+day,ic:"✅",c:"--good",h:"Estás recuperado",p:"Tu cuerpo ha asimilado lo último que entrenaste. Hoy puedes apretar.",t:now-1,act:()=>openDetail("rtime")});
@@ -3218,10 +3244,38 @@ function scanLost(){if(S.on||busyLive())return[];const Lg=AUTO.log;if(!Lg||Lg.le
 const busyLive=()=>{try{const E=window.__runE&&window.__runE();return!!(E&&E.on)||!!store.get(KEY,null)}catch(e){return false}};
 function openLost(x){const se=sessFromSamples(x.a,x.b,x.type);se.auto=false;se.src="rescate";window.__lostPending={a:x.a,b:x.b};S.lastSamples=null;try{go("train")}catch(e){}setTimeout(()=>summary(se,true),300)}
 window.__scanLost=scanLost;window.__openLost=openLost;
-(window.__feedX=window.__feedX||[]).push(out=>{let L=[];try{L=scanLost()}catch(e){}L.forEach(x=>out.push({id:"lost:"+Math.round(x.a),ic:"🛟",c:"--bad",h:`${typeOf(x.type)[1]} sin guardar · ${hhmm(x.a)}–${hhmm(x.b)}`,p:`${Math.round((x.b-x.a)/60000)} min · media ${x.avg} ppm · máx ${x.max}. La pulsera lo grabó: toca para recuperarlo.`,t:Date.now()+1,act:()=>openLost(x)}))});
+let rescT=0,rescN=-1;window.__autoRescue=function(force){const now=Date.now();if(!force&&now-rescT<45000&&AUTO.log.length===rescN)return;rescT=now;rescN=AUTO.log.length;let L=[];try{L=scanLost()}catch(e){return}if(!L.length)return;
+  let h=sessions();for(const x of L){const se=sessFromSamples(x.a,x.b,x.type);se.src="auto";se.auto=true;se.why="detectado por la pulsera";h=h.filter(q=>!(q.id<x.b&&q.id+q.dur*1000>x.a&&(q.auto||q.src==="auto")&&!q.rpe&&!q.note));h.unshift(se)}
+  h.sort((a,b)=>b.id-a.id);store.set("sess",h.slice(0,600));toast(L.length>1?L.length+" entrenos detectados y guardados":`${typeOf(L[0].type)[1]} detectado y guardado · ${Math.round((L[0].b-L[0].a)/60000)} min`)};
 
 // ===== arranque =====
 setTimeout(()=>{restore().catch(e=>console.error(e))},900);
+})();
+</script>
+<script>
+// ---------- Premium v23 + rendimiento: caché de cálculos, iconos, tinte de recuperación, rescate automático ----------
+(function(){
+// cachés cortos para cálculos repetidos en cada pintado
+let LC=null,LT=0;const PC={};const _ld=loads;loads=function(){const n=performance.now();if(LC&&n-LT<2500)return LC;LC=_ld();LT=n;return LC};
+const _pm=pmc;pmc=function(d){const n=performance.now();const c=PC[d];if(c&&n-c.t<2500)return c.v;const v=_pm(d);PC[d]={v,t:n};return v};
+(window.__memoHooks=window.__memoHooks||[]).push(k=>{if(k==="sess"||!k){LC=null;for(const x in PC)delete PC[x]}});
+// tinte de fondo según tu recuperación (como WHOOP)
+function amb(){const c=checks()[0];const tc=c&&dayKey(c.d)===dayKey(Date.now())?c:null;const s=tc&&tc.score!=null?tc.score:null;
+  document.documentElement.style.setProperty("--amb",s==null?"169 139 255":s>=67?"79 227 154":s>=34?"255 200 87":"255 95 126")}
+// iconos de línea en lugar de emojis en las tarjetas
+const P={check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',walk:'<circle cx="13" cy="4.5" r="1.8"/><path d="M10 21l2-6 3 3v4M8.5 11.5l3.5-3.5 3 2.5 3 1M12 8l-1.5 6"/>',
+ pulse:'<path d="M3 12h4l2-4.5 3 9 2.5-4.5H21"/>',bolt:'<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>',flame:'<path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2.5 1.5-4 2.5-5 0 2 1 3 2 3 0-3-1-5.5.5-8z"/>',
+ dumb:'<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>',seed:'<path d="M12 20v-8M12 12c0-4-3-6-7-6 0 4 3 6 7 6zM12 14c0-3 2.5-5 6-5 0 3-2.5 5-6 5z"/>',
+ alert:'<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/>',x:'<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',mtn:'<path d="M3 19l6-10 4 6 2-3 6 7z"/>',
+ up:'<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',down:'<path d="M3 7l6 6 4-4 8 8"/><path d="M15 17h6v-6"/>',batt:'<rect x="3" y="7" width="16" height="10" rx="2.5"/><path d="M21 10.5v3M11 9.5l-2 3h4l-2 3"/>',
+ scale:'<path d="M12 4v16M8 20h8M5 8h14M5 8l-2.5 6a3 3 0 0 0 5 0zM19 8l-2.5 6a3 3 0 0 0 5 0z"/>'};
+const MAP={"✅":"check","🛌":"moon","🚶":"walk","🫁":"pulse","⚡":"bolt","🔥":"flame","🏋":"dumb","🌱":"seed","🚨":"alert","😵":"x","⛰":"mtn","📈":"up","📉":"down","⚖":"scale"};
+function iconize(){document.querySelectorAll(".sgic").forEach(e=>{if(e.querySelector("svg"))return;const t=e.textContent.trim().replace(/️/g,"");const k=MAP[t];if(k)e.innerHTML=`<svg viewBox="0 0 24 24">${P[k]}</svg>`})}
+// una sola verdad: el resto de tarjetas usan los mismos cálculos que las páginas de detalle
+function sync(){try{const R=window.__ach&&__ach.recTime?__ach.recTime():null;if(R&&$("rtime")){$("rtime").innerHTML=R.h>0?R.h+"<small> h</small>":"Listo";$("rtime").style.color=cssv(R.col);$("rtimed").textContent=R.h>0?"para estar recuperado del todo":"Recuperado: puedes apretar"}}catch(e){}
+  try{const T=WL.tstatus();if($("formv")){$("formv").innerHTML=`<span style="color:${cssv(T.col)}">${T.l}</span>`;$("formd").textContent=T.short;const tile=$("formv").closest(".tile");if(tile&&!tile.dataset.tap){tile.dataset.tap=1;tile.style.cursor="pointer";tile.onclick=()=>openDetail("tstatus")}}}catch(e){}}
+const _rh=renderHoy;renderHoy=function(){try{window.__autoRescue&&window.__autoRescue()}catch(e){console.error(e)}_rh.apply(this,arguments);try{amb();iconize();sync()}catch(e){}};
+try{amb();iconize()}catch(e){}
 })();
 </script>
 </body>
