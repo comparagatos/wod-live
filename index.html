@@ -9,7 +9,7 @@
 <title>WOD Live</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
 <style>
 :root{--bg:#0d0a13;--bg2:#120e1a;--card:#17121f;--card2:#1e1828;--s2:#251e31;--s3:#32293f;--line:rgb(255 255 255/.07);--line2:rgb(255 255 255/.12);
 --fg:#f7f2ff;--muted:#a197b8;--dim:#6f6684;--pink:#ff7eb6;--violet:#a98bff;--sky:#64c7ff;--lime:#c6f36b;--lemon:#ffe066;
@@ -2617,11 +2617,11 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="23";let busy=false;
+const WL_BUILD="24";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
   if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if((E&&E.on)||(window.__busyUpd&&window.__busyUpd())){if(manual)toast("Hay versión nueva: se instalará cuando termines y guardes la actividad");return false}
-    toast("Actualizando WOD Live…");setTimeout(()=>location.replace(location.pathname+"?"+(NATIVE?"app=ios&":"")+"v="+m[1]),500);return true}
+    toast("Actualizando WOD Live…");setTimeout(()=>{const go2=()=>location.replace(location.pathname+"?"+(NATIVE?"app=ios&":"")+"v="+m[1]);if(NATIVE&&parseFloat((window.NATIVE_APP||{}).version||0)>=1.4)nat("reloadFresh").catch(go2);else go2()},500);return true}
   if(manual)toast("Tienes la última versión ("+WL_BUILD+")")}catch(e){}finally{busy=false}return false}
 const _nr=window.__nrefresh;window.__nrefresh=async()=>{if(await checkUpdate(true))return;if(_nr)await _nr()};
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkUpdate(false)});
@@ -3277,6 +3277,12 @@ function sync(){try{const R=window.__ach&&__ach.recTime?__ach.recTime():null;if(
 const _rh=renderHoy;renderHoy=function(){try{window.__autoRescue&&window.__autoRescue()}catch(e){console.error(e)}_rh.apply(this,arguments);try{amb();iconize();sync()}catch(e){}};
 try{amb();iconize()}catch(e){}
 })();
+</script>
+<script>
+// ---------- Rendimiento v24: agrupa repintados seguidos de Hoy ----------
+(function(){let last=0,tm=null;const _r=renderHoy;
+renderHoy=function(){const n=performance.now();if(n-last<160){if(!tm)tm=setTimeout(()=>{tm=null;last=performance.now();try{_r()}catch(e){console.error(e)}},160-(n-last));return}last=n;return _r.apply(this,arguments)};
+renderHoy.now=function(){clearTimeout(tm);tm=null;last=performance.now();return _r.apply(this,arguments)};})();
 </script>
 </body>
 </html>
