@@ -147,6 +147,38 @@ nav .live.on::after{display:block}
 .box .brow b{color:var(--fg);font-weight:600}
 .box .bclock{font:700 min(16vw,12vh) var(--mono);letter-spacing:-.04em}
 .box .bx{position:absolute;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right))}
+.contrib{display:grid;grid-template-columns:minmax(0,auto) minmax(60px,1fr) auto;gap:4px 10px;align-items:center;font-size:13px}
+.contrib .l{font-weight:700;white-space:nowrap}
+.contrib .cb{position:relative;height:8px;border-radius:4px;background:var(--s2)}
+.contrib .cb i{position:absolute;top:0;height:100%;border-radius:4px}
+.contrib .cb::after{content:"";position:absolute;left:50%;top:-3px;width:2px;height:14px;margin-left:-1px;background:var(--line2)}
+.contrib b{font:500 13px var(--mono);text-align:right;white-space:nowrap}
+.contrib small{grid-column:1/-1;color:var(--muted);font-size:11.5px;margin:-2px 0 6px}
+.breath{position:relative;height:250px;display:grid;place-items:center}
+.breath>*{grid-area:1/1}
+.breath .bring{width:220px;height:220px;border-radius:50%;border:1.5px dashed var(--line2)}
+.breath .bc{width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe0ef 0%,#ff7eb6 30%,#a98bff 65%,#64c7ff 100%);transform:scale(.42);transition:transform 1.2s ease-in-out;box-shadow:0 0 80px -12px rgb(169 139 255/.8)}
+.breath .bt{text-align:center;z-index:1;pointer-events:none}
+.breath .bt b{display:block;font:800 21px var(--display);text-shadow:0 2px 14px rgb(0 0 0/.55)}
+.breath .bt span{font:600 14px var(--mono);text-shadow:0 2px 10px rgb(0 0 0/.6)}
+.sgauge{position:relative;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--good),var(--warn) 55%,var(--bad))}
+.sgauge i{position:absolute;top:-6px;width:4px;height:22px;border-radius:2px;background:var(--fg);transform:translateX(-50%);box-shadow:0 0 0 3px var(--bg);transition:left .8s}
+.chips.multi button[aria-pressed="true"]{background:rgb(169 139 255/.22);color:var(--fg);border-color:var(--violet)}
+.glance{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gl{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:22px;padding:13px 13px 12px;display:flex;flex-direction:column;gap:4px;min-width:0;text-align:left;font-weight:400}
+.gl h3{display:flex;align-items:center;gap:6px}
+.semi{position:relative;width:100%;max-width:150px;margin:2px auto 0}
+.semi svg{width:100%;display:block}
+.semi .n{position:absolute;left:0;right:0;bottom:2px;text-align:center}
+.semi .n b{display:block;font:700 26px/1 var(--display);letter-spacing:-.03em}
+.semi .n span{font:700 10px var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.gl .d{font-size:11.5px;color:var(--muted);text-align:center}
+.gl canvas{height:38px}
+.gl .mring{max-width:96px}
+.gl .mring .n b{font-size:20px}
+.semi.big{max-width:230px}
+.semi.big .n b{font-size:40px}
+.ins{display:flex;flex-direction:column;gap:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -161,15 +193,30 @@ nav .live.on::after{display:block}
   <section class="view stack" id="v-hoy">
     <div class="card">
       <div class="rings">
-        <div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="r1" cx="60" cy="60" r="50" fill="none" stroke="var(--good)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="r1v">–</b><span>%</span></div></div><h3>Preparación</h3></div>
+        <div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="r1" cx="60" cy="60" r="50" fill="none" stroke="var(--good)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="r1v">–</b><span>%</span></div></div><h3>Recuperación</h3></div>
         <div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="r2" cx="60" cy="60" r="50" fill="none" stroke="var(--sky)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="r2v">0</b><span>/ 21</span></div></div><h3>Strain <span class="est">est.</span></h3></div>
         <div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="r3" cx="60" cy="60" r="50" fill="none" stroke="var(--lime)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="r3v">0</b><span id="r3u">/ 150 min</span></div></div><h3>Intensidad sem.</h3></div>
       </div>
       <div class="reco"><div class="ic" id="recoic">→</div><div><b id="recoh">Haz tu check matinal</b><p id="recop">2 minutos tumbado al despertar y te digo cómo afrontar el día.</p></div></div>
       <div class="bigbtns"><button id="gocheck">Check matinal</button><button class="p" id="gotrain">Entrenar</button></div>
     </div>
+    <div class="card"><div class="reco" style="background:transparent;border:0;padding:0"><div class="ic" style="background:linear-gradient(135deg,#a98bff,#64c7ff)">☾</div><div style="flex:1"><b id="hsleeph">Esta noche</b><p id="hsleepp">Registra tu sueño en el check matinal.</p></div><button class="s ghost" id="gosleep">Ver</button></div></div>
+    <div class="card" id="detcard" hidden><div class="row sb"><h2>Detectado automáticamente</h2><span class="pill" id="detn"></span></div><div class="stack" id="detlist"></div></div>
+    <div class="card">
+      <div class="row sb"><h2>Tu día</h2><button class="s" id="autobtn">Activar</button></div>
+      <canvas id="cvday" style="height:150px"></canvas>
+      <div class="row small" style="gap:12px"><span><b style="color:var(--pink)">▮</b> Entreno</span><span><b style="color:var(--lime)">▮</b> Caminar</span><span><b style="color:var(--violet)">▮</b> Sueño / siesta</span><span><b style="color:var(--dim)">▮</b> Por confirmar</span></div>
+      <div class="msg" id="autotxt"></div>
+    </div>
+    <div><div class="row sb" style="padding:2px 4px 8px"><h3>De un vistazo</h3><span class="small" id="glsub"></span></div>
+    <div class="glance">
+      <button class="gl" id="gl-hr"><h3><span style="color:var(--pink)">♥</span> Frec. cardiaca</h3><div class="semi" id="glhr"></div><div class="d" id="glhrd">Reposo --</div></button>
+      <button class="gl" id="gl-st"><h3><span style="color:var(--warn)">◔</span> Estrés</h3><div class="semi" id="glst"></div><canvas id="glstc"></canvas></button>
+      <button class="gl" id="gl-sl"><h3><span style="color:var(--violet)">☾</span> Sueño</h3><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="12"/><circle id="glslr" cx="60" cy="60" r="50" fill="none" stroke="var(--violet)" stroke-width="12" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="glslv">–</b><span id="glslu">anoche</span></div></div><div class="d" id="glsld"></div></button>
+      <button class="gl" id="gl-hv"><h3><span style="color:var(--sky)">∿</span> HRV</h3><div style="text-align:center;margin-top:6px"><b id="glhv" style="font:700 30px/1 var(--display)">--</b> <span class="small">ms</span></div><div class="d" id="glhvd">tu media --</div><canvas id="glhvc"></canvas></button>
+    </div></div>
     <div class="grid2">
-      <div class="tile"><h3>Recuperación <span class="est">est.</span></h3><div class="v" id="rtime">--</div><div class="d" id="rtimed">Sin entrenos recientes</div></div>
+      <div class="tile"><h3>Tiempo de recup. <span class="est">est.</span></h3><div class="v" id="rtime">--</div><div class="d" id="rtimed">Sin entrenos recientes</div></div>
       <div class="tile"><h3>Estado de forma</h3><div class="v" id="formv">--</div><div class="d" id="formd">Necesito unas sesiones</div></div>
       <div class="tile"><h3>Racha</h3><div class="v" id="streak">0<small> días</small></div><div class="d" id="streakd">Días seguidos con entreno o check</div></div>
       <div class="tile"><h3>Esta semana</h3><div class="v" id="wk">0<small> ses.</small></div><div class="d" id="wkd">--</div></div>
@@ -231,19 +278,70 @@ nav .live.on::after{display:block}
 
   <section class="view stack" id="v-rec" hidden>
     <div class="card">
+      <div class="row sb"><h2>Tu recuperación</h2><span class="pill" id="recpill">Pendiente</span></div>
+      <div class="rings"><div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="rr1" cx="60" cy="60" r="50" fill="none" stroke="var(--good)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="rr1v">–</b><span id="rr1u">%</span></div></div><h3>Recuperación</h3></div><div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="rr2" cx="60" cy="60" r="50" fill="none" stroke="var(--violet)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="rr2v">–</b><span id="rr2u">sueño</span></div></div><h3>Sueño</h3></div><div><div class="mring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgb(255 255 255/.06)" stroke-width="11"/><circle id="rr3" cx="60" cy="60" r="50" fill="none" stroke="var(--sky)" stroke-width="11" stroke-linecap="round" stroke-dasharray="314.2" stroke-dashoffset="314.2" style="transition:stroke-dashoffset 1s"/></svg><div class="n"><b id="rr3v">–</b><span id="rr3u">/ 3</span></div></div><h3>Estrés</h3></div></div>
+      <div class="reco"><div class="ic" id="recic">☾</div><div><b id="rech">Empieza el día con tu check</b><p id="recp">Registra cómo has dormido y mide 2 minutos tumbado.</p></div></div>
+      <h3>Qué suma y qué resta hoy</h3>
+      <div class="contrib" id="contrib"></div>
+    </div>
+
+    <div class="card">
       <div class="row sb"><h2>Check matinal</h2><span class="pill" id="chkstate">Pendiente</span></div>
-      <div class="msg">Al despertar, tumbado y quieto, antes de mirar el móvil. 2 minutos. Mide tu pulso en reposo y, si la pulsera envía el latido a latido, tu HRV y tu respiración.</div>
+      <div class="msg">Al despertar, tumbado y quieto, antes de mirar el móvil. Primero cuéntame cómo has dormido; luego 2 minutos de medición.</div>
+      <h3>Anoche</h3>
+      <div class="row"><label class="f">Me acosté<input type="time" id="sbed"></label><label class="f">Me levanté<input type="time" id="swake"></label><div class="k" style="flex:1;min-width:100px"><small>Dormido</small><b id="sdur">--</b></div></div>
+      <h3>Calidad del sueño</h3>
+      <div class="feel" id="sq"><button data-q="1">Fatal</button><button data-q="2">Mala</button><button data-q="3">Normal</button><button data-q="4">Buena</button><button data-q="5">Top</button></div>
       <h3>¿Cómo te sientes?</h3>
       <div class="feel" id="feel"><button data-f="1">Fatal</button><button data-f="2">Mal</button><button data-f="3">Normal</button><button data-f="4">Bien</button><button data-f="5">Top</button></div>
+      <h3>Ayer…</h3>
+      <div class="chips multi" id="tags"></div>
       <div style="text-align:center"><div class="clock" id="chkout" style="font-size:64px">2:00</div><div class="small" id="chklive"></div></div>
-      <div class="bigbtns"><button class="p" id="chkstart">Empezar check</button><button id="chkconnect">Conectar pulsera</button></div>
+      <div class="bigbtns"><button class="p" id="chkstart">Medir 2 min</button><button id="chkconnect">Conectar pulsera</button></div>
+      <button class="s ghost" id="chksave" style="align-self:center">Guardar sin medir</button>
     </div>
     <div class="card" id="chkres" hidden></div>
+
+    <div class="card">
+      <div class="row sb"><h2>Sueño</h2><span class="pill" id="sleeppill">--</span></div>
+      <div class="grid3"><div class="k"><small>Anoche</small><b id="slast">--</b><span id="slastd"></span></div><div class="k"><small>Deuda 3 noches</small><b id="sdebt">--</b></div><div class="k"><small>Regularidad</small><b id="sreg">--</b><span id="sregd"></span></div></div>
+      <div class="reco"><div class="ic" style="background:linear-gradient(135deg,#a98bff,#64c7ff)">☾</div><div><b id="stonight">Esta noche</b><p id="stonightp"></p></div></div>
+      <canvas id="cvsleep" style="height:140px"></canvas>
+      <div class="small">Barras: horas dormidas. Línea: lo que necesitabas de media. Tu necesidad sube con el strain del día y con la deuda acumulada, como en WHOOP.</div>
+    </div>
+
+    <div class="card">
+      <div class="row sb"><h2>Respira</h2><span class="small" id="brwk">0 min esta semana</span></div>
+      <div class="msg">Respiración guiada con biofeedback de tu pulsera. Baja pulsaciones y sube tu HRV: después del WOD, en un día de estrés o antes de dormir.</div>
+      <div class="chips" id="brpat"></div>
+      <div class="row sb"><div class="chips" id="brdur"></div><span class="small" id="brdesc"></span></div>
+      <div class="breath"><div class="bring"></div><div class="bc" id="bc"></div><div class="bt"><b id="brphase">Listo</b><span id="brclock">5:00</span></div></div>
+      <div class="grid3"><div class="k"><small>Pulso</small><b id="brhr">--</b></div><div class="k"><small>HRV vivo</small><b id="brhrv">--</b></div><div class="k"><small>Coherencia <span class="est">est.</span></small><b id="brcoh">--</b></div></div>
+      <div class="bigbtns"><button class="p" id="brstart">Empezar</button><button id="brconnect">Conectar pulsera</button></div>
+      <div id="brres" class="stack"></div>
+    </div>
+
+    <div class="card">
+      <div class="row sb"><h2>Estrés ahora</h2><span class="pill" id="stpill">--</span></div>
+      <div class="msg">Siéntate quieto 60 segundos. Comparo tu pulso y tu HRV con tu base de reposo. Escala de 0 a 3, como el monitor de estrés de WHOOP.</div>
+      <div class="semi big" id="stg" style="position:relative;width:100%;margin:0 auto"></div>
+      <div class="row sb small" style="max-width:260px;margin:0 auto;width:100%"><span>0 · Calma</span><span>3 · Alto</span></div>
+      <div class="msg" id="sttxt">Aún no has medido tu estrés hoy.</div>
+      <div class="small" id="stlive"></div>
+      <div class="bigbtns"><button class="p" id="ststart">Medir 60 s</button><button id="stbreath">Respirar 2 min</button></div>
+    </div>
+
+    <div class="card">
+      <h2>Qué afecta a tu recuperación</h2>
+      <div class="msg" id="instxt"></div>
+      <div class="contrib" id="ins"></div>
+    </div>
+
     <div class="card">
       <h3>Tendencia · 14 días</h3>
-      <div class="seg" id="chkseg"><button data-c="score" aria-pressed="true">Preparación</button><button data-c="rhr" aria-pressed="false">Reposo</button><button data-c="hrv" aria-pressed="false">HRV</button></div>
+      <div class="seg" id="chkseg"><button data-c="score" aria-pressed="true">Recuperación</button><button data-c="sleep" aria-pressed="false">Sueño</button><button data-c="rhr" aria-pressed="false">Reposo</button><button data-c="hrv" aria-pressed="false">HRV</button></div>
       <canvas id="cvchk" style="height:150px"></canvas>
-      <div class="tw"><table><thead><tr><th>Día</th><th>Prep.</th><th>Reposo</th><th>HRV</th><th>Resp.</th><th>Sens.</th></tr></thead><tbody id="chkt"></tbody></table></div>
+      <div class="tw"><table><thead><tr><th>Día</th><th>Recup.</th><th>Sueño</th><th>Reposo</th><th>HRV</th><th>Resp.</th><th>Sens.</th></tr></thead><tbody id="chkt"></tbody></table></div>
     </div>
     <div class="card">
       <h2>Recuperación entre esfuerzos</h2>
@@ -282,7 +380,7 @@ nav .live.on::after{display:block}
       <div class="card">
         <div class="row sb"><h2>Tu WHOOP</h2><button class="s" id="sconnect">Conectar</button></div>
         <div class="sensor" id="sensor"></div>
-        <div class="small">La WHOOP solo comparte por Bluetooth estándar el pulso y, según el firmware, el intervalo entre latidos, el contacto con la piel y la batería. Los datos de sueño, SpO2 o temperatura solo salen por la app de WHOOP.</div>
+        <div class="small">La WHOOP solo comparte por Bluetooth estándar el pulso y, según el firmware, el intervalo entre latidos, el contacto con la piel y la batería. Los datos de sueño, SpO2 o temperatura solo salen por la app de WHOOP, por eso el sueño se apunta en el check matinal.</div>
       </div>
     </div>
     <div class="stack" id="m-set" hidden>
@@ -292,6 +390,11 @@ nav .live.on::after{display:block}
         <div class="row"><label class="f">Peso (kg)<input type="number" id="s-kg" inputmode="decimal"></label><label class="f">Edad<input type="number" id="s-age" inputmode="numeric"></label><label class="f">Sexo<select id="s-sex"><option value="m">Hombre</option><option value="f">Mujer</option></select></label></div>
         <label class="f">Modelo de zonas<select id="s-model"><option value="max">% del pulso máximo (como WHOOP)</option><option value="hrr">% de reserva cardiaca (Karvonen)</option></select></label>
         <div class="row"><label class="f">Pulso máx. automático<select id="s-automax"><option value="1">Sí, si lo supero</option><option value="0">No</option></select></label><label class="f">Objetivo intensidad/sem<input type="number" id="s-goal" inputmode="numeric"></label></div>
+      </div>
+      <div class="card">
+        <h2>Sueño</h2>
+        <div class="row"><label class="f">Sueño base (h)<input type="number" id="s-sleep" inputmode="decimal" step="0.25"></label><label class="f">Hora de levantarte<input type="time" id="s-wake"></label></div>
+        <div class="small">Tu necesidad de sueño parte de aquí y sube con el strain y la deuda. Con la hora de levantarte calculo a qué hora acostarte.</div>
       </div>
       <div class="card">
         <h2>Avisos</h2>
@@ -307,8 +410,8 @@ nav .live.on::after{display:block}
     <div class="stack" id="m-help" hidden>
       <div class="card"><h2>Cómo conectar</h2><div class="msg">1. App de WHOOP → Configuración del dispositivo → Estado → activa <b>Transmitir frecuencia cardíaca</b>.<br>2. En iPhone abre esta página con <b>Bluefy</b>; en Android o PC, con Chrome.<br>3. Pulsa <b>Conectar pulsera</b> y elige tu WHOOP.</div></div>
       <div class="card"><h2>Qué significa cada dato</h2><div class="msg">
-        <b>Preparación</b>: HRV y pulso en reposo frente a tu media de 7 días, sensación y frescura. Como la recuperación de WHOOP y el Training Readiness de Garmin.<br><br>
-        <b>Strain 0–21</b>: carga cardiovascular del día en escala logarítmica, como WHOOP. Estimado con TRIMP.<br><br>
+        <b>Recuperación</b>: HRV y pulso en reposo frente a tu media de 7 días, sueño frente a lo que necesitabas, sensación y frescura. Como la recuperación de WHOOP y el Training Readiness de Garmin.<br><br><b>Sueño necesario</b>: tu sueño base + extra por el strain del día + parte de la deuda de las 3 noches anteriores.<br><br><b>Estrés 0–3</b>: pulso y HRV sentado frente a tu base de reposo.<br><br><b>Coherencia</b>: cuánto oscila tu pulso con cada respiración (arritmia sinusal). Cuanto más amplia, más activo está tu sistema de recuperación.<br><br>
+        <b>Detección automática</b>: con la app abierta y conectada, clasifico cada bloque por tu pulso. Caminar: pulso moderado y estable. WOD: subidas repetidas y zona alta. Fuerza: picos con descansos largos. Carrera: esfuerzo alto y constante. Siesta: pulso pegado a tu reposo y estable al menos 15 minutos. Siempre te pido confirmar. Sin acelerómetro no distingo, por ejemplo, surf de carrera: cámbialo con un toque.<br><br><b>Strain 0–21</b>: carga cardiovascular del día en escala logarítmica, como WHOOP. Estimado con TRIMP.<br><br>
         <b>Carga (TRIMP)</b>: minutos ponderados por intensidad (Banister).<br><br>
         <b>Training Effect</b>: de 0 a 5, como Garmin. Aeróbico por tu carga frente a tu forma; anaeróbico por tiempo en zona 5 y picos.<br><br>
         <b>DFA α1</b>: mide la complejidad del latido a latido. Por encima de 0,75 estás por debajo de tu umbral aeróbico; entre 0,5 y 0,75, entre umbrales; por debajo de 0,5, por encima del umbral anaeróbico. Solo si tu pulsera envía latido a latido.<br><br>
@@ -341,9 +444,9 @@ nav .live.on::after{display:block}
 <script>
 const $=id=>document.getElementById(id);
 const ZC=["--z1","--z2","--z3","--z4","--z5"],ZN=["Zona 1","Zona 2","Zona 3","Zona 4","Zona 5"];
-const TYPES=[["wod","WOD","--pink"],["fuerza","Fuerza","--violet"],["halte","Halterofilia","--lemon"],["carrera","Carrera","--sky"],["surf","Surf","--z2"],["otro","Otro","--muted"]];
+const TYPES=[["wod","WOD","--pink"],["fuerza","Fuerza","--violet"],["halte","Halterofilia","--lemon"],["carrera","Carrera","--sky"],["surf","Surf","--z2"],["caminar","Caminar","--lime"],["otro","Otro","--muted"]];
 const store={get(k,d){try{const v=localStorage.getItem(k);const o=v==null?null:JSON.parse(v);return o==null?d:o}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const CFG=Object.assign({max:194,rest:46,kg:"",age:"",sex:"m",model:"max",snd:"1",voice:"0",zalert:"0",goal:150,automax:"1",vt1:null},store.get("cfg",{}));
+const CFG=Object.assign({auto:"0",max:194,rest:46,kg:"",age:"",sex:"m",model:"max",snd:"1",voice:"0",zalert:"0",goal:150,automax:"1",vt1:null,sleepBase:7.5,wake:"07:00"},store.get("cfg",{}));
 const saveCfg=()=>store.set("cfg",CFG);
 const mmss=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,"0");return h?h+":"+String(m).padStart(2,"0")+":"+x:m+":"+x};
 const fx=(v,d=1)=>(+v).toFixed(d).replace(".",",");
@@ -354,8 +457,12 @@ const DAY=864e5;
 const esc=s=>String(s).replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]));
 function toast(t){const e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2800)}
 const sessions=()=>(store.get("sess",[])||[]).filter(x=>x&&x.id).map(x=>{const n=v=>typeof v==="number"&&isFinite(v)?v:0;x.trimp=n(x.trimp);x.dur=n(x.dur);x.avg=n(x.avg);x.max=n(x.max);if(typeof x.strain!=="number"||!isFinite(x.strain))x.strain=+(21*(1-Math.exp(-x.trimp/95))).toFixed(1);x.teA=n(x.teA);x.teN=n(x.teN);if(!Array.isArray(x.zones))x.zones=[0,0,0,0,0];if(!Array.isArray(x.hrr))x.hrr=[];if(!Array.isArray(x.series))x.series=[];return x});
-const checks=()=>store.get("chk",[]);
-const typeOf=k=>TYPES.find(t=>t[0]===k)||TYPES[5];
+const checks=()=>(store.get("chk",[])||[]).filter(c=>c&&c.d).sort((a,b)=>b.d-a.d);
+const stresses=()=>(store.get("str",[])||[]).filter(x=>x&&x.d);
+const breaths=()=>(store.get("brt",[])||[]).filter(x=>x&&x.d);
+const naps=()=>(store.get("naps",[])||[]).filter(x=>x&&x.start);
+const dets=()=>(store.get("det",[])||[]).filter(x=>x&&x.start);
+const typeOf=k=>TYPES.find(t=>t[0]===k)||TYPES[TYPES.length-1];
 
 function frac(h){return CFG.model==="hrr"?(h-CFG.rest)/(CFG.max-CFG.rest):h/CFG.max}
 function zoneOf(h){const p=frac(h);return p<.6?0:p<.7?1:p<.8?2:p<.9?3:4}
@@ -395,31 +502,31 @@ function go(v){document.querySelectorAll("nav button").forEach(x=>{if(x.dataset.
   document.querySelectorAll(".view").forEach(s=>s.hidden=s.id!=="v-"+v);$("title").textContent=TITLES[v];scrollTo(0,0);
   if(v==="hoy")renderHoy();if(v==="prog")renderProg();if(v==="rec")renderRec();if(v==="mas"){renderHist();renderSensor()}if(v==="train")draw(true)}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.v));
-$("gotrain").onclick=()=>go("train");$("gocheck").onclick=()=>go("rec");$("seeall").onclick=()=>go("mas");
+$("gotrain").onclick=()=>go("train");$("gosleep").onclick=()=>go("rec");$("gocheck").onclick=()=>go("rec");$("seeall").onclick=()=>go("mas");
 document.querySelectorAll("#masseg button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#masseg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));["hist","sensor","set","help"].forEach(m=>$("m-"+m).hidden=m!==b.dataset.m);if(b.dataset.m==="sensor")renderSensor()});
 $("eyebrow").textContent=new Date().toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"});
 
 const S={on:false,mode:null,t0:0,samples:[],rr:[],zones:[0,0,0,0,0],last:null,hrr:[],pending:null,kcal:0,trimp:0,peaks:0,inPeak:false,min:null,win:600,type:"wod",target:-1,lastZone:-1,lastVoice:0,lastOut:0,dfa:null,dfaLog:[],maxRun:0};
 const BT={dev:null,on:false,retry:0,name:null,battery:null,info:{},contact:null,contactSupported:false,rrSeen:0,beats:0,synth:0,real:0,firstT:0,lastPkt:0,pkts:0};
-if(!navigator.bluetooth){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth. En iPhone abre la página con Bluefy; en Android o PC, con Chrome. Puedes probar con «Probar sin pulsera».";["connect","chkconnect","sconnect"].forEach(i=>$(i).disabled=true)}
+if(!navigator.bluetooth){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth. En iPhone abre la página con Bluefy; en Android o PC, con Chrome. Puedes probar con «Probar sin pulsera».";["connect","chkconnect","sconnect","brconnect"].forEach(i=>$(i).disabled=true)}
 function parseHR(dv){const f=dv.getUint8(0);let i=1;const hr=(f&1)?dv.getUint16(1,true):dv.getUint8(1);i+=(f&1)?2:1;const cs=!!(f&4),cc=!!(f&2);let en=null;if(f&8){en=dv.getUint16(i,true);i+=2}const rr=[];if(f&16){while(i+1<dv.byteLength){rr.push(dv.getUint16(i,true)/1024*1000);i+=2}}return{hr,rr,cs,cc,en}}
 async function btConnect(){try{BT.dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}],optionalServices:["battery_service","device_information"]});BT.dev.addEventListener("gattserverdisconnected",btLost);await btGatt();return true}
   catch(e){if(e.name!=="NotFoundError")status("No conecta: "+e.message,"off");return false}}
 async function btGatt(){status("Conectando…","off");const srv=await BT.dev.gatt.connect();const svc=await srv.getPrimaryService("heart_rate");const ch=await svc.getCharacteristic("heart_rate_measurement");await ch.startNotifications();
-  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);onPacket(m)});BT.on=true;BT.retry=0;BT.name=BT.dev.name||"WHOOP";BT.firstT=Date.now();status(BT.name,"on");
+  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);onPacket(m)});if(demoTimer&&!S.on)stopDemo();BT.on=true;BT.retry=0;BT.name=BT.dev.name||"WHOOP";BT.firstT=Date.now();status(BT.name,"on");
   try{const bs=await srv.getPrimaryService("battery_service");const bl=await bs.getCharacteristic("battery_level");BT.battery=(await bl.readValue()).getUint8(0);try{await bl.startNotifications();bl.addEventListener("characteristicvaluechanged",e=>{BT.battery=e.target.value.getUint8(0);renderSensor()})}catch(e){}}catch(e){BT.battery=null}
   try{const di=await srv.getPrimaryService("device_information");for(const [k,n] of [["fab","manufacturer_name_string"],["modelo","model_number_string"],["firmware","firmware_revision_string"],["hardware","hardware_revision_string"]]){try{const c=await di.getCharacteristic(n);BT.info[k]=new TextDecoder().decode(await c.readValue()).replace(/\0/g,"").trim()}catch(e){}}}catch(e){}
   renderSensor()}
 function onPacket(m){const now=Date.now();BT.pkts++;BT.lastPkt=now;BT.contactSupported=m.cs;BT.contact=m.cs?m.cc:null;
   m.rr.forEach(x=>{BT.rrSeen++;if(Math.abs(x-60000/m.hr)<=1.5)BT.synth++;else BT.real++});beat(m.hr,m.rr);if(!$("m-sensor").hidden&&!$("v-mas").hidden&&BT.pkts%3===0)renderSensor()}
-function btLost(){BT.on=false;if(BT.retry<5&&(S.on||CHK.run)){BT.retry++;status("Reconectando "+BT.retry+"/5","off");setTimeout(()=>btGatt().catch(btLost),1500)}else status("Desconectada","off");renderSensor()}
+function btLost(){BT.on=false;if(BT.retry<5&&(S.on||CHK.run||BR.run||ST.run||AUTO.on)){BT.retry++;status("Reconectando "+BT.retry+"/5","off");setTimeout(()=>btGatt().catch(btLost),1500)}else status("Desconectada","off");renderSensor()}
 function status(t,k){$("status").textContent=t;$("dot").className="dot "+(k==="on"?"on":k==="demo"?"demo":"");$("navtrain").classList.toggle("on",k==="on"||k==="demo")}
 const rrReal=()=>BT.real>BT.synth*2&&BT.real>20;
 let demoTimer=null;
-function startDemo(){if(demoTimer)return;status("Modo prueba","demo");BT.real=0;BT.synth=0;let t=0,h=72;demoTimer=setInterval(()=>{t++;const p=t%120;const tg=S.on?(p<70?112+p*1.15:108):58;h+=(tg-h)*.09+(Math.random()-.5)*2;
+function startDemo(){if(demoTimer)return;status("Modo prueba","demo");BT.real=0;BT.synth=0;let t=0,h=72;demoTimer=setInterval(()=>{t++;const p=t%120;const tg=S.on?(p<70?112+p*1.15:108):BR.run?63+7*BR.sig:ST.run?71:58;h+=(tg-h)*(BR.run?.5:.09)+(Math.random()-.5)*(BR.run?.6:2);
   const n=Math.max(1,Math.round(h/60));const rr=[];for(let i=0;i<n;i++)rr.push(60000/h*(1+Math.sin(t*1.3+i)*.04)+(Math.random()-.5)*(S.on?10:40));BT.real+=n;beat(Math.round(h),rr)},1000)}
 function stopDemo(){clearInterval(demoTimer);demoTimer=null}
-function beat(hr,rr){if(!hr)return;BT.beats++;if(S.on)onBeat(hr,rr);if(CHK.run)CHK.beat(hr,rr)}
+function beat(hr,rr){if(!hr)return;BT.beats++;if(S.on)onBeat(hr,rr);if(CHK.run)CHK.beat(hr,rr);if(BR.run)BR.beat(hr,rr);if(ST.run)ST.beat(hr,rr);if(AUTO.on)AUTO.beat(hr,rr);BT.lastHr=hr;BT.lastHrT=Date.now();if(!$("v-hoy").hidden&&Date.now()-(BT.glT||0)>2000){BT.glT=Date.now();glHR()}}
 
 function renderSensor(){const el=$("sensor");if(!el)return;const ic=p=>`<div class="ic"><svg viewBox="0 0 24 24">${p}</svg></div>`;
   const ago=BT.lastPkt?Math.round((Date.now()-BT.lastPkt)/1000):null;const rate=BT.on&&BT.firstT?(BT.pkts/Math.max(1,(Date.now()-BT.firstT)/1000)):0;
@@ -475,7 +582,7 @@ $("stop").onclick=()=>{if(!S.on)return;if(T.run){if(T.t0)closeRound();tStop()}S.
 function endLive(){if(S.mode==="demo"){stopDemo();status("Desconectada","off")}$("prep").hidden=false;$("live").hidden=true}
 const teTxt=v=>v<1?"Sin efecto":v<2?"Leve":v<3?"Mantiene":v<4?"Mejora":v<5?"Mejora mucho":"Excesivo";
 function summary(sess,isNew){const rh=Math.round(recoveryHours(sess,curPmc().tsb));const tot=sess.zones.reduce((a,b)=>a+b,0)||1;const ty=typeOf(sess.type);const d=new Date(sess.id);
-  $("sumin").innerHTML=`<div class="grab"></div><div class="row sb"><div><div class="eyebrow">${d.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})} · ${d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}</div><h2 style="font-size:24px">${ty[1]} · ${mmss(sess.dur)}</h2></div>${sess.demo?'<span class="pill w">prueba</span>':""}</div>
+  $("sumin").innerHTML=`<div class="grab"></div><div class="row sb"><div><div class="eyebrow">${d.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"})} · ${d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}</div><h2 style="font-size:24px">${ty[1]} · ${mmss(sess.dur)}</h2></div>${sess.demo?'<span class="pill w">prueba</span>':sess.auto?'<span class="pill">auto</span>':""}</div>
   <div class="grid3"><div class="k"><small>Strain</small><b>${fx(sess.strain)}</b><span> /21</span></div><div class="k"><small>Carga</small><b>${sess.trimp}</b><span> TRIMP</span></div><div class="k"><small>Recuperación</small><b>${rh} h</b></div>
   <div class="k"><small>TE aeróbico</small><b>${fx(sess.teA)}</b><span> ${teTxt(sess.teA)}</span></div><div class="k"><small>TE anaeróbico</small><b>${fx(sess.teN)}</b><span> ${teTxt(sess.teN)}</span></div><div class="k"><small>Calorías</small><b>${sess.kcal??"--"}</b></div>
   <div class="k"><small>Media</small><b>${sess.avg}</b></div><div class="k"><small>Máximo</small><b>${sess.max}</b></div><div class="k"><small>Mejor recup.</small><b>${sess.hrr&&sess.hrr.length?"−"+Math.max(...sess.hrr):"--"}</b></div></div>
@@ -488,7 +595,7 @@ function summary(sess,isNew){const rh=Math.round(recoveryHours(sess,curPmc().tsb
   <label class="f">Nota (WOD, cargas, sensaciones)<textarea id="note" rows="2">${esc(sess.note||"")}</textarea></label>
   <div class="bigbtns">${isNew?'<button id="discard">Descartar</button><button class="p" id="save">Guardar</button>':'<button id="delsess">Borrar</button><button class="p" id="save">Guardar cambios</button>'}</div>
   <div class="small">Strain, Training Effect, recuperación y umbral son estimaciones con fórmulas públicas.</div>`;
-  $("sum").hidden=false;setTimeout(()=>lineChart($("sumcv"),sess.series,5,{marks:(sess.hrrT||[]).map(s=>s*1000)}),30);
+  $("sum").hidden=false;setTimeout(()=>lineChart($("sumcv"),sess.series,sess.step||5,{marks:(sess.hrrT||[]).map(s=>s*1000)}),30);
   $("rpe").querySelectorAll("button").forEach(b=>b.onclick=()=>{sess.rpe=+b.dataset.r;$("rpe").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
   $("save").onclick=()=>{sess.note=$("note").value.trim();const h=sessions().filter(x=>x.id!==sess.id);h.unshift(sess);h.sort((a,b)=>b.id-a.id);store.set("sess",h.slice(0,400));if(isNew){if(S.lastSamples)store.set("last",S.lastSamples);toast("Sesión guardada");endLive()}$("sum").hidden=true;renderHoy();renderHist()};
   if(isNew)$("discard").onclick=()=>{$("sum").hidden=true;toast("Sesión descartada");endLive()};
@@ -577,8 +684,46 @@ $("tstart").onclick=()=>{if(T.run){if(T.t0)closeRound();tStop()}else tStart()};
 $("tlap").onclick=()=>{if(T.run&&T.t0&&(T.mode==="fortime"||T.mode==="amrap")){closeRound();beep(990,.15);toast("Ronda "+T.rounds.length)}};
 
 const CHK={run:false,t0:0,hrs:[],rr:[],feel:null,iv:null,beat(hr,rr){this.hrs.push(hr);rr.forEach(x=>this.rr.push(x))}};
-document.querySelectorAll("#feel button").forEach(b=>b.onclick=()=>{CHK.feel=+b.dataset.f;document.querySelectorAll("#feel button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+const SQ={q:null};
+const TAGS=[["alcohol","Alcohol"],["cafe","Café por la tarde"],["cena","Cena tarde"],["pantallas","Pantallas en la cama"],["estres","Día estresante"],["noche","Entreno por la noche"],["movilidad","Movilidad"],["siesta","Siesta"],["frio","Sauna o frío"]];
+const tmin=x=>{if(!x||!/^\d{1,2}:\d{2}/.test(x))return null;const[h,m]=x.split(":").map(Number);return h*60+m};
+const hhmm=m=>{m=((Math.round(m)%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
+const hm=h=>{if(h==null||!isFinite(h))return"--";const t=Math.round(h*60);return Math.floor(t/60)+" h "+String(t%60).padStart(2,"0")};
+const hms=h=>{const t=Math.round(h*60);return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")};
+const clamp=(a,b,v)=>Math.max(a,Math.min(b,v));
+const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+function sleepDur(bed,wake){const b=tmin(bed),w=tmin(wake);if(b==null||w==null)return null;let d=w-b;if(d<=0)d+=1440;return d/60}
+function dayStrain(t){const k=startOfDay(t);return strainOf(sessions().filter(x=>!x.demo&&startOfDay(x.id)===k).reduce((a,x)=>a+x.trimp,0))}
+function sleepNeed(wakeDay){const base=+CFG.sleepBase||7.5;const ds=startOfDay(wakeDay);const st=dayStrain(ds-DAY);const sa=Math.max(0,st-8)*.06;
+  const prev=checks().filter(c=>c.sleep&&c.sleep.h&&startOfDay(c.d)<ds&&startOfDay(c.d)>=ds-3*DAY);const raw=prev.reduce((a,c)=>a+Math.max(0,(c.sleep.need||base)-c.sleep.h),0);const debt=Math.min(1.5,raw*.33);
+  const nap=naps().filter(n=>startOfDay(n.start)===ds-DAY).reduce((a,n)=>a+(n.end-n.start)/36e5,0);
+  return{need:Math.max(base*.85,base+sa+debt-nap),base,strain:sa,debt,raw,st,nap}}
+function sleepReg(){const b=checks().filter(c=>c.sleep&&tmin(c.sleep.bed)!=null).slice(0,7).map(c=>(tmin(c.sleep.bed)-720+1440)%1440);if(b.length<3)return null;const m=mean(b);const sd=Math.sqrt(mean(b.map(x=>(x-m)**2)));return{v:Math.round(clamp(0,100,100-sd*.7)),sd:Math.round(sd)}}
+const bedtimeFor=need=>hhmm((tmin(CFG.wake)??420)-need*60-15);
+function baseline(){const p=checks().slice(0,7);return{rhr:mean(p.map(x=>x.rhr).filter(Boolean)),hrv:mean(p.map(x=>x.hrv).filter(Boolean))}}
+function stressOf(hr,hrv){const b=baseline();const rb=b.rhr||CFG.rest;let v=(hr/rb-1.05)/.35*3;if(hrv&&b.hrv)v=.5*v+.5*((1-hrv/b.hrv)/.6*3);return clamp(0,3,v)}
+const stressTxt=v=>v<1?"Calma":v<2?"Moderado":"Alto";
+const stressCls=v=>v<1?"g":v<2?"w":"r";
+
+$("tags").innerHTML=TAGS.map(([k,l])=>`<button data-k="${k}" aria-pressed="false">${l}</button>`).join("");
+$("tags").querySelectorAll("button").forEach(b=>b.onclick=()=>b.setAttribute("aria-pressed",String(b.getAttribute("aria-pressed")!=="true")));
+function pressFeel(v){CHK.feel=v;document.querySelectorAll("#feel button").forEach(x=>x.setAttribute("aria-pressed",String(+x.dataset.f===v)))}
+function pressSQ(v){SQ.q=v;document.querySelectorAll("#sq button").forEach(x=>x.setAttribute("aria-pressed",String(+x.dataset.q===v)))}
+document.querySelectorAll("#feel button").forEach(b=>b.onclick=()=>pressFeel(+b.dataset.f));
+document.querySelectorAll("#sq button").forEach(b=>b.onclick=()=>pressSQ(+b.dataset.q));
+const sdurUpd=()=>{const h=sleepDur($("sbed").value,$("swake").value);$("sdur").textContent=h?hms(h):"--"};
+$("sbed").oninput=sdurUpd;$("swake").oninput=sdurUpd;
+function readSleep(){const bed=$("sbed").value,wake=$("swake").value;const h=sleepDur(bed,wake);if(!h||h<1||h>16)return null;return{bed,wake,h:+h.toFixed(2),q:SQ.q||null}}
+const readTags=()=>[...$("tags").querySelectorAll('button[aria-pressed="true"]')].map(b=>b.dataset.k);
+function recPrefill(){const c=checks();const td=c[0]&&dayKey(c[0].d)===dayKey(Date.now())?c[0]:null;const ls=c.find(x=>x.sleep);
+  $("sbed").value=td&&td.sleep?td.sleep.bed:ls?ls.sleep.bed:"23:30";$("swake").value=td&&td.sleep?td.sleep.wake:(CFG.wake||"07:00");sdurUpd();
+  pressSQ(td&&td.sleep?td.sleep.q:null);pressFeel(td?td.feel:null);
+  $("tags").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(!!(td&&Array.isArray(td.tags)&&td.tags.includes(b.dataset.k)))))}
+function finalizeCheck(c){if(c.sleep)c.sleep.need=+sleepNeed(c.d).need.toFixed(2);const R=readinessParts(c);c.score=R.score;c.parts=R.parts;
+  const all=checks().filter(x=>dayKey(x.d)!==dayKey(c.d));all.unshift(c);store.set("chk",all.slice(0,365));showCheck(c);renderRec();renderHoy()}
 $("chkconnect").onclick=async()=>{if(await btConnect())toast("Pulsera conectada")};
+$("chksave").onclick=()=>{if(!CHK.feel){toast("Elige cómo te sientes");return}const ex=checks().find(x=>dayKey(x.d)===dayKey(Date.now()));
+  const c=Object.assign({d:Date.now(),rhr:null,hrv:null,resp:null},ex||{},{feel:CHK.feel,sleep:readSleep(),tags:readTags()});finalizeCheck(c);toast("Guardado")};
 $("chkstart").onclick=()=>{if(CHK.run)return;if(!BT.on&&!demoTimer){toast("Conecta la pulsera primero");return}if(!CHK.feel){toast("Elige cómo te sientes");return}
   Object.assign(CHK,{run:true,t0:Date.now(),hrs:[],rr:[]});$("chkstart").disabled=true;$("chkres").hidden=true;
   CHK.iv=setInterval(()=>{const el=(Date.now()-CHK.t0)/1000;$("chkout").textContent=mmss(120-el);const lh=CHK.hrs[CHK.hrs.length-1];$("chklive").textContent=lh?`Pulso ${lh} ppm · ${CHK.rr.length} latidos registrados`:"Esperando señal…";
@@ -586,18 +731,176 @@ $("chkstart").onclick=()=>{if(CHK.run)return;if(!BT.on&&!demoTimer){toast("Conec
     const sorted=[...CHK.hrs].sort((a,b)=>a-b);const q=Math.max(1,Math.floor(sorted.length*.2));const rhr=sorted.length?Math.round(sorted.slice(0,q).reduce((a,b)=>a+b,0)/q):null;
     const ok=rrReal();const hrvRaw=ok?rmssd(cleanRR(CHK.rr)):null;const hrv=hrvRaw?Math.round(hrvRaw):null;const resp=ok?respRate(CHK.rr):null;
     if(!rhr){$("chkout").textContent="Sin datos";return}
-    const c={d:Date.now(),rhr,hrv,resp:resp?+resp.toFixed(1):null,feel:CHK.feel};c.score=readiness(c);const all=checks().filter(x=>dayKey(x.d)!==dayKey(c.d));all.unshift(c);store.set("chk",all.slice(0,180));
-    $("chkout").textContent=c.score+"%";$("chklive").textContent="";showCheck(c);renderRec();renderHoy();beep(1320,.3)},500)};
-function readiness(c){const prev=checks().filter(x=>dayKey(x.d)!==dayKey(c.d)).slice(0,7);let s=60;
-  const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
-  const bh=avg(prev.map(x=>x.hrv).filter(Boolean)),br=avg(prev.map(x=>x.rhr).filter(Boolean));
-  if(c.hrv&&bh)s+=Math.max(-25,Math.min(25,(Math.log(c.hrv)/Math.log(bh)-1)*400));
-  if(c.rhr&&br)s+=Math.max(-20,Math.min(15,(br-c.rhr)*3));else if(c.rhr)s+=Math.max(-15,Math.min(10,(CFG.rest-c.rhr)*2));
-  s+=(c.feel-3)*6;s+=Math.max(-15,Math.min(8,curPmc().tsb*.4));return Math.round(Math.max(1,Math.min(99,s)))}
-function showCheck(c){const cl=zClass(c.score);const prev=checks().slice(1,8);const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;const br=avg(prev.map(x=>x.rhr)),bh=avg(prev.map(x=>x.hrv).filter(Boolean));
+    const c={d:Date.now(),rhr,hrv,resp:resp?+resp.toFixed(1):null,feel:CHK.feel,sleep:readSleep(),tags:readTags()};finalizeCheck(c);
+    $("chkout").textContent=c.score+"%";$("chklive").textContent="";beep(1320,.3)},500)};
+function readinessParts(c){const prev=checks().filter(x=>dayKey(x.d)!==dayKey(c.d)&&x.d<c.d).slice(0,7);
+  const bh=mean(prev.map(x=>x.hrv).filter(Boolean)),br=mean(prev.map(x=>x.rhr).filter(Boolean));const P=[];
+  if(c.hrv&&bh)P.push(["HRV",clamp(-25,25,(Math.log(c.hrv)/Math.log(bh)-1)*400),`${c.hrv} ms · tu media ${Math.round(bh)} ms`]);else if(c.hrv)P.push(["HRV",0,`${c.hrv} ms · aún creando tu media`]);
+  if(c.rhr&&br)P.push(["Pulso en reposo",clamp(-20,15,(br-c.rhr)*3),`${c.rhr} ppm · tu media ${Math.round(br)}`]);else if(c.rhr)P.push(["Pulso en reposo",clamp(-15,10,(CFG.rest-c.rhr)*2),`${c.rhr} ppm · referencia ${CFG.rest}`]);
+  if(c.sleep&&c.sleep.h){const need=c.sleep.need||sleepNeed(c.d).need;const pct=c.sleep.h/need*100;P.push(["Sueño",clamp(-18,12,(pct-85)*.5+((c.sleep.q||3)-3)*2),`${hm(c.sleep.h)} de ${hm(need)} necesarias · ${Math.round(pct)} %`])}
+  if(c.feel)P.push(["Sensación",(c.feel-3)*5,["","Fatal","Mal","Normal","Bien","Top"][c.feel]]);
+  if(sessions().some(x=>!x.demo)){const t=curPmc().tsb;P.push(["Carga reciente",clamp(-15,8,t*.4),`Frescura ${Math.round(t)}`])}
+  return{score:Math.round(clamp(1,99,60+P.reduce((a,p)=>a+p[1],0))),parts:P.map(p=>[p[0],Math.round(p[1]),p[2]])}}
+function readiness(c){return readinessParts(c).score}
+function contribHTML(parts){return parts.map(([l,d,t])=>{const w=Math.min(50,Math.abs(d)/25*50);return`<span class="l">${l}</span><span class="cb"><i style="${d>=0?"left:50%":"right:50%"};width:${w}%;background:var(${d>0?"--good":d<0?"--bad":"--muted"})"></i></span><b class="${d>0?"g":d<0?"r":""}">${d>0?"+":d<0?"−":"±"}${Math.abs(d)}</b><small>${t}</small>`}).join("")}
+function showCheck(c){const cl=zClass(c.score);const prev=checks().filter(x=>x.d<c.d).slice(0,7);const br=mean(prev.map(x=>x.rhr).filter(Boolean)),bh=mean(prev.map(x=>x.hrv).filter(Boolean));
   $("chkres").hidden=false;$("chkres").innerHTML=`<div class="row sb"><h2>Resultado</h2><span class="pill ${cl}">${c.score}% · ${cl==="g"?"Verde":cl==="w"?"Amarillo":"Rojo"}</span></div>
-  <div class="grid3"><div class="k"><small>Reposo</small><b>${c.rhr}</b><span>${br?" vs "+Math.round(br):""}</span></div><div class="k"><small>HRV</small><b>${c.hrv??"--"}</b><span>${c.hrv&&bh?" vs "+Math.round(bh):c.hrv?" ms":" n/d"}</span></div><div class="k"><small>Respiración</small><b>${c.resp?fx(c.resp):"--"}</b><span>${c.resp?" rpm":" n/d"}</span></div></div>
-  ${!c.hrv?'<div class="small">Tu pulsera no ha enviado el latido a latido, así que la preparación se basa en tu pulso en reposo, tu sensación y tu carga.</div>':""}`}
+  <div class="grid3"><div class="k"><small>Reposo</small><b>${c.rhr??"--"}</b><span>${c.rhr&&br?" vs "+Math.round(br):""}</span></div><div class="k"><small>HRV</small><b>${c.hrv??"--"}</b><span>${c.hrv&&bh?" vs "+Math.round(bh):c.hrv?" ms":" n/d"}</span></div><div class="k"><small>Respiración</small><b>${c.resp?fx(c.resp):"--"}</b><span>${c.resp?" rpm":" n/d"}</span></div>
+  <div class="k"><small>Sueño</small><b>${c.sleep?hms(c.sleep.h):"--"}</b><span>${c.sleep&&c.sleep.need?" de "+hms(c.sleep.need):""}</span></div><div class="k"><small>Calidad</small><b>${c.sleep&&c.sleep.q?["","Fatal","Mala","Normal","Buena","Top"][c.sleep.q]:"--"}</b></div><div class="k"><small>Hábitos</small><b>${Array.isArray(c.tags)?c.tags.length:0}</b><span> marcados</span></div></div>
+  ${!c.rhr?'<div class="small">Sin medición: la recuperación se basa en tu sueño, tu sensación y tu carga.</div>':!c.hrv?'<div class="small">Tu pulsera no ha enviado el latido a latido, así que no hay HRV. La recuperación usa pulso en reposo, sueño, sensación y carga.</div>':""}`}
+
+const ST={run:false,t0:0,hrs:[],rr:[],iv:null,beat(hr,rr){this.hrs.push(hr);rr.forEach(x=>this.rr.push(x))}};
+$("ststart").onclick=()=>{if(ST.run)return;if(!BT.on&&!demoTimer){toast("Conecta la pulsera primero");return}Object.assign(ST,{run:true,t0:Date.now(),hrs:[],rr:[]});$("ststart").disabled=true;
+  ST.iv=setInterval(()=>{const el=(Date.now()-ST.t0)/1000;const lh=ST.hrs[ST.hrs.length-1];$("stlive").textContent=`${Math.max(0,Math.ceil(60-el))} s · `+(lh?`pulso ${lh} ppm`:"esperando señal…");if(el<60)return;
+    clearInterval(ST.iv);ST.run=false;$("ststart").disabled=false;if(ST.hrs.length<10){$("stlive").textContent="Sin datos suficientes.";return}
+    const k=Math.floor(ST.hrs.length/3);const hr=Math.round(mean(ST.hrs.slice(k)));const hv=rrReal()?rmssd(cleanRR(ST.rr)):null;const v=+stressOf(hr,hv).toFixed(1);
+    const a=stresses();a.unshift({d:Date.now(),v,hr,hrv:hv?Math.round(hv):null});store.set("str",a.slice(0,300));$("stlive").textContent="";renderRec();beep(1100,.2)},500)};
+$("stbreath").onclick=()=>{if(BR.run)return;BR.min=2;chips($("brdur"),[["2","2 min"],["5","5 min"],["10","10 min"]],"2",brDurCb);BR.pat="relax";chips($("brpat"),Object.entries(PATS).map(([k,v])=>[k,v.n]),"relax",brPatCb);brIdle();$("bc").scrollIntoView({behavior:"smooth",block:"center"});setTimeout(brStart,700)};
+
+const PATS={res:{n:"Resonancia",d:"5 s inhala · 5 s exhala",p:[["in",5],["out",5]]},relax:{n:"Relax 4·6",d:"Exhalación larga: baja pulsaciones",p:[["in",4],["out",6]]},box:{n:"Caja 4·4·4·4",d:"Foco y calma antes de competir",p:[["in",4],["hold",4],["out",4],["hold",4]]},sleep:{n:"Dormir 4·7·8",d:"Antes de acostarte",p:[["in",4],["hold",7],["out",8]]}};
+const BR={run:false,pat:"res",min:5,t0:0,hrs:[],rr:[],amps:[],cyc:-1,cs:0,ph:-1,lc:-1,sig:0,iv:null,beat(hr,rr){const t=Date.now();this.hrs.push([t,hr]);rr.forEach(x=>this.rr.push([t,x]))}};
+const brPatCb=k=>{if(!BR.run){BR.pat=k;brIdle()}},brDurCb=k=>{if(!BR.run){BR.min=+k;brIdle()}};
+chips($("brpat"),Object.entries(PATS).map(([k,v])=>[k,v.n]),BR.pat,brPatCb);
+chips($("brdur"),[["2","2 min"],["5","5 min"],["10","10 min"]],"5",brDurCb);
+function brIdle(){$("brclock").textContent=mmss(BR.min*60);$("brphase").textContent="Listo";$("brdesc").textContent=PATS[BR.pat].d}
+const coh=a=>Math.round(clamp(0,100,mean(a)/12*100));
+function brLive(){const now=Date.now();const lh=BR.hrs.length?BR.hrs[BR.hrs.length-1][1]:null;$("brhr").textContent=lh??"--";
+  const rv=rrReal()?rmssd(cleanRR(BR.rr.filter(x=>now-x[0]<60000).map(x=>x[1]))):null;$("brhrv").textContent=rv?Math.round(rv)+" ms":"--";
+  const a=BR.amps.slice(-3);$("brcoh").textContent=a.length?coh(a)+" %":"--"}
+function brStart(){if(BR.run){brStop(true);return}Object.assign(BR,{run:true,t0:Date.now(),hrs:[],rr:[],amps:[],cyc:-1,ph:-1,lc:-1});$("brstart").textContent="Parar";$("brres").innerHTML="";
+  if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>BR.wl=w).catch(()=>{});
+  const P=PATS[BR.pat].p,cl=P.reduce((a,x)=>a+x[1],0);
+  BR.iv=setInterval(()=>{const el=(Date.now()-BR.t0)/1000;if(el>=BR.min*60){brStop(false);return}
+    const cyc=Math.floor(el/cl);let r=el%cl,i=0;while(i<P.length-1&&r>=P[i][1]){r-=P[i][1];i++}
+    const k=P[i][0],d=P[i][1],f=r/d;const prevIn=i>0&&P[i-1][0]==="in";BR.sig=k==="in"?-1+2*f:k==="out"?1-2*f:(prevIn?1:-1);
+    if(cyc!==BR.cyc){if(BR.cyc>=0){const hs=BR.hrs.filter(h=>h[0]>=BR.cs).map(h=>h[1]);if(hs.length>=3)BR.amps.push(Math.max(...hs)-Math.min(...hs))}BR.cyc=cyc;BR.cs=Date.now()}
+    if(i!==BR.ph||cyc!==BR.lc){BR.ph=i;BR.lc=cyc;const bc=$("bc");bc.style.transition=`transform ${Math.max(.2,d-r)}s ease-in-out`;bc.style.transform=`scale(${k==="in"?1:k==="out"?.42:(prevIn?1:.42)})`;
+      $("brphase").textContent={in:"Inhala",out:"Exhala",hold:"Mantén"}[k];if(k!=="hold")beep(k==="in"?520:390,.12)}
+    $("brclock").textContent=mmss(BR.min*60-el);brLive()},100)}
+function brStop(manual){clearInterval(BR.iv);BR.run=false;BR.sig=0;BR.wl?.release?.().catch(()=>{});$("brstart").textContent="Empezar";const bc=$("bc");bc.style.transition="transform 1.2s ease-in-out";bc.style.transform="scale(.42)";
+  const t1=Date.now(),t0=BR.t0,el=(t1-t0)/1000;$("brphase").textContent=manual?"Parado":"¡Hecho!";$("brclock").textContent=mmss(el);if(el<60){setTimeout(brIdle,1500);return}
+  const hs=BR.hrs;const m=a=>a.length?Math.round(mean(a)):null;const hr0=m(hs.filter(h=>h[0]-t0<30000).map(h=>h[1])),hr1=m(hs.filter(h=>t1-h[0]<30000).map(h=>h[1]));
+  const ok=rrReal();const v0=ok?rmssd(cleanRR(BR.rr.filter(x=>x[0]-t0<60000).map(x=>x[1]))):null,v1=ok?rmssd(cleanRR(BR.rr.filter(x=>t1-x[0]<60000).map(x=>x[1]))):null;
+  const r={d:t0,min:+(el/60).toFixed(1),pat:BR.pat,hr0,hr1,hrv0:v0?Math.round(v0):null,hrv1:v1?Math.round(v1):null,coh:BR.amps.length?coh(BR.amps):null,amp:BR.amps.length?+mean(BR.amps).toFixed(1):null};
+  const all=breaths();all.unshift(r);store.set("brt",all.slice(0,300));brResult(r);renderRec();if(!manual)beep(1320,.5)}
+function brResult(r){const dl=(a,b,u,inv)=>a!=null&&b!=null?`<span class="${(b-a)*(inv?-1:1)>=0?"g":"r"}">${b-a>=0?"+":"−"}${Math.abs(b-a)}${u}</span>`:"";
+  $("brres").innerHTML=`<div class="row sb"><h3>${PATS[r.pat].n} · ${fx(r.min)} min</h3><span class="pill g">Guardado</span></div>`+(r.hr0?`<div class="grid3"><div class="k"><small>Pulso</small><b>${r.hr0}→${r.hr1}</b><span> ${dl(r.hr0,r.hr1," ppm",true)}</span></div><div class="k"><small>HRV</small><b>${r.hrv0?r.hrv0+"→"+r.hrv1:"--"}</b><span> ${dl(r.hrv0,r.hrv1," ms")}</span></div><div class="k"><small>Coherencia</small><b>${r.coh!=null?r.coh+" %":"--"}</b><span>${r.amp?" ±"+fx(r.amp/2)+" ppm":""}</span></div></div>`:'<div class="small">Sin pulsera conectada: se guarda como minutos de respiración, sin biofeedback.</div>')}
+$("brstart").onclick=brStart;$("brconnect").onclick=async()=>{if(await btConnect())toast("Pulsera conectada")};
+brIdle();
+
+function insights(){const c=checks().filter(x=>Array.isArray(x.tags)&&x.score);const out=[];
+  TAGS.forEach(([k,l])=>{const y=c.filter(x=>x.tags.includes(k)),n=c.filter(x=>!x.tags.includes(k));if(y.length>=3&&n.length>=3){const a=v=>mean(v.map(x=>x.score));const hv=v=>mean(v.map(x=>x.hrv).filter(Boolean));const hy=hv(y),hn=hv(n);out.push([l,Math.round(a(y)-a(n)),`${y.length} días con, ${n.length} sin`+(hy&&hn?` · HRV ${hy>=hn?"+":"−"}${Math.abs(Math.round((hy/hn-1)*100))} %`:"")])}});
+  const sl=checks().filter(x=>x.sleep&&x.score);const g=sl.filter(x=>x.sleep.h>=7),b=sl.filter(x=>x.sleep.h<7);if(g.length>=3&&b.length>=3)out.push(["Dormir 7 h o más",Math.round(mean(g.map(x=>x.score))-mean(b.map(x=>x.score))),`${g.length} noches de 7 h o más, ${b.length} por debajo`]);
+  const tr=checks().filter(x=>x.score);const hd=tr.filter(x=>dayStrain(startOfDay(x.d)-DAY)>=14),ez=tr.filter(x=>{const st=dayStrain(startOfDay(x.d)-DAY);return st<14});if(hd.length>=3&&ez.length>=3)out.push(["Día anterior duro (strain ≥ 14)",Math.round(mean(hd.map(x=>x.score))-mean(ez.map(x=>x.score))),`${hd.length} días tras un día duro`]);
+  return out.sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]))}
+function recCoach(td,sp,stv,tn){const bt=bedtimeFor(tn.need);
+  if(!td)return["☀","Empieza el día con tu check","Registra cómo has dormido y mide 2 minutos tumbado. Con eso te digo cómo vas."];
+  if(td.score<34)return["☾","Hoy toca recuperar",`Descanso activo, 10 minutos de Respira y a la cama a las ${bt}. Mañana lo notarás.`];
+  if(sp!=null&&sp<80)return["☾","Te falta sueño",`Anoche cubriste el ${Math.round(sp)} % de lo que necesitabas. Acuéstate a las ${bt}; una siesta de 20 minutos también suma.`];
+  if(stv!=null&&stv>=2)return["≈","Estrés alto ahora","5 minutos de Respira en resonancia bajan pulsaciones y suben tu HRV. Pruébalo y vuelve a medir."];
+  if(td.score<67)return["≈","Recuperación a medias",`Entreno controlado y prioriza dormir: a la cama a las ${bt} para tus ${hm(tn.need)}.`];
+  return["✓","Bien recuperado",`Mantén la rutina. Esta noche necesitas ${hm(tn.need)}: a la cama a las ${bt}.`]}
+
+
+// ---------- Detección automática ----------
+const AUTO={on:false,acc:[],rr:[],t:0,log:(store.get("day",[])||[]).filter(x=>Array.isArray(x)&&Date.now()-x[0]<36*36e5),bout:null,slp:null,wl:null,
+  beat(hr,rr){const now=Date.now();this.acc.push(hr);rr.forEach(x=>this.rr.push([now,x]));this.rr=this.rr.filter(x=>now-x[0]<60000);if(!this.t)this.t=now;
+    if(now-this.t>=10000){const hv=rrReal()?rmssd(cleanRR(this.rr.map(x=>x[1]))):null;this.push([now,Math.round(mean(this.acc)),hv?Math.round(hv):null]);this.acc=[];this.t=now}},
+  push(smp){const L=this.log;const last=L[L.length-1];if(last&&smp[0]-last[0]>180000)closeAll(last[0]);L.push(smp);while(L.length&&smp[0]-L[0][0]>36*36e5)L.shift();
+    if(L.length%6===0)store.set("day",L);detect(smp[0]);if(L.length%3===0&&!$("v-hoy").hidden)renderDay()}};
+const rFrac=h=>(h-(baseline().rhr||CFG.rest))/(CFG.max-(baseline().rhr||CFG.rest));
+function winS(now,ms){const L=AUTO.log;const o=[];for(let i=L.length-1;i>=0&&now-L[i][0]<ms;i--)o.push(L[i]);return o.reverse()}
+const sd=a=>{const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)**2)))};
+const busy=()=>S.on||BR.run||CHK.run||ST.run;
+function overlapsSession(a,b){return sessions().some(x=>x.id<b&&x.id+x.dur*1000>a)}
+function detect(now){if(busy()){AUTO.bout=null;AUTO.slp=null;return}
+  const w2=winS(now,120000),w3=winS(now,180000),w10=winS(now,600000);if(w2.length<8)return;const rest=baseline().rhr||CFG.rest;
+  const m2=mean(w2.map(x=>x[1])),m3=mean(w3.map(x=>x[1]));
+  if(!AUTO.bout&&rFrac(m2)>=.25){AUTO.bout={start:w2[0][0]};AUTO.slp=null}
+  else if(AUTO.bout&&rFrac(m3)<.18){finishAct(AUTO.bout.start,now-150000);AUTO.bout=null}
+  if(!AUTO.bout&&w10.length>=50){const h10=w10.map(x=>x[1]);
+    if(!AUTO.slp&&mean(h10)<=rest+4&&sd(h10)<4)AUTO.slp={start:w10[0][0]};
+    else if(AUTO.slp&&m3>rest+12){finishSleep(AUTO.slp.start,now-180000);AUTO.slp=null}}}
+function closeAll(t){if(AUTO.bout){finishAct(AUTO.bout.start,t);AUTO.bout=null}if(AUTO.slp){finishSleep(AUTO.slp.start,t);AUTO.slp=null}}
+function samplesIn(a,b){return AUTO.log.filter(x=>x[0]>=a&&x[0]<=b)}
+function classify(all){const tr=all.length>90?15:0;const sm=all.slice(tr,all.length-tr);const hs=sm.map(x=>x[1]),rs=hs.map(rFrac);const mr=mean(rs),p90=[...rs].sort((a,b)=>a-b)[Math.floor(rs.length*.9)];const m30a=[];for(let i=0;i+3<=hs.length;i+=3)m30a.push(mean(hs.slice(i,i+3)));const cv=sd(m30a.length>3?m30a:hs)/mean(hs);
+  const z4=hs.filter(h=>zoneOf(h)>=3).length/hs.length;const m30=[];for(let i=0;i+3<=hs.length;i+=3)m30.push(mean(hs.slice(i,i+3)));let surges=0;for(let i=2;i<m30.length;i++)if(m30[i]-Math.min(m30[i-1],m30[i-2])>=12)surges++;
+  const spm=surges/(sm.length/6);
+  let type,why;
+  if(mr<.38&&p90<.5){type="caminar";why="pulso moderado y estable"}
+  else if(spm>=.15||(z4>=.25&&cv>=.08)){type="wod";why="subidas repetidas de pulso y tiempo en zona alta"}
+  else if(mr>=.5&&cv<.07){type="carrera";why="esfuerzo alto y constante"}
+  else if(cv>=.08){type="fuerza";why="picos con descansos largos"}
+  else{type=mr>=.45?"carrera":"caminar";why="esfuerzo continuo"}
+  return{type,why,mr,cv,z4,spm}}
+function finishAct(a,b){if(b-a<8*60000)return;const sm=samplesIn(a,b);if(sm.length<30||overlapsSession(a,b))return;const c=classify(sm);const hs=sm.map(x=>x[1]);
+  addDet({kind:"act",start:a,end:b,type:c.type,why:c.why,avg:Math.round(mean(hs)),max:Math.max(...hs)})}
+function finishSleep(a,b){if(b-a<15*60000)return;const sm=samplesIn(a,b);if(sm.length<60)return;const sh=new Date(a).getHours();const night=(sh>=19||sh<5)&&b-a>=3*36e5;
+  addDet({kind:night?"night":"nap",start:a,end:b,avg:Math.round(mean(sm.map(x=>x[1]))),hrv:Math.round(mean(sm.map(x=>x[2]).filter(Boolean)))||null})}
+function addDet(d){const L=dets();if(L.some(x=>x.start<d.end&&x.end>d.start))return;d.id=d.start;L.unshift(d);store.set("det",L.slice(0,60));store.set("day",AUTO.log);renderDet();renderDay();
+  beep(990,.15);toast(d.kind==="act"?`Detectado: ${typeOf(d.type)[1]} · ${Math.round((d.end-d.start)/60000)} min`:d.kind==="nap"?`Siesta detectada · ${Math.round((d.end-d.start)/60000)} min`:"Noche de sueño detectada")}
+function sessFromSamples(a,b,type){const sm=samplesIn(a,b);const z=[0,0,0,0,0];let tr=0,kc=0,peaks=0,inP=false;
+  sm.forEach((x,i)=>{const dt=i?Math.min(60,(x[0]-sm[i-1][0])/1000):10;const zz=zoneOf(x[1]);z[zz]+=dt;tr+=trimpMin(x[1])*dt/60;const k=kcalMin(x[1]);if(k)kc+=k*dt/60;if(zz===4&&!inP){inP=true;peaks++}if(zz<=2)inP=false});
+  const hs=sm.map(x=>x[1]);return{id:a,type,dur:(b-a)/1000,avg:Math.round(mean(hs)),max:Math.max(...hs),min:Math.min(...hs),kcal:Math.round(kc)||null,trimp:Math.round(tr),zones:z.map(Math.round),hrr:[],hrrT:[],
+    teA:+teAer(tr).toFixed(1),teN:+teAna(z[4],peaks).toFixed(1),strain:+strainOf(tr).toFixed(1),rounds:null,demo:false,auto:true,series:hs,step:10,rpe:null,note:"",vt1:null}}
+const fmtT=t=>new Date(t).toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
+function renderDet(){const L=dets();$("detcard").hidden=!L.length;$("detn").textContent=L.length;
+  $("detlist").innerHTML=L.map(d=>{const min=Math.round((d.end-d.start)/60000);const when=`${new Date(d.start).toLocaleDateString("es-ES",{weekday:"short",day:"numeric"})} · ${fmtT(d.start)}–${fmtT(d.end)} · ${min>=60?hm(min/60):min+" min"}`;
+    if(d.kind==="act")return`<div class="reco" data-id="${d.id}"><div class="ic" style="background:var(${typeOf(d.type)[2]})">${typeOf(d.type)[1][0]}</div><div style="flex:1;min-width:0"><b>${typeOf(d.type)[1]}</b><p>${when} · media ${d.avg}, máx ${d.max} ppm. Lo clasifico así por ${d.why}.</p>
+      <div class="chips" style="margin-top:8px">${TYPES.filter(t=>t[0]!=="otro").map(t=>`<button class="s" data-t="${t[0]}" aria-pressed="${t[0]===d.type}">${t[1]}</button>`).join("")}</div>
+      <div class="row" style="margin-top:8px"><button class="s p" data-a="ok">Guardar sesión</button><button class="s" data-a="no">Descartar</button></div></div></div>`;
+    return`<div class="reco" data-id="${d.id}"><div class="ic" style="background:linear-gradient(135deg,#a98bff,#64c7ff)">☾</div><div style="flex:1;min-width:0"><b>${d.kind==="nap"?"Siesta":"Noche de sueño"}</b><p>${when} · pulso medio ${d.avg} ppm${d.hrv?" · HRV "+d.hrv+" ms":""}.</p>
+      <div class="row" style="margin-top:8px"><button class="s p" data-a="ok">${d.kind==="nap"?"Sí, dormí":"Usar en el check"}</button><button class="s" data-a="no">No dormía</button></div></div></div>`}).join("");
+  $("detlist").querySelectorAll(".reco").forEach(el=>{const id=+el.dataset.id;
+    el.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const L=dets();const d=L.find(x=>x.id===id);if(d){d.type=b.dataset.t;store.set("det",L);renderDet()}});
+    el.querySelector('[data-a="ok"]').onclick=()=>confirmDet(id);el.querySelector('[data-a="no"]').onclick=()=>{store.set("det",dets().filter(x=>x.id!==id));renderDet();renderDay()}})}
+function confirmDet(id){const L=dets();const d=L.find(x=>x.id===id);if(!d)return;store.set("det",L.filter(x=>x.id!==id));
+  if(d.kind==="act"){const se=sessFromSamples(d.start,d.end,d.type);const h=sessions().filter(x=>x.id!==se.id);h.unshift(se);h.sort((a,b)=>b.id-a.id);store.set("sess",h.slice(0,400));toast("Sesión guardada");renderHoy();renderHist()}
+  else if(d.kind==="nap"){const n=naps();n.unshift({start:d.start,end:d.end,avg:d.avg,hrv:d.hrv});store.set("naps",n.slice(0,200));toast("Siesta guardada: cuenta para tu sueño");renderHoy();renderRec()}
+  else{$("sbed").value=hhmm(new Date(d.start).getHours()*60+new Date(d.start).getMinutes());$("swake").value=hhmm(new Date(d.end).getHours()*60+new Date(d.end).getMinutes());sdurUpd();go("rec");toast("Horas de sueño puestas en el check")}
+  renderDet();renderDay()}
+function renderDay(){const c=$("cvday");const P=prep(c);if(!P)return;const{x:cx,W,H}=P;const t0=startOfDay(Date.now()),t1=t0+DAY;const X=t=>30+(t-t0)/DAY*(W-34);
+  const sm=AUTO.log.filter(x=>x[0]>=t0);const lo=40,hi=Math.max(140,...sm.map(x=>x[1]+5));const y=v=>H-16-(v-lo)/(hi-lo)*(H-24);
+  const band=(a,b,col,al)=>{if(b<t0||a>t1)return;cx.globalAlpha=al;cx.fillStyle=col;cx.fillRect(X(Math.max(a,t0)),6,Math.max(2,X(Math.min(b,t1))-X(Math.max(a,t0))),H-22);cx.globalAlpha=1};
+  sessions().forEach(x=>band(x.id,x.id+x.dur*1000,cssv(x.type==="caminar"?"--lime":"--pink"),.22));naps().forEach(n=>band(n.start,n.end,cssv("--violet"),.25));
+  dets().forEach(d=>band(d.start,d.end,cssv("--dim"),.25));if(AUTO.bout)band(AUTO.bout.start,Date.now(),cssv("--pink"),.12);if(AUTO.slp)band(AUTO.slp.start,Date.now(),cssv("--violet"),.12);
+  [6,12,18].forEach(h=>{cx.fillStyle=cssv("--dim");cx.textAlign="center";cx.fillText(String(h).padStart(2,"0")+":00",X(t0+h*36e5),H-3);cx.strokeStyle="rgba(255,255,255,.05)";cx.beginPath();cx.moveTo(X(t0+h*36e5),6);cx.lineTo(X(t0+h*36e5),H-16);cx.stroke()});
+  [60,100,140].forEach(v=>{if(v>hi)return;cx.fillStyle=cssv("--dim");cx.textAlign="right";cx.fillText(v,26,y(v)+3)});
+  cx.lineWidth=1.6;cx.lineJoin="round";for(let i=1;i<sm.length;i++){if(sm[i][0]-sm[i-1][0]>180000)continue;cx.strokeStyle=cssv(ZC[zoneOf(sm[i][1])]);cx.beginPath();cx.moveTo(X(sm[i-1][0]),y(sm[i-1][1]));cx.lineTo(X(sm[i][0]),y(sm[i][1]));cx.stroke()}
+  const nx=X(Date.now());cx.strokeStyle=cssv("--fg");cx.globalAlpha=.4;cx.setLineDash([3,3]);cx.beginPath();cx.moveTo(nx,6);cx.lineTo(nx,H-16);cx.stroke();cx.setLineDash([]);cx.globalAlpha=1;
+  const hrs=sm.length*10/3600;$("autobtn").textContent=AUTO.on?"Desactivar":"Activar";$("autobtn").className="s"+(AUTO.on?"":" p");
+  $("autotxt").textContent=AUTO.on?(BT.on||demoTimer?`Detección automática activa · ${fx(hrs)} h registradas hoy. ${AUTO.bout?"Ahora mismo: actividad en curso.":AUTO.slp?"Ahora mismo: parece que duermes.":"Deja Bluefy abierto con la pantalla encendida."}`:"Detección activada, pero la pulsera no está conectada. Pulsa Activar de nuevo para reconectar."):"Activa la detección y deja Bluefy abierto con la pantalla encendida (por ejemplo, cargando en el box o en la mesilla). Detecto solo tus paseos, WODs, sesiones de fuerza y carrera, siestas y la noche, y te pido confirmarlos."}
+$("autobtn").onclick=async()=>{if(AUTO.on&&(BT.on||demoTimer)){AUTO.on=false;CFG.auto="0";saveCfg();closeAll(Date.now());store.set("day",AUTO.log);AUTO.wl?.release?.().catch(()=>{});renderDay();toast("Detección desactivada");return}
+  if(!BT.on&&!demoTimer&&!(await btConnect()))return;AUTO.on=true;CFG.auto="1";saveCfg();if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>AUTO.wl=w).catch(()=>{});renderDay();toast("Detección automática activada")};
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&AUTO.on&&navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>AUTO.wl=w).catch(()=>{});if(document.hidden)store.set("day",AUTO.log)});
+AUTO.on=CFG.auto==="1";
+
+
+// ---------- De un vistazo ----------
+const STG=[["--good",1],["--warn",1],["--bad",1]];
+const stressCol=v=>v<1?"--good":v<2?"--warn":"--bad";
+function semi(f,segs,val,lab,col){const R=46,cx=60,cy=58,A=a=>[cx+R*Math.cos(a),cy+R*Math.sin(a)];const arc=(a0,a1)=>{const[x0,y0]=A(a0),[x1,y1]=A(a1);return`M${x0.toFixed(2)} ${y0.toFixed(2)}A${R} ${R} 0 0 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`};
+  const tot=segs.reduce((a,x)=>a+x[1],0);let a=Math.PI,o="";segs.forEach(([c,w])=>{const b=a+Math.PI*w/tot;o+=`<path d="${arc(a+.035,b-.035)}" stroke="var(${c})" stroke-opacity=".22" stroke-width="10" fill="none" stroke-linecap="round"/>`;a=b});
+  if(f!=null){const fv=Math.max(0,Math.min(1,f));const e=Math.PI+Math.PI*fv;let a2=Math.PI;segs.forEach(([c,w])=>{const b=a2+Math.PI*w/tot;const end=Math.min(b,e);if(end>a2+.01)o+=`<path d="${arc(a2+.035,Math.max(a2+.04,end-.035))}" stroke="var(${c})" stroke-width="10" fill="none" stroke-linecap="round"/>`;a2=b});
+    const[px,py]=A(e);o+=`<circle cx="${px.toFixed(2)}" cy="${py.toFixed(2)}" r="6.5" fill="var(--bg)" stroke="var(${col||"--fg"})" stroke-width="3"/>`}
+  return`<svg viewBox="0 0 120 66">${o}</svg><div class="n"><b>${val}</b><span>${lab||""}</span></div>`}
+const HRSEG=[["--z1",.6],["--z2",.1],["--z3",.1],["--z4",.1],["--z5",.1]];
+function glHR(){const now=Date.now();const live=(BT.on||demoTimer)&&BT.lastHr&&now-BT.lastHrT<15000;const ls=AUTO.log[AUTO.log.length-1];const hr=live?BT.lastHr:ls&&now-ls[0]<36e5?ls[1]:null;
+  const lo=35;$("glhr").innerHTML=semi(hr?(hr-lo)/(CFG.max-lo):null,HRSEG,hr??"--",live?"ppm · ahora":hr?"ppm · "+fmtT(ls[0]):"sin conexión",hr?ZC[zoneOf(hr)]:null);
+  const today=AUTO.log.filter(x=>x[0]>=startOfDay(now)).map(x=>x[1]);const b=baseline().rhr;$("glhrd").textContent=(b?"Reposo "+Math.round(b)+" ppm":"Reposo "+CFG.rest+" ppm")+(today.length?` · ${Math.min(...today)}–${Math.max(...today)} hoy`:"")}
+function hourStress(){const t0=startOfDay(Date.now());const out=[];for(let h=0;h<24;h++){const a=t0+h*36e5,b=a+36e5;const sm=AUTO.log.filter(x=>x[0]>=a&&x[0]<b&&rFrac(x[1])<.25&&!overlapsSession(x[0]-1,x[0]+1));
+  out.push(sm.length>=12?stressOf(mean(sm.map(x=>x[1])),mean(sm.map(x=>x[2]).filter(Boolean))):null)}return out}
+function renderGlance(){glHR();const now=Date.now();
+  const hs=hourStress();const st=stresses()[0];const stToday=st&&dayKey(st.d)===dayKey(now)?st.v:null;const lastH=[...hs].reverse().find(v=>v!=null);const sv=stToday??lastH??null;
+  $("glst").innerHTML=semi(sv!=null?sv/3:null,STG,sv!=null?fx(sv):"--",sv!=null?stressTxt(sv):"mide o activa Tu día",sv!=null?stressCol(sv):null);
+  barChart($("glstc"),hs.map(v=>v==null?null:+(v+.15).toFixed(2)),[],{min:0,colorFn:v=>cssv(stressCol(v-.15))});
+  const c=checks();const td=c[0]&&dayKey(c[0].d)===dayKey(now)?c[0]:null;const ls=td&&td.sleep;
+  if(ls){const pct=ls.h/(ls.need||sleepNeed(td.d).need);setRing("glslr",pct,cssv(pct>=.9?"--violet":pct>=.75?"--warn":"--bad"));$("glslv").textContent=hms(ls.h);$("glsld").textContent=Math.round(pct*100)+" % de lo que necesitabas"}
+  else{setRing("glslr",0);$("glslv").textContent="–";const nps=naps().filter(n=>startOfDay(n.start)===startOfDay(now));$("glsld").textContent=nps.length?"Siesta "+Math.round(nps.reduce((a,n)=>a+(n.end-n.start),0)/60000)+" min":"Regístralo en el check"}
+  const hv=c.filter(x=>x.hrv).slice(0,7);const b=mean(hv.slice(td&&td.hrv?1:0).map(x=>x.hrv));$("glhv").textContent=td&&td.hrv?td.hrv:"--";$("glhv").style.color=td&&td.hrv&&b?cssv(td.hrv>=b*.95?"--good":td.hrv>=b*.8?"--warn":"--bad"):"";
+  $("glhvd").textContent=b?"tu media "+Math.round(b)+" ms":"necesita latido a latido";const hr7=hv.slice().reverse();barChart($("glhvc"),hr7.map(x=>x.hrv),[],{min:Math.max(0,Math.min(...hr7.map(x=>x.hrv),999)-10),colorFn:()=>cssv("--sky")});
+  $("glsub").textContent=BT.on?"en directo":demoTimer?"modo prueba":""}
+["gl-hr","gl-st","gl-sl","gl-hv"].forEach((id,i)=>$(id).onclick=()=>{if(i===0)go("train");else go("rec")});
 
 function streak(){const days=new Set([...sessions().filter(s=>!s.demo).map(s=>dayKey(s.id)),...checks().map(c=>dayKey(c.d))]);let n=0,t=Date.now();if(!days.has(dayKey(t)))t-=DAY;while(days.has(dayKey(t))){n++;t-=DAY}return n}
 function setRing(id,frac,col){$(id).setAttribute("stroke-dashoffset",314.2*(1-Math.max(0,Math.min(1,frac))));if(col)$(id).style.stroke=col}
@@ -612,8 +915,9 @@ function renderHoy(){const ch=checks()[0];const today=ch&&dayKey(ch.d)===dayKey(
   const wk=ss.filter(s=>s.id>=ws);$("wk").innerHTML=wk.length+"<small> ses.</small>";$("wkd").textContent=wk.length?`${mmss(wk.reduce((a,s)=>a+s.dur,0))} · carga ${wk.reduce((a,s)=>a+s.trimp,0)}`:"Sin sesiones aún";
   const ac=acwr();if(ac&&ss.length>=3){const r=ac.r;$("acwrmark").style.left=Math.max(0,Math.min(100,r/2*100))+"%";const s=r<.8?["Baja","w"]:r<=1.3?["Óptima","g"]:r<=1.5?["Alta","w"]:["Sobrecarga","r"];
     $("acwrpill").className="pill "+s[1];$("acwrpill").textContent=s[0]+" · "+fx(r,2);$("acwrtxt").textContent=r>1.3?"Estás subiendo la carga muy rápido. Mete un día suave.":r<.8?"Semana más suave que tu media. Buen momento para apretar si te sientes bien.":"Carga en buen rango respecto a tus últimas 4 semanas."}
-  const rec=recommend(today,left,cur.tsb,ac);$("recoh").textContent=rec.h;$("recop").textContent=rec.p;$("recoic").textContent=rec.i;
-  $("lastsess").innerHTML=last?sessCard(last):'<div class="empty">Aún no hay sesiones. Pulsa «Entrenar».</div>';bindSess($("lastsess"))}
+  const rec=recommend(today,left,cur.tsb,ac);if(today&&today.sleep&&today.sleep.need&&today.sleep.h/today.sleep.need<.75)rec.p+=" Has dormido poco: evita buscar máximos.";$("recoh").textContent=rec.h;$("recop").textContent=rec.p;$("recoic").textContent=rec.i;
+  const tn=sleepNeed(startOfDay(Date.now())+DAY);const ln=today&&today.sleep;$("hsleeph").textContent="Esta noche necesitas "+hm(tn.need);$("hsleepp").textContent=`A la cama a las ${bedtimeFor(tn.need)} para levantarte a las ${CFG.wake||"07:00"}.`+(ln?` Anoche dormiste ${hm(ln.h)}${ln.need?" ("+Math.round(ln.h/ln.need*100)+" %)":""}.`:"")+(tn.raw>.25?` Arrastras ${hm(tn.raw)} de deuda.`:"");
+  renderDet();renderDay();renderGlance();$("lastsess").innerHTML=last?sessCard(last):'<div class="empty">Aún no hay sesiones. Pulsa «Entrenar».</div>';bindSess($("lastsess"))}
 function recommend(today,left,tsb,ac){
   if(!today)return{i:"☀",h:"Haz tu check matinal",p:"2 minutos tumbado al despertar y te digo cómo afrontar el día."};
   const sc=today.score,hi=ac&&ac.r>1.3;
@@ -623,18 +927,45 @@ function recommend(today,left,tsb,ac){
   if(sc>=34)return{i:"↓",h:"Técnica y zona 2",p:"Mejor movilidad, técnica ligera o cardio suave en zona 2. Usa la alerta de zona."};
   return{i:"☾",h:"Descanso activo",p:"Tu cuerpo pide recuperar. Paseo, movilidad y dormir bien. Mañana lo notarás."}}
 function sessCard(s){const d=new Date(s.id);const ty=typeOf(s.type);const best=s.hrr&&s.hrr.length?Math.max(...s.hrr):null;
-  return`<button class="sess" data-id="${s.id}"><span class="badge" style="background:var(${ty[2]})">${ty[1][0]}</span><b>${ty[1]} · ${d.toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"})}${s.demo?' <span class="pill w">prueba</span>':""}</b><b style="font-family:var(--mono);font-weight:500">${mmss(s.dur)}</b>
+  return`<button class="sess" data-id="${s.id}"><span class="badge" style="background:var(${ty[2]})">${ty[1][0]}</span><b>${ty[1]} · ${d.toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"})}${s.demo?' <span class="pill w">prueba</span>':s.auto?' <span class="pill">auto</span>':""}</b><b style="font-family:var(--mono);font-weight:500">${mmss(s.dur)}</b>
   <span class="m">strain ${fx(s.strain)} · TE ${fx(s.teA)}/${fx(s.teN)} · ${s.avg}/${s.max} ppm${s.kcal?" · "+s.kcal+" kcal":""}${best?" · −"+best:""}${s.rpe?" · RPE "+s.rpe:""}</span>
   <span class="zbar">${s.zones.map((z,i)=>`<span style="flex:${z||0.0001};background:var(${ZC[i]})"></span>`).join("")}</span>${s.note?`<span class="note">${esc(s.note)}</span>`:""}</button>`}
 function bindSess(el){el.querySelectorAll(".sess").forEach(b=>b.onclick=()=>{const s=sessions().find(x=>x.id===+b.dataset.id);if(s)summary(s,false)})}
 
 let chkMetric="score";
 document.querySelectorAll("#chkseg button").forEach(b=>b.onclick=()=>{chkMetric=b.dataset.c;document.querySelectorAll("#chkseg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));renderRec()});
-function renderRec(){const c=checks();const td=c[0]&&dayKey(c[0].d)===dayKey(Date.now());$("chkstate").className="pill "+(td?zClass(c[0].score):"");$("chkstate").textContent=td?"Hoy · "+c[0].score+"%":"Pendiente hoy";
-  $("chkt").innerHTML=c.length?c.slice(0,14).map(x=>`<tr><td>${new Date(x.d).toLocaleDateString("es-ES",{weekday:"short",day:"numeric"})}</td><td class="${zClass(x.score)}">${x.score}%</td><td>${x.rhr}</td><td>${x.hrv?x.hrv:"–"}</td><td>${x.resp?fx(x.resp):"–"}</td><td>${["","Fatal","Mal","Normal","Bien","Top"][x.feel]}</td></tr>`).join(""):'<tr><td colspan="6" class="empty">Aún no hay checks.</td></tr>';
-  const cc=c.slice(0,14).reverse();const vals=cc.map(x=>x[chkMetric]??null);const real=vals.filter(v=>v!=null);
-  barChart($("cvchk"),vals,cc.map(x=>new Date(x.d).getDate()),{min:chkMetric==="score"||!real.length?0:Math.max(0,Math.min(...real)-8),colorFn:v=>chkMetric==="score"?zColor(v):chkMetric==="rhr"?cssv("--pink"):cssv("--sky")});
-  const hr=[];sessions().slice().reverse().forEach(s=>{if(s.hrr&&s.hrr.length)hr.push([s.id,Math.max(...s.hrr)])});const hh=hr.slice(-14);
+function renderRec(){const c=checks();const td=c[0]&&dayKey(c[0].d)===dayKey(Date.now())?c[0]:null;
+  $("chkstate").className="pill "+(td?zClass(td.score):"");$("chkstate").textContent=td?"Hoy · "+td.score+"%":"Pendiente hoy";
+  const tn=sleepNeed(startOfDay(Date.now())+DAY);const ls=td&&td.sleep?td.sleep:null;const sp=ls?ls.h/(ls.need||sleepNeed(td.d).need)*100:null;
+  const st=stresses()[0];const stv=st&&dayKey(st.d)===dayKey(Date.now())?st.v:null;
+  if(td){setRing("rr1",td.score/100,zColor(td.score));$("rr1v").textContent=td.score;$("recpill").className="pill "+zClass(td.score);$("recpill").textContent=td.score+"% · "+(td.score>=67?"Verde":td.score>=34?"Amarillo":"Rojo");
+    const parts=td.parts||readinessParts(td).parts;$("contrib").innerHTML=parts.length?contribHTML(parts):'<div class="small" style="grid-column:1/-1">Sin datos suficientes.</div>'}
+  else{setRing("rr1",0);$("rr1v").textContent="–";$("recpill").className="pill";$("recpill").textContent="Pendiente";$("contrib").innerHTML='<div class="small" style="grid-column:1/-1">Haz el check matinal y verás qué te suma y qué te resta: HRV, pulso en reposo, sueño, sensación y carga.</div>'}
+  if(ls){setRing("rr2",sp/100,cssv(sp>=90?"--violet":sp>=75?"--warn":"--bad"));$("rr2v").textContent=hms(ls.h);$("rr2u").textContent="de "+hms(ls.need||tn.base)}else{setRing("rr2",0);$("rr2v").textContent="–";$("rr2u").textContent="sueño"}
+  if(stv!=null){setRing("rr3",stv/3,cssv(stv<1?"--good":stv<2?"--warn":"--bad"));$("rr3v").textContent=fx(stv)}else{setRing("rr3",0);$("rr3v").textContent="–"}
+  const co=recCoach(td,sp,stv,tn);$("recic").textContent=co[0];$("rech").textContent=co[1];$("recp").textContent=co[2];
+  // sueño
+  const reg=sleepReg();$("slast").textContent=ls?hms(ls.h):"--";$("slastd").textContent=ls?" "+Math.round(sp)+" %":"";$("sdebt").textContent=tn.raw>0?hms(tn.raw):"0:00";$("sreg").textContent=reg?reg.v+" %":"--";$("sregd").textContent=reg?" ±"+reg.sd+" min":"";
+  $("sleeppill").className="pill "+(sp==null?"":sp>=90?"g":sp>=75?"w":"r");$("sleeppill").textContent=sp==null?"Sin registrar":sp>=90?"Óptimo":sp>=75?"Suficiente":"Escaso";
+  $("stonight").textContent="Esta noche necesitas "+hm(tn.need);
+  $("stonightp").textContent=`A la cama a las ${bedtimeFor(tn.need)} para levantarte a las ${CFG.wake||"07:00"}. Base ${hm(tn.base)}`+(tn.strain>.05?` + ${Math.round(tn.strain*60)} min por el strain de hoy (${fx(tn.st)})`:"")+(tn.debt>.05?` + ${Math.round(tn.debt*60)} min de deuda`:"")+(tn.nap>.05?` − ${Math.round(tn.nap*60)} min de siesta`:"")+".";
+  const sc=c.filter(x=>x.sleep).slice(0,14).reverse();const nd=mean(sc.map(x=>x.sleep.need||tn.base))||tn.base;
+  barChart($("cvsleep"),sc.map(x=>+x.sleep.h.toFixed(1)),sc.map(x=>new Date(x.d).getDate()),{goal:+nd.toFixed(1),colorFn:v=>cssv(v>=nd*.9?"--violet":v>=nd*.75?"--warn":"--bad")});
+  // respira
+  const ws=weekStart(Date.now());const bw=breaths().filter(x=>x.d>=ws);$("brwk").textContent=`${Math.round(bw.reduce((a,x)=>a+x.min,0))} min esta semana`;
+  // estrés
+  if(st){$("stpill").className="pill "+stressCls(st.v);$("stpill").textContent=fx(st.v)+" · "+stressTxt(st.v);$("stg").innerHTML=semi(st.v/3,STG,fx(st.v),stressTxt(st.v),stressCol(st.v));
+    const ago=Math.round((Date.now()-st.d)/60000);$("sttxt").textContent=`${ago<60?"Hace "+ago+" min":ago<1440?"Hace "+Math.round(ago/60)+" h":new Date(st.d).toLocaleDateString("es-ES",{weekday:"short",day:"numeric"})} · pulso ${st.hr} ppm${st.hrv?" · HRV "+st.hrv+" ms":""}. `+(st.v<1?"Sistema nervioso tranquilo.":st.v<2?"Algo activado. Normal si estás trabajando o has tomado café.":"Muy activado. Respira unos minutos y vuelve a medir.")}
+  else{$("stpill").className="pill";$("stpill").textContent="--";$("sttxt").textContent="Aún no has medido tu estrés.";$("stg").innerHTML=semi(null,STG,"–","sin medir")}
+  // insights
+  const ins=insights();const nt=c.filter(x=>Array.isArray(x.tags)).length;
+  $("instxt").textContent=ins.length?"Diferencia media de tu recuperación los días después de cada hábito frente a los días sin él.":`Marca tus hábitos en el check matinal. Con 3 días con y 3 sin cada hábito te digo cuánto te sube o te baja la recuperación. Llevas ${nt} ${nt===1?"día":"días"}.`;
+  $("ins").innerHTML=ins.length?contribHTML(ins):"";
+  // tendencia
+  $("chkt").innerHTML=c.length?c.slice(0,14).map(x=>`<tr><td>${new Date(x.d).toLocaleDateString("es-ES",{weekday:"short",day:"numeric"})}</td><td class="${zClass(x.score)}">${x.score}%</td><td>${x.sleep?hms(x.sleep.h):"–"}</td><td>${x.rhr??"–"}</td><td>${x.hrv?x.hrv:"–"}</td><td>${x.resp?fx(x.resp):"–"}</td><td>${["","Fatal","Mal","Normal","Bien","Top"][x.feel]||"–"}</td></tr>`).join(""):'<tr><td colspan="7" class="empty">Aún no hay checks.</td></tr>';
+  const cc=c.slice(0,14).reverse();const vals=cc.map(x=>chkMetric==="sleep"?(x.sleep?+x.sleep.h.toFixed(1):null):(x[chkMetric]??null));const real=vals.filter(v=>v!=null);
+  barChart($("cvchk"),vals,cc.map(x=>new Date(x.d).getDate()),{min:chkMetric==="score"||chkMetric==="sleep"||!real.length?0:Math.max(0,Math.min(...real)-8),colorFn:v=>chkMetric==="score"?zColor(v):chkMetric==="rhr"?cssv("--pink"):chkMetric==="sleep"?cssv("--violet"):cssv("--sky")});
+  const hr=[];sessions().slice().reverse().forEach(x=>{if(x.hrr&&x.hrr.length)hr.push([x.id,Math.max(...x.hrr)])});const hh=hr.slice(-14);
   barChart($("cvhrr"),hh.map(x=>x[1]),hh.map(x=>new Date(x[0]).getDate()),{goal:30,colorFn:v=>cssv(v>=30?"--good":v>=20?"--warn":"--bad")});
   $("hrrsum").textContent=hh.length?`Mejor recuperación de cada sesión. Media: −${Math.round(hh.reduce((a,x)=>a+x[1],0)/hh.length)} ppm.`:"Aún no hay recuperaciones. Pulsa «Fin de esfuerzo» al acabar una ronda dura."}
 
@@ -644,7 +975,7 @@ function renderProg(){const pm=pmc(42);const cur=pm[pm.length-1];const ss=sessio
   const ch=checks();const wkch=ch.filter(c=>c.d>=ws);
   $("weekly").innerHTML=`<div class="row sb"><h2>Tu semana</h2><span class="small">vs semana pasada</span></div>
   <div class="grid3"><div class="k"><small>Sesiones</small><b>${a.length}</b><span> ${dlt(a.length,b.length)}</span></div><div class="k"><small>Tiempo</small><b>${mmss(sum(a,s=>s.dur))}</b><span> ${dlt(sum(a,s=>s.dur),sum(b,s=>s.dur))}</span></div><div class="k"><small>Carga</small><b>${sum(a,s=>s.trimp)}</b><span> ${dlt(sum(a,s=>s.trimp),sum(b,s=>s.trimp))}</span></div>
-  <div class="k"><small>Strain medio</small><b>${a.length?fx(sum(a,s=>s.strain)/a.length):"--"}</b></div><div class="k"><small>Prep. media</small><b>${wkch.length?Math.round(sum(wkch,c=>c.score)/wkch.length)+"%":"--"}</b></div><div class="k"><small>Calorías</small><b>${sum(a,s=>s.kcal||0)||"--"}</b></div></div>
+  <div class="k"><small>Strain medio</small><b>${a.length?fx(sum(a,s=>s.strain)/a.length):"--"}</b></div><div class="k"><small>Recup. media</small><b>${wkch.length?Math.round(sum(wkch,c=>c.score)/wkch.length)+"%":"--"}</b></div><div class="k"><small>Sueño medio</small><b>${(()=>{const z=wkch.filter(c=>c.sleep);return z.length?hms(sum(z,c=>c.sleep.h)/z.length):"--"})()}</b></div></div>
   <div class="msg">${weeklyText(a,b,cur)}</div>`;
   $("ctl").textContent=Math.round(cur.ctl);$("atl").textContent=Math.round(cur.atl);$("tsb").textContent=Math.round(cur.tsb);const f=formState(cur.tsb);$("tsbpill").className="pill "+(ss.length>=3?f.c:"");$("tsbpill").textContent=ss.length>=3?f.t:"Pocos datos";
   $("pmctxt").textContent=ss.length<3?"Con unas cuantas sesiones guardadas verás cómo evoluciona tu forma.":cur.tsb<-25?"Fatiga muy por encima de tu forma: riesgo de pasarte. Prioriza dormir y un par de días suaves.":cur.tsb<-10?"Estás cargado: es el estado productivo de un bloque de entreno, pero no lo alargues.":cur.tsb>10?"Muy fresco: ideal para competir o testear un PR.":"Equilibrio entre carga y recuperación.";
@@ -661,14 +992,14 @@ function renderProg(){const pm=pmc(42);const cur=pm[pm.length-1];const ss=sessio
   $("zbar4").innerHTML=z4.map((z,i)=>`<div style="flex:${z||0.0001};background:var(${ZC[i]})"></div>`).join("");
   $("zleg4").innerHTML=z4.map((z,i)=>`<span><i style="background:var(${ZC[i]})"></i>Z${i+1}<b>${fx(z/3600)} h</b>${tot?Math.round(z/tot*100):0}%</span>`).join("");
   const pc=i=>tot?z4[i]/tot*100:0;$("zone4txt").textContent=!tot?"Sin sesiones en 4 semanas.":pc(2)>30?"Mucho tiempo en zona 3, la zona gris: separa más los días suaves de los duros.":pc(0)+pc(1)>70&&pc(3)+pc(4)<8?"Mucha base y poca intensidad. Si buscas motor, mete intervalos cortos.":"Buen reparto entre trabajo suave e intenso.";
-  const rhr=ch.length?Math.round(ch.slice(0,7).reduce((a,c)=>a+c.rhr,0)/Math.min(7,ch.length)):CFG.rest;
+  const rr7=ch.filter(c=>c.rhr).slice(0,7);const rhr=rr7.length?Math.round(rr7.reduce((a,c)=>a+c.rhr,0)/rr7.length):CFG.rest;
   $("vo2").innerHTML=Math.round(15.3*CFG.max/rhr)+"<small> ml/kg/min</small>";$("vo2d").textContent=`Método Uth · máx ${CFG.max} / reposo ${rhr}`;
   $("vt1").innerHTML=CFG.vt1?CFG.vt1+"<small> ppm</small>":"--";$("vt1d").textContent=CFG.vt1?"Estimado con DFA α1 en tus sesiones":"Necesita que tu pulsera envíe latido a latido";
   const R=[];if(ss.length){const by=f=>ss.reduce((a,b)=>f(b)>f(a)?b:a);const d=s=>new Date(s.id).toLocaleDateString("es-ES",{day:"numeric",month:"short"});
     const m=by(s=>s.max),l=by(s=>s.dur),st=by(s=>s.strain),tm=by(s=>s.trimp),hs=ss.filter(s=>s.hrr&&s.hrr.length);
     R.push(["Pulso máximo",m.max+" ppm",d(m)],["Sesión más larga",mmss(l.dur),d(l)],["Strain más alto",fx(st.strain),d(st)],["Mayor carga",tm.trimp+" TRIMP",d(tm)]);
     if(hs.length){const h=by(s=>Math.max(...s.hrr));R.push(["Mejor recuperación","−"+Math.max(...h.hrr)+" ppm",d(h)])}
-    const best=ch.length?ch.reduce((a,b)=>b.rhr<a.rhr?b:a):null;if(best)R.push(["Reposo más bajo",best.rhr+" ppm",new Date(best.d).toLocaleDateString("es-ES",{day:"numeric",month:"short"})])}
+    const chr=ch.filter(c=>c.rhr);const best=chr.length?chr.reduce((a,b)=>b.rhr<a.rhr?b:a):null;if(best)R.push(["Reposo más bajo",best.rhr+" ppm",new Date(best.d).toLocaleDateString("es-ES",{day:"numeric",month:"short"})])}
   $("recs").innerHTML=R.length?R.map(r=>`<div class="k"><small>${r[0]}</small><b>${r[1]}</b><span> ${r[2]}</span></div>`).join(""):'<div class="empty" style="grid-column:1/-1">Tus récords aparecerán aquí.</div>'}
 function weeklyText(a,b,cur){if(!a.length&&!b.length)return"Guarda tus entrenos para ver tu resumen semanal.";const ta=a.reduce((x,s)=>x+s.trimp,0),tb=b.reduce((x,s)=>x+s.trimp,0);
   const p=[];if(tb&&ta>tb*1.3)p.push("Has subido mucho la carga respecto a la semana pasada.");else if(tb&&ta<tb*.7)p.push("Semana más suave que la anterior.");else if(a.length)p.push("Carga parecida a la semana pasada.");
@@ -680,20 +1011,20 @@ function renderHist(){const all=sessions();chips($("hfilter"),[["all","Todas"],.
   const h=all.filter(s=>hFilter==="all"||s.type===hFilter);if(!h.length){$("hist").innerHTML='<div class="empty">Cuando guardes una sesión aparecerá aquí.</div>';$("histsum").textContent="";return}
   $("histsum").textContent=`${h.length} sesiones · ${mmss(h.reduce((a,s)=>a+s.dur,0))}`;$("hist").innerHTML=h.slice(0,80).map(sessCard).join("");bindSess($("hist"))}
 
-const SF={max:"s-max",rest:"s-rest",kg:"s-kg",age:"s-age",sex:"s-sex",model:"s-model",snd:"s-snd",voice:"s-voice",zalert:"s-zalert",goal:"s-goal",automax:"s-automax"};
-for(const k in SF){const el=$(SF[k]);el.value=CFG[k];el.onchange=()=>{CFG[k]=el.type==="number"?(el.value===""?"":+el.value):el.value;if(!(CFG.max>100))CFG.max=194;if(!(CFG.rest>25))CFG.rest=46;if(!(CFG.goal>0))CFG.goal=150;saveCfg();toast("Guardado")}}
+const SF={max:"s-max",rest:"s-rest",kg:"s-kg",age:"s-age",sex:"s-sex",model:"s-model",snd:"s-snd",voice:"s-voice",zalert:"s-zalert",goal:"s-goal",automax:"s-automax",sleepBase:"s-sleep",wake:"s-wake"};
+for(const k in SF){const el=$(SF[k]);el.value=CFG[k];el.onchange=()=>{CFG[k]=el.type==="number"?(el.value===""?"":+el.value):el.value;if(!(CFG.max>100))CFG.max=194;if(!(CFG.rest>25))CFG.rest=46;if(!(CFG.goal>0))CFG.goal=150;if(!(CFG.sleepBase>=5&&CFG.sleepBase<=11))CFG.sleepBase=7.5;if(tmin(CFG.wake)==null)CFG.wake="07:00";saveCfg();toast("Guardado");renderHoy()}}
 function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove()}
-$("backup").onclick=()=>download("wod-live-copia-"+new Date().toISOString().slice(0,10)+".json",JSON.stringify({v:4,cfg:CFG,sess:sessions(),chk:checks(),tcfg:T.cfg}),"application/json");
+$("backup").onclick=()=>download("wod-live-copia-"+new Date().toISOString().slice(0,10)+".json",JSON.stringify({v:5,cfg:CFG,sess:sessions(),chk:checks(),str:stresses(),brt:breaths(),naps:naps(),tcfg:T.cfg}),"application/json");
 $("restorebtn").onclick=()=>$("restore").click();
-$("restore").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||!Array.isArray(o.sess))throw 0;store.set("sess",o.sess);store.set("chk",o.chk||[]);if(o.cfg){Object.assign(CFG,o.cfg);saveCfg()}if(o.tcfg)store.set("tcfg",o.tcfg);toast("Copia restaurada");setTimeout(()=>location.reload(),800)}catch(err){toast("Ese archivo no es una copia válida")}};r.readAsText(f)};
+$("restore").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||!Array.isArray(o.sess))throw 0;store.set("sess",o.sess);store.set("chk",o.chk||[]);if(o.cfg){Object.assign(CFG,o.cfg);saveCfg()}if(o.tcfg)store.set("tcfg",o.tcfg);if(o.str)store.set("str",o.str);if(o.brt)store.set("brt",o.brt);if(o.naps)store.set("naps",o.naps);toast("Copia restaurada");setTimeout(()=>location.reload(),800)}catch(err){toast("Ese archivo no es una copia válida")}};r.readAsText(f)};
 $("csvall").onclick=()=>{const h=sessions();if(!h.length){toast("No hay sesiones");return}
   const rows=["fecha,tipo,duracion_min,media,max,strain,trimp,te_aer,te_ana,kcal,z1_min,z2_min,z3_min,z4_min,z5_min,mejor_recup,rpe,nota"].concat(h.map(s=>[new Date(s.id).toISOString(),s.type,(s.dur/60).toFixed(1),s.avg,s.max,s.strain,s.trimp,s.teA,s.teN,s.kcal??"",...s.zones.map(z=>(z/60).toFixed(1)),s.hrr&&s.hrr.length?Math.max(...s.hrr):"",s.rpe??"",'"'+(s.note||"").replace(/"/g,"'")+'"'].join(",")));
   download("wod-live-sesiones.csv",rows.join("\n"),"text/csv")};
-let wipeArm=0;$("wipe").onclick=()=>{if(Date.now()-wipeArm<4000){["sess","chk","last"].forEach(k=>store.set(k,null));$("wipemsg").textContent="Todo borrado.";renderHoy()}else{wipeArm=Date.now();$("wipemsg").textContent="Pulsa otra vez en 4 s para confirmar. Borra sesiones y checks. No se puede deshacer."}};
-addEventListener("resize",()=>{if(!$("v-prog").hidden)renderProg();if(!$("v-rec").hidden)renderRec()});
+let wipeArm=0;$("wipe").onclick=()=>{if(Date.now()-wipeArm<4000){["sess","chk","last","str","brt","naps","det","day"].forEach(k=>store.set(k,null));AUTO.log=[];recPrefill();renderRec();$("wipemsg").textContent="Todo borrado.";renderHoy()}else{wipeArm=Date.now();$("wipemsg").textContent="Pulsa otra vez en 4 s para confirmar. Borra sesiones, checks, sueño y respiraciones. No se puede deshacer."}};
+addEventListener("resize",()=>{if(!$("v-hoy").hidden){renderDay();renderGlance()}if(!$("v-prog").hidden)renderProg();if(!$("v-rec").hidden)renderRec()});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.on&&navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>S.wl=w).catch(()=>{})});
 
-renderRounds();renderHoy();renderSensor();
+renderRounds();recPrefill();renderHoy();renderSensor();
 </script>
 </body>
 </html>
