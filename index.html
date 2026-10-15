@@ -2,193 +2,383 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#17131f">
+<meta name="theme-color" content="#16121e">
 <title>WOD Live</title>
 <style>
-:root{--bg:#17131f;--surface:#211b2c;--s2:#2a2338;--line:#362d46;--fg:#f7f0ff;--muted:#a99fc0;--pink:#ff86bf;--sky:#6cc8ff;
---z1:#8fb8ff;--z2:#6cd8c8;--z3:#c6f36b;--z4:#ffcf5a;--z5:#ff6d82;--good:#57de95;--warn:#ffcf5a;--bad:#ff6d82;
---display:"Fredoka",ui-rounded,"SF Pro Rounded",system-ui,sans-serif;--body:system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;color-scheme:dark}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
-.wrap{max-width:1000px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:16px}
-h1,h2{font-family:var(--display);margin:0;font-weight:700}
-h1{font-size:26px}h2{font-size:18px}
-.top{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
-.btns{display:flex;flex-wrap:wrap;gap:8px}
-button{font:700 14px var(--body);border-radius:999px;padding:10px 16px;border:1px solid var(--line);background:var(--s2);color:var(--fg);cursor:pointer}
+:root{--bg:#16121e;--surface:#211b2c;--s2:#2b2439;--line:#3a3050;--fg:#f8f2ff;--muted:#a99fc0;--pink:#ff86bf;--sky:#6cc8ff;--lemon:#ffe066;
+--z1:#8fb8ff;--z2:#6cd8c8;--z3:#c6f36b;--z4:#ffcf5a;--z5:#ff6d82;--good:#57de95;--warn:#ffcf5a;--bad:#ff6d82;--zc:#a99fc0;
+--display:"Fredoka",ui-rounded,"SF Pro Rounded",system-ui,sans-serif;--body:-apple-system,system-ui,"Segoe UI",sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 var(--body);overscroll-behavior:none}
+.app{max-width:720px;margin:0 auto;padding:max(12px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(96px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-block:6px 12px}
+h1{font:700 22px var(--display);margin:0}
+h2{font:700 18px var(--display);margin:0}
+h3{font:700 13px var(--body);margin:0;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.conn{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);text-align:right}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--bad);flex:none}
+.dot.on{background:var(--good);box-shadow:0 0 0 4px rgb(87 222 149/.18)}
+.dot.demo{background:var(--lemon)}
+button{font:700 15px var(--body);border-radius:14px;padding:12px 16px;border:1px solid var(--line);background:var(--s2);color:var(--fg);cursor:pointer;touch-action:manipulation}
 button.p{background:var(--pink);color:#2a0f1e;border-color:transparent}
-button:disabled{opacity:.45;cursor:default}
+button.s{padding:7px 12px;font-size:13px;border-radius:999px}
+button:disabled{opacity:.4}
 button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.stack{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sb{justify-content:space-between}
 .msg{color:var(--muted);font-size:13px}
-.msg.warn{color:var(--warn)}
-.hero{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
-@media(max-width:640px){.hero{grid-template-columns:1fr}}
-.hr{font:700 clamp(84px,22vw,120px)/0.9 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-.hr small{font:600 18px var(--body);color:var(--muted);letter-spacing:0}
-.zone{display:inline-block;font:800 14px var(--body);letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:var(--s2)}
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.k{background:var(--s2);border-radius:14px;padding:10px 12px}
-.k small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
-.k b{font:500 24px var(--mono);font-variant-numeric:tabular-nums}
-.zbar{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden}
-.zbar div{transition:flex .5s}
-.zleg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;font-size:12px;color:var(--muted)}
-.zleg b{display:block;font:500 14px var(--mono);color:var(--fg)}
-.zleg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px}
-canvas{width:100%;height:200px;display:block}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:760px){.two{grid-template-columns:1fr}}
+.warn{color:var(--warn)}
+.hero{border-radius:24px;padding:18px;background:radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--zc) 26%,transparent),var(--surface) 70%);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:8px}
+.bpm{font:700 clamp(96px,30vw,150px)/.9 var(--display);font-variant-numeric:tabular-nums;color:var(--zc);letter-spacing:-.04em;transition:color .4s}
+.bpm small{font:600 17px var(--body);color:var(--muted);letter-spacing:0}
+.zline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+.zone{font:800 13px var(--body);letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px;background:var(--s2);color:var(--zc)}
+.trend{font:600 13px var(--mono);color:var(--muted)}
+.pctbar{width:100%;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--z1) 0 20%,var(--z2) 20% 40%,var(--z3) 40% 60%,var(--z4) 60% 80%,var(--z5) 80%);position:relative;margin-top:6px}
+.pctbar i{position:absolute;top:-5px;width:4px;height:20px;border-radius:2px;background:var(--fg);transform:translateX(-50%);transition:left .4s}
+.pctlab{display:flex;justify-content:space-between;width:100%;font:11px var(--mono);color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.k{background:var(--s2);border-radius:14px;padding:10px 12px;min-width:0}
+.k small{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k b{font:500 21px var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.k span{font-size:11px;color:var(--muted)}
+.zbar{display:flex;gap:2px;height:16px;border-radius:8px;overflow:hidden;background:var(--s2)}
+.zleg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;font-size:11px;color:var(--muted);text-align:center}
+.zleg b{display:block;font:500 13px var(--mono);color:var(--fg)}
+.zleg i{display:block;height:4px;border-radius:2px;margin:0 auto 4px;width:60%}
+canvas{width:100%;height:180px;display:block}
+.seg{display:flex;gap:4px;background:var(--s2);padding:4px;border-radius:999px;width:fit-content}
+.seg button{border:0;background:transparent;color:var(--muted);padding:6px 12px;font-size:13px;border-radius:999px}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg)}
+.bigbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bigbtns button{padding:16px}
+.clock{font:700 clamp(72px,24vw,120px)/1 var(--mono);text-align:center;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.phase{text-align:center;font:800 15px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.phase.work{color:var(--pink)}.phase.rest{color:var(--sky)}
+.modes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.modes button{padding:10px 4px;font-size:13px}
+.modes button[aria-pressed="true"]{background:var(--pink);color:#2a0f1e;border-color:transparent}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);flex:1;min-width:100px}
+input,select{background:var(--s2);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:10px;font:16px var(--mono);width:100%}
+.tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
-th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:6px;border-bottom:1px solid var(--line)}
-td{padding:6px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:6px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:8px 6px;border-bottom:1px solid var(--line);font-family:var(--mono);white-space:nowrap}
 .pill{font:700 11px var(--body);padding:2px 8px;border-radius:999px;background:var(--s2)}
 .g{color:var(--good)}.w{color:var(--warn)}.r{color:var(--bad)}
-.big{font:600 40px var(--display);font-variant-numeric:tabular-nums}
-label{font-size:13px;color:var(--muted)}
-input[type=number]{width:70px;background:var(--s2);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:4px 6px;font:14px var(--mono)}
-kbd{font:12px var(--mono);background:var(--s2);border:1px solid var(--line);border-radius:4px;padding:0 5px}
+.big{font:600 44px var(--display);font-variant-numeric:tabular-nums}
+.sess{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:12px;border-radius:14px;background:var(--s2)}
+.sess b{font:600 15px var(--body)}
+.sess .m{font:12px var(--mono);color:var(--muted);grid-column:1/-1}
+.sess .zbar{grid-column:1/-1;height:8px}
+.empty{color:var(--muted);text-align:center;padding:18px 0;font-size:13px;font-family:var(--body);white-space:normal}
+nav{position:fixed;left:0;right:0;bottom:0;background:rgb(22 18 30/.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));z-index:5}
+nav .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+nav button{background:transparent;border:0;border-radius:12px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font:600 10.5px var(--body)}
+nav button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav button[aria-current="page"]{color:var(--pink)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font:600 14px var(--body);z-index:9;max-width:90vw;text-align:center}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top">
-    <div><h1>WOD Live</h1><div class="msg" id="status">Pulsera desconectada</div></div>
-    <div class="btns">
-      <button class="p" id="connect">Conectar pulsera</button>
-      <button id="demo">Probar sin pulsera</button>
-      <button id="stop" disabled>Terminar sesión</button>
-      <button id="csv" disabled>Descargar CSV</button>
-    </div>
-  </div>
+<div class="app">
+  <header>
+    <h1>WOD Live</h1>
+    <div class="conn"><span id="status">Pulsera desconectada</span><span class="dot" id="dot"></span></div>
+  </header>
   <div class="msg warn" id="bt" hidden></div>
 
-  <section class="panel">
+  <section class="view stack" id="v-live">
     <div class="hero">
-      <div><div class="hr" id="hr">--<small> ppm</small></div><span class="zone" id="zone">Sin señal</span></div>
-      <div class="kpis">
-        <div class="k"><small>Tiempo</small><b id="t">0:00</b></div>
-        <div class="k"><small>Media</small><b id="avg">--</b></div>
-        <div class="k"><small>Máximo</small><b id="max">--</b></div>
-        <div class="k"><small>% de tu máx</small><b id="pct">--</b></div>
-        <div class="k"><small>HRV en vivo</small><b id="rm">--</b></div>
-        <div class="k"><small>Última recuperación</small><b id="lasthrr">--</b></div>
-      </div>
+      <div class="bpm" id="bpm">--<small> ppm</small></div>
+      <div class="zline"><span class="zone" id="zone">Sin señal</span><span class="trend" id="trend"></span></div>
+      <div class="pctbar" aria-hidden="true"><i id="pctmark" style="left:0%"></i></div>
+      <div class="pctlab"><span>50%</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100%</span></div>
     </div>
-    <div class="zbar" id="zbar"></div>
-    <div class="zleg" id="zleg"></div>
-    <div class="msg">Zonas sobre tu pulso máximo: <input type="number" id="hrmax" value="194" min="150" max="230" aria-label="Pulso máximo"> ppm (el más alto que ha visto WHOOP en tus WODs).</div>
+    <div class="bigbtns" id="startbtns">
+      <button class="p" id="connect">Conectar pulsera</button>
+      <button id="demo">Probar sin pulsera</button>
+    </div>
+    <div class="bigbtns" id="runbtns" hidden>
+      <button id="markbtn">Fin de esfuerzo</button>
+      <button id="stop">Terminar y guardar</button>
+    </div>
+    <div class="grid">
+      <div class="k"><small>Tiempo</small><b id="t">0:00</b></div>
+      <div class="k"><small>Media</small><b id="avg">--</b><span> ppm</span></div>
+      <div class="k"><small>Máximo</small><b id="max">--</b><span> ppm</span></div>
+      <div class="k"><small>% de tu máx</small><b id="pct">--</b></div>
+      <div class="k"><small>Calorías</small><b id="kcal">--</b><span id="kcalu"> kcal</span></div>
+      <div class="k"><small>Carga</small><b id="trimp">--</b><span> TRIMP</span></div>
+      <div class="k"><small>Zonas 4–5</small><b id="hard">0:00</b></div>
+      <div class="k"><small>HRV vivo</small><b id="rm">--</b></div>
+      <div class="k"><small>Últ. recup.</small><b id="lasthrr">--</b></div>
+    </div>
+    <div class="card">
+      <h3>Tiempo por zonas</h3>
+      <div class="zbar" id="zbar"></div>
+      <div class="zleg" id="zleg"></div>
+    </div>
+    <div class="card">
+      <div class="row sb"><h3>Pulso</h3>
+        <div class="seg" role="group" aria-label="Ventana">
+          <button data-w="120" aria-pressed="false">2 min</button><button data-w="600" aria-pressed="true">10 min</button><button data-w="1800" aria-pressed="false">30 min</button>
+        </div></div>
+      <canvas id="cv" aria-label="Gráfica de pulso"></canvas>
+    </div>
   </section>
 
-  <section class="panel">
-    <h2>Últimos 10 minutos</h2>
-    <canvas id="cv" width="1000" height="200" aria-label="Pulso en directo"></canvas>
+  <section class="view stack" id="v-timer" hidden>
+    <div class="card">
+      <div class="modes" role="group" aria-label="Modo">
+        <button data-m="fortime" aria-pressed="true">For Time</button>
+        <button data-m="amrap" aria-pressed="false">AMRAP</button>
+        <button data-m="emom" aria-pressed="false">EMOM</button>
+        <button data-m="tabata" aria-pressed="false">Tabata</button>
+      </div>
+      <div class="row" id="tcfg"></div>
+    </div>
+    <div class="card">
+      <div class="phase" id="tphase">Listo</div>
+      <div class="clock" id="tclock">0:00</div>
+      <div class="row" style="justify-content:center;gap:16px">
+        <span class="msg">Ronda <b id="tround" style="color:var(--fg)">–</b></span>
+        <span class="msg">Pulso <b id="thr" style="color:var(--fg)">--</b></span>
+      </div>
+      <div class="bigbtns">
+        <button class="p" id="tstart">Empezar</button>
+        <button id="tlap">Ronda +</button>
+      </div>
+      <button id="treset">Reiniciar</button>
+      <div class="msg">Cuenta atrás de 10 s y pitidos en cada cambio. El pulso de cada ronda se guarda solo. «Ronda +» marca una ronda a mano en For Time y AMRAP.</div>
+    </div>
+    <div class="card">
+      <h3>Pulso por ronda</h3>
+      <div class="tw"><table><thead><tr><th>#</th><th>Tiempo</th><th>Media</th><th>Máx</th><th>Final</th></tr></thead><tbody id="rounds"></tbody></table></div>
+    </div>
   </section>
 
-  <div class="two">
-    <section class="panel">
-      <div class="top"><h2>Recuperación entre rondas</h2><button id="mark" disabled>Fin de esfuerzo <kbd>espacio</kbd></button></div>
-      <div class="msg">Al acabar una ronda o un sprint, pulsa el botón (o la barra espaciadora). Mido cuánto baja tu pulso en 30 y 60 segundos. También lo detecto solo cuando bajas de zona 4–5. Cuanto más baja, mejor está tu motor y más recuperado estás. La app de WHOOP no te da este dato.</div>
-      <table><thead><tr><th>#</th><th>Pico</th><th>−30 s</th><th>−60 s</th><th></th></tr></thead><tbody id="hrrt"><tr><td colspan="5" class="msg">Aún no hay rondas.</td></tr></tbody></table>
-    </section>
-    <section class="panel">
-      <div class="top"><h2>Test de HRV de 2 minutos</h2><button id="hrvbtn" disabled>Empezar test</button></div>
-      <div class="msg">Por la mañana, tumbado y quieto, antes de mirar el móvil. Mide tu HRV (RMSSD) con los latidos uno a uno, al momento, sin esperar a que WHOOP puntúe la noche. Hazlo siempre igual para poder comparar.</div>
+  <section class="view stack" id="v-rec" hidden>
+    <div class="card">
+      <h2>Recuperación entre esfuerzos</h2>
+      <div class="msg">Al acabar una ronda o un sprint pulsa <b>Fin de esfuerzo</b> en En vivo. Mido cuánto baja tu pulso en 30 y 60 s. También lo detecto solo al salir de zona 4–5. Más de 30 ppm en un minuto es una recuperación muy buena.</div>
+      <div class="tw"><table><thead><tr><th>#</th><th>Pico</th><th>−30 s</th><th>−60 s</th><th></th></tr></thead><tbody id="hrrt"></tbody></table></div>
+    </div>
+    <div class="card">
+      <div class="row sb"><h2>Test de HRV · 2 min</h2><button class="s" id="hrvbtn" disabled>Empezar</button></div>
+      <div class="msg">Al despertar, tumbado y quieto. Calcula tu RMSSD latido a latido al momento. Hazlo siempre igual para comparar. Necesita la pulsera conectada.</div>
       <div class="big" id="hrvout">--</div>
-      <table><thead><tr><th>Día</th><th>RMSSD</th><th>Pulso</th></tr></thead><tbody id="hrvt"></tbody></table>
-    </section>
-  </div>
-  <div class="msg">Todo se queda en este dispositivo. Necesita Bluefy (iPhone) o Chrome (Android, Mac, PC) y activar «Broadcast Heart Rate» en la app de WHOOP.</div>
+      <div class="tw"><table><thead><tr><th>Día</th><th>RMSSD</th><th>Pulso</th><th></th></tr></thead><tbody id="hrvt"></tbody></table></div>
+    </div>
+    <div class="card">
+      <h2>Pulso mínimo de la sesión</h2>
+      <div class="msg">Útil por la mañana como pulso en reposo. Guárdalo en Ajustes para afinar zonas y carga.</div>
+      <div class="big" id="minhr">--</div>
+    </div>
+  </section>
+
+  <section class="view stack" id="v-hist" hidden>
+    <div class="card">
+      <div class="row sb"><h2>Sesiones</h2><span class="msg" id="histsum"></span></div>
+      <div class="stack" id="hist"></div>
+    </div>
+  </section>
+
+  <section class="view stack" id="v-set" hidden>
+    <div class="card">
+      <h2>Tus datos</h2>
+      <div class="msg">Para calcular zonas, calorías y carga. Se guardan solo en este móvil.</div>
+      <div class="row">
+        <label class="f">Pulso máximo<input type="number" id="s-max" inputmode="numeric"></label>
+        <label class="f">Pulso en reposo<input type="number" id="s-rest" inputmode="numeric"></label>
+      </div>
+      <div class="row">
+        <label class="f">Peso (kg)<input type="number" id="s-kg" inputmode="decimal"></label>
+        <label class="f">Edad<input type="number" id="s-age" inputmode="numeric"></label>
+        <label class="f">Sexo<select id="s-sex"><option value="m">Hombre</option><option value="f">Mujer</option></select></label>
+      </div>
+      <label class="f">Modelo de zonas<select id="s-model"><option value="max">% del pulso máximo (como WHOOP)</option><option value="hrr">% de reserva cardiaca (Karvonen)</option></select></label>
+      <label class="f">Sonido del timer<select id="s-snd"><option value="1">Activado</option><option value="0">Desactivado</option></select></label>
+    </div>
+    <div class="card">
+      <h2>Cómo conectar</h2>
+      <div class="msg">1. App de WHOOP → Configuración del dispositivo → Estado → activa <b>Transmitir frecuencia cardíaca</b>.<br>2. En iPhone abre esta página con <b>Bluefy</b>; en Android o PC, con Chrome.<br>3. Pulsa <b>Conectar pulsera</b> y elige tu WHOOP.</div>
+    </div>
+    <div class="card">
+      <h2>Datos</h2>
+      <div class="row"><button class="s" id="csvlast">CSV de la última sesión</button><button class="s" id="wipe">Borrar historial</button></div>
+      <div class="msg" id="wipemsg"></div>
+    </div>
+  </section>
 </div>
+
+<nav aria-label="Menú"><div class="in">
+  <button data-v="live" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>En vivo</button>
+  <button data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>Timer</button>
+  <button data-v="rec"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>Recuperar</button>
+  <button data-v="hist"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Historial</button>
+  <button data-v="set"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>Ajustes</button>
+</div></nav>
+<div class="toast" id="toast" hidden></div>
+
 <script>
 const $=id=>document.getElementById(id);
-const ZC=["var(--z1)","var(--z2)","var(--z3)","var(--z4)","var(--z5)"],ZN=["Zona 1","Zona 2","Zona 3","Zona 4","Zona 5"];
-const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-$("hrmax").value=store.get("hrmax",194);$("hrmax").onchange=()=>store.set("hrmax",+$("hrmax").value);
-const S={on:false,t0:0,samples:[],rr:[],zones:[0,0,0,0,0],last:null,hrr:[],pending:null,synthetic:0,real:0,hrv:null,dev:null,demo:null,wl:null,retry:0};
-const hrmax=()=>+$("hrmax").value||194;
-const zoneOf=h=>{const p=h/hrmax();return p<.6?0:p<.7?1:p<.8?2:p<.9?3:4};
-const mmss=s=>Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0");
+const ZC=["--z1","--z2","--z3","--z4","--z5"],ZN=["Zona 1","Zona 2","Zona 3","Zona 4","Zona 5"];
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const CFG=Object.assign({max:194,rest:46,kg:"",age:"",sex:"m",model:"max",snd:"1"},store.get("cfg",{}));
+const mmss=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,"0");return h?h+":"+String(m).padStart(2,"0")+":"+x:m+":"+x};
+const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function toast(t){const e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2600)}
 
-if(!navigator.bluetooth){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth web. En iPhone abre esta página con la app Bluefy; en ordenador o Android, con Google Chrome.";$("connect").disabled=true}
+const S={on:false,mode:null,t0:0,samples:[],rr:[],zones:[0,0,0,0,0],last:null,hrr:[],pending:null,synthetic:0,real:0,hrv:null,dev:null,demo:null,wl:null,retry:0,kcal:0,trimp:0,min:null,win:600};
 
+function frac(h){return CFG.model==="hrr"?(h-CFG.rest)/(CFG.max-CFG.rest):h/CFG.max}
+function zoneOf(h){const p=frac(h);return p<.6?0:p<.7?1:p<.8?2:p<.9?3:4}
+function zoneHr(p){return CFG.model==="hrr"?CFG.rest+p*(CFG.max-CFG.rest):CFG.max*p}
+function kcalMin(h){const w=+CFG.kg,a=+CFG.age;if(!w||!a)return null;const v=CFG.sex==="f"?(-20.4022+0.4472*h-0.1263*w+0.074*a)/4.184:(-55.0969+0.6309*h+0.1988*w+0.2017*a)/4.184;return Math.max(v,1.2)}
+function trimpMin(h){const r=Math.max(0,Math.min(1,(h-CFG.rest)/(CFG.max-CFG.rest)));return CFG.sex==="f"?r*0.86*Math.exp(1.67*r):r*0.64*Math.exp(1.92*r)}
+
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.removeAttribute("aria-current"));b.setAttribute("aria-current","page");
+  document.querySelectorAll(".view").forEach(v=>v.hidden=v.id!=="v-"+b.dataset.v);if(b.dataset.v==="hist")renderHist();if(b.dataset.v==="live")draw(true);scrollTo(0,0)});
+
+if(!navigator.bluetooth){$("bt").hidden=false;$("bt").textContent="Este navegador no tiene Bluetooth. En iPhone abre la página con Bluefy; en Android o PC, con Chrome. Puedes probarla con «Probar sin pulsera».";$("connect").disabled=true}
 function parseHR(dv){const f=dv.getUint8(0);let i=1;const hr=(f&1)?dv.getUint16(1,true):dv.getUint8(1);i+=(f&1)?2:1;if(f&8)i+=2;const rr=[];if(f&16){while(i+1<dv.byteLength){rr.push(dv.getUint16(i,true)/1024*1000);i+=2}}return{hr,rr}}
-async function connect(){
-  try{S.dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}]});
-    S.dev.addEventListener("gattserverdisconnected",onDisc);await gatt()}
-  catch(e){if(e.name!=="NotFoundError")status("No he podido conectar: "+e.message+". ¿Tienes activado «Broadcast Heart Rate» en la app de WHOOP?",true)}}
-async function gatt(){status("Conectando con "+(S.dev.name||"la pulsera")+"…");const srv=await S.dev.gatt.connect();const svc=await srv.getPrimaryService("heart_rate");
-  const ch=await svc.getCharacteristic("heart_rate_measurement");await ch.startNotifications();
-  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);onBeat(m.hr,m.rr)});S.retry=0;start();status("Conectado a "+(S.dev.name||"tu pulsera"))}
-async function onDisc(){if(!S.on)return;if(S.retry<5){S.retry++;status("Señal perdida, reconectando ("+S.retry+"/5)…",true);setTimeout(()=>gatt().catch(onDisc),1500)}else status("Pulsera desconectada. Pulsa «Conectar pulsera».",true)}
-function status(t,w){$("status").textContent=t;$("status").className="msg"+(w?" warn":"")}
+async function connect(){try{S.dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}]});S.dev.addEventListener("gattserverdisconnected",onDisc);await gatt()}
+  catch(e){if(e.name!=="NotFoundError")status("No conecta: "+e.message,"off")}}
+async function gatt(){status("Conectando…","off");const srv=await S.dev.gatt.connect();const svc=await srv.getPrimaryService("heart_rate");const ch=await svc.getCharacteristic("heart_rate_measurement");await ch.startNotifications();
+  ch.addEventListener("characteristicvaluechanged",e=>{const m=parseHR(e.target.value);onBeat(m.hr,m.rr)});S.retry=0;start("ble");status("Conectado a "+(S.dev.name||"tu WHOOP"),"on")}
+function onDisc(){if(!S.on||S.mode!=="ble")return;if(S.retry<5){S.retry++;status("Reconectando ("+S.retry+"/5)…","off");setTimeout(()=>gatt().catch(onDisc),1500)}else status("Pulsera desconectada","off")}
+function status(t,k){$("status").textContent=t;$("dot").className="dot "+(k==="on"?"on":k==="demo"?"demo":"")}
 
-function demo(){if(S.demo){clearInterval(S.demo);S.demo=null}start();status("Modo prueba: datos simulados, no son tuyos");let t=0,h=70;
-  S.demo=setInterval(()=>{t++;const phase=(t%150);const target=phase<90?95+phase*0.95:110;h+= (target-h)*0.08+(Math.random()-.5)*2;const ibi=60000/h;onBeat(Math.round(h),[ibi+(Math.random()-.5)*40])},1000)}
+function demo(){start("demo");status("Modo prueba","demo");let t=0,h=72;
+  S.demo=setInterval(()=>{t++;const p=t%120;const tg=p<70?100+p*1.2:105;h+=(tg-h)*.09+(Math.random()-.5)*2;onBeat(Math.round(h),[60000/h+(Math.random()-.5)*45])},1000)}
 
-function start(){if(S.on)return;S.on=true;S.t0=Date.now();S.samples=[];S.rr=[];S.zones=[0,0,0,0,0];S.hrr=[];renderHRR();
-  ["stop","mark","hrvbtn"].forEach(id=>$(id).disabled=false);$("csv").disabled=true;
+function start(mode){if(S.on)return;Object.assign(S,{on:true,mode,t0:Date.now(),samples:[],rr:[],zones:[0,0,0,0,0],hrr:[],pending:null,kcal:0,trimp:0,min:null,synthetic:0,real:0,last:null});
+  $("startbtns").hidden=true;$("runbtns").hidden=false;$("hrvbtn").disabled=false;renderHRR();
   if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>S.wl=w).catch(()=>{});}
-function stop(){S.on=false;if(S.demo){clearInterval(S.demo);S.demo=null}try{S.dev?.gatt?.disconnect()}catch(e){}S.wl?.release?.().catch(()=>{});
-  ["stop","mark","hrvbtn"].forEach(id=>$(id).disabled=true);$("csv").disabled=!S.samples.length;status("Sesión terminada · "+mmss((Date.now()-S.t0)/1000))}
+function stop(){if(!S.on)return;S.on=false;if(S.demo){clearInterval(S.demo);S.demo=null}try{S.dev?.gatt?.disconnect()}catch(e){}S.wl?.release?.().catch(()=>{});
+  $("startbtns").hidden=false;$("runbtns").hidden=true;$("hrvbtn").disabled=true;
+  const dur=(Date.now()-S.t0)/1000;
+  if(S.samples.length>20){const hs=S.samples.map(s=>s.hr);const sess={id:S.t0,dur,avg:Math.round(hs.reduce((a,b)=>a+b,0)/hs.length),max:Math.max(...hs),kcal:Math.round(S.kcal)||null,trimp:Math.round(S.trimp),zones:S.zones.map(Math.round),hrr:S.hrr.map(x=>x.peak-x.h60),demo:S.mode==="demo",rounds:T.rounds.length?T.rounds.length:null};
+    const h=store.get("sess",[]);h.unshift(sess);store.set("sess",h.slice(0,100));store.set("last",S.samples.map(s=>[s.t,s.hr,s.rr]));toast("Sesión guardada · "+mmss(dur))}
+  else toast("Sesión demasiado corta, no se guarda");status(S.mode==="demo"?"Prueba terminada":"Pulsera desconectada","off")}
+let lastTick=0;
 function onBeat(hr,rr){if(!S.on||!hr)return;const now=Date.now();
-  if(S.last)S.zones[zoneOf(S.last.hr)]+=Math.min(5,(now-S.last.t)/1000);
-  S.last={t:now,hr};S.samples.push({t:now,hr,rr:rr.map(x=>Math.round(x)).join(" ")});
+  if(S.last){const dt=Math.min(5,(now-S.last.t)/1000);S.zones[zoneOf(S.last.hr)]+=dt;const k=kcalMin(S.last.hr);if(k)S.kcal+=k*dt/60;S.trimp+=trimpMin(S.last.hr)*dt/60}
+  S.last={t:now,hr};S.min=S.min==null?hr:Math.min(S.min,hr);S.samples.push({t:now,hr,rr:rr.map(x=>Math.round(x)).join(" ")});
   rr.forEach(x=>{if(x>300&&x<2000){if(Math.abs(x-60000/hr)<=1.5)S.synthetic++;else S.real++;S.rr.push({t:now,v:x});if(S.hrv)S.hrv.rr.push(x)}});
-  S.rr=S.rr.filter(x=>now-x.t<60000);
-  autoHRR(now,hr);tickHRR(now,hr);draw()}
+  S.rr=S.rr.filter(x=>now-x.t<60000);autoHRR(now,hr);tickHRR(now,hr);if(T.run&&T.t0)T.hrs.push(hr);
+  if(now-lastTick>250){lastTick=now;draw()}}
 
 function rmssd(a){const c=[];for(let i=1;i<a.length;i++){const d=a[i]-a[i-1];if(Math.abs(d)<a[i-1]*.2)c.push(d*d)}return c.length>=10?Math.sqrt(c.reduce((x,y)=>x+y,0)/c.length):null}
 const rrOK=()=>S.real>S.synthetic*2&&S.real>20;
-function hrvTest(){if(S.hrv)return;S.hrv={t0:Date.now(),rr:[],hrs:[]};$("hrvbtn").disabled=true;
-  const iv=setInterval(()=>{const el=(Date.now()-S.hrv.t0)/1000;if(S.last)S.hrv.hrs.push(S.last.hr);$("hrvout").textContent="Midiendo… "+mmss(120-el);
+function hrvTest(){if(S.hrv||!S.on)return;S.hrv={t0:Date.now(),rr:[],hrs:[]};$("hrvbtn").disabled=true;
+  const iv=setInterval(()=>{if(!S.hrv){clearInterval(iv);return}const el=(Date.now()-S.hrv.t0)/1000;if(S.last)S.hrv.hrs.push(S.last.hr);$("hrvout").textContent="Midiendo… "+mmss(120-el);
     if(el>=120){clearInterval(iv);const v=rmssd(S.hrv.rr),h=Math.round(S.hrv.hrs.reduce((a,b)=>a+b,0)/Math.max(1,S.hrv.hrs.length));
-      if(v==null||!rrOK()){$("hrvout").textContent="Sin latido a latido";$("hrvout").insertAdjacentHTML("beforeend",'<div class="msg">Tu pulsera no está enviando los intervalos entre latidos, así que no puedo calcular el HRV en vivo. El pulso y la recuperación entre rondas sí funcionan.</div>')}
-      else{$("hrvout").textContent=Math.round(v)+" ms";const hist=store.get("hrv",[]);hist.unshift({d:new Date().toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"}),v:Math.round(v),h});store.set("hrv",hist.slice(0,30));renderHRV()}
+      if(v==null||!rrOK())$("hrvout").innerHTML='Sin latido a latido<div class="msg">Tu pulsera no envía los intervalos entre latidos, así que no puedo calcular el HRV en vivo. Pulso, zonas y recuperación sí funcionan.</div>';
+      else{$("hrvout").textContent=Math.round(v)+" ms";const hist=store.get("hrv",[]);hist.unshift({d:Date.now(),v:Math.round(v),h});store.set("hrv",hist.slice(0,60));renderHRV()}
       S.hrv=null;$("hrvbtn").disabled=!S.on}},1000)}
 function renderHRV(){const h=store.get("hrv",[]);const base=h.length>3?h.slice(1,8).reduce((a,b)=>a+b.v,0)/Math.min(7,h.length-1):null;
-  $("hrvt").innerHTML=h.length?h.slice(0,7).map((x,i)=>`<tr><td>${x.d}</td><td>${x.v} ms ${i===0&&base?`<span class="pill ${x.v>=base*.95?"g":x.v>=base*.85?"w":"r"}">${x.v>=base?"+":""}${Math.round((x.v/base-1)*100)} % vs tu media</span>`:""}</td><td>${x.h} ppm</td></tr>`).join(""):'<tr><td colspan="3" class="msg">Aún no hay tests.</td></tr>'}
+  $("hrvt").innerHTML=h.length?h.slice(0,10).map((x,i)=>{const d=new Date(x.d).toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"});const st=base&&i===0?(x.v>=base*.95?"g":x.v>=base*.85?"w":"r"):"";
+    return`<tr><td>${d}</td><td>${x.v} ms</td><td>${x.h} ppm</td><td>${st?`<span class="pill ${st}">${x.v>=base?"+":""}${Math.round((x.v/base-1)*100)} %</span>`:""}</td></tr>`}).join(""):'<tr><td colspan="4" class="empty">Aún no hay tests.</td></tr>'}
 
 function peakRecent(now,ms){let p=0;for(let i=S.samples.length-1;i>=0&&now-S.samples[i].t<ms;i--)p=Math.max(p,S.samples[i].hr);return p}
-function mark(auto){if(!S.on||!S.last||S.pending)return;const now=Date.now();S.pending={t:now,peak:peakRecent(now,15000),auto};}
+function mark(auto){if(!S.on||!S.last||S.pending)return;const now=Date.now();S.pending={t:now,peak:peakRecent(now,15000),auto};if(!auto)toast("Midiendo recuperación 60 s…")}
 let hiSince=null;
-function autoHRR(now,hr){const z=zoneOf(hr);if(z>=3){hiSince=hiSince||now}else if(hiSince){if(now-hiSince>30000&&peakRecent(now,20000)-hr>=12&&!S.pending)mark(true);if(z<3)hiSince=null}}
-function tickHRR(now,hr){const p=S.pending;if(!p)return;const el=now-p.t;if(el>=30000&&p.h30==null)p.h30=hr;if(el>=60000){p.h60=hr;S.hrr.unshift({...p});S.pending=null;renderHRR()}}
+function autoHRR(now,hr){const z=zoneOf(hr);if(z>=3){hiSince=hiSince||now}else if(hiSince){if(now-hiSince>30000&&peakRecent(now,20000)-hr>=12&&!S.pending)mark(true);hiSince=null}}
+function tickHRR(now,hr){const p=S.pending;if(!p)return;const el=now-p.t;if(el>=30000&&p.h30==null)p.h30=hr;if(el>=60000){p.h60=hr;S.hrr.unshift({...p});S.pending=null;renderHRR();toast("Recuperación: −"+(p.peak-p.h60)+" ppm en 60 s")}}
 function renderHRR(){const r=S.hrr;$("lasthrr").textContent=r.length?"−"+(r[0].peak-r[0].h60):"--";
-  $("hrrt").innerHTML=r.length?r.map((x,i)=>{const d=x.peak-x.h60;const c=d>=30?"g":d>=20?"w":"r";return`<tr><td>${r.length-i}${x.auto?" auto":""}</td><td>${x.peak}</td><td>−${x.peak-(x.h30??x.peak)}</td><td>−${d}</td><td><span class="pill ${c}">${d>=30?"Muy buena":d>=20?"Normal":"Lenta"}</span></td></tr>`}).join(""):'<tr><td colspan="5" class="msg">Aún no hay rondas.</td></tr>'}
+  $("hrrt").innerHTML=r.length?r.map((x,i)=>{const d=x.peak-x.h60;const c=d>=30?"g":d>=20?"w":"r";return`<tr><td>${r.length-i}${x.auto?" auto":""}</td><td>${x.peak}</td><td>−${x.peak-(x.h30??x.peak)}</td><td>−${d}</td><td><span class="pill ${c}">${d>=30?"Muy buena":d>=20?"Normal":"Lenta"}</span></td></tr>`}).join(""):'<tr><td colspan="5" class="empty">Aún no hay esfuerzos medidos.</td></tr>'}
 
 const cv=$("cv"),cx=cv.getContext("2d");
-function draw(){const L=S.last;if(!L)return;const z=zoneOf(L.hr);
-  $("hr").innerHTML=L.hr+"<small> ppm</small>";$("hr").style.color=ZC[z];$("zone").textContent=ZN[z];$("zone").style.color=ZC[z];
-  const el=(Date.now()-S.t0)/1000;$("t").textContent=mmss(el);
+function draw(force){if(!$("v-timer").hidden&&S.last)$("thr").textContent=S.last.hr;
+  if($("v-live").hidden&&!force){if(!$("v-rec").hidden)$("minhr").textContent=S.min?S.min+" ppm":"--";return}
+  const L=S.last;if(!L)return;const z=zoneOf(L.hr);document.documentElement.style.setProperty("--zc",cssv(ZC[z]));
+  $("bpm").innerHTML=L.hr+"<small> ppm</small>";$("zone").textContent=ZN[z];
+  let old=null;for(let i=S.samples.length-1;i>=0;i--){if(L.t-S.samples[i].t>=15000){old=S.samples[i];break}}
+  $("trend").textContent=old?((L.hr-old.hr>=0?"▲ +":"▼ ")+(L.hr-old.hr)+" en 15 s"):"";
+  $("pctmark").style.left=Math.max(0,Math.min(100,(frac(L.hr)-.5)/.5*100))+"%";
+  $("t").textContent=mmss((Date.now()-S.t0)/1000);
   const hs=S.samples.map(s=>s.hr);$("avg").textContent=Math.round(hs.reduce((a,b)=>a+b,0)/hs.length);$("max").textContent=Math.max(...hs);
-  $("pct").textContent=Math.round(L.hr/hrmax()*100)+" %";
+  $("pct").textContent=Math.round(L.hr/CFG.max*100)+"%";
+  const kk=kcalMin(L.hr);$("kcal").textContent=kk?Math.round(S.kcal):"--";$("kcalu").textContent=kk?" kcal":" (ajustes)";
+  $("trimp").textContent=Math.round(S.trimp);$("hard").textContent=mmss(S.zones[3]+S.zones[4]);
   const live=rrOK()?rmssd(S.rr.map(x=>x.v)):null;$("rm").textContent=live?Math.round(live)+" ms":(S.synthetic>20&&!rrOK()?"n/d":"--");
-  if(S.pending)$("lasthrr").textContent="midiendo…";
-  const tot=S.zones.reduce((a,b)=>a+b,0)||1;
-  $("zbar").innerHTML=S.zones.map((s,i)=>`<div style="flex:${s||0.0001};background:${ZC[i]}"></div>`).join("");
-  $("zleg").innerHTML=S.zones.map((s,i)=>`<span><i style="background:${ZC[i]}"></i>${ZN[i]}<b>${mmss(s)}</b>${Math.round(s/tot*100)} %</span>`).join("");
-  // chart
-  const W=cv.clientWidth,H=cv.clientHeight,dpr=devicePixelRatio||1;if(cv.width!==W*dpr){cv.width=W*dpr;cv.height=H*dpr}
-  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);const css=getComputedStyle(document.documentElement);
-  const now=Date.now(),span=600000,lo=Math.round(hrmax()*.4),hi=hrmax()+5,y=v=>H-18-(v-lo)/(hi-lo)*(H-26),x=t=>34+(t-(now-span))/span*(W-40);
-  [.6,.7,.8,.9].forEach((p,i)=>{const v=hrmax()*p;cx.strokeStyle=css.getPropertyValue("--line");cx.lineWidth=1;cx.beginPath();cx.moveTo(34,y(v));cx.lineTo(W-6,y(v));cx.stroke();
-    cx.fillStyle=css.getPropertyValue("--muted");cx.font="11px ui-monospace,Menlo,monospace";cx.textAlign="right";cx.fillText(Math.round(v),30,y(v)+4)});
-  const pts=S.samples.filter(s=>now-s.t<span);
-  for(let i=1;i<pts.length;i++){cx.strokeStyle=css.getPropertyValue(ZC[zoneOf(pts[i].hr)].slice(4,-1));cx.lineWidth=2.5;cx.lineCap="round";cx.beginPath();cx.moveTo(x(pts[i-1].t),y(pts[i-1].hr));cx.lineTo(x(pts[i].t),y(pts[i].hr));cx.stroke()}
-  cx.fillStyle=css.getPropertyValue("--muted");cx.textAlign="left";cx.fillText("−10 min",34,H-4);cx.textAlign="right";cx.fillText("ahora",W-6,H-4)}
+  if(S.pending)$("lasthrr").textContent="…";$("minhr").textContent=S.min?S.min+" ppm":"--";
+  renderZones();chart()}
+function renderZones(){const tot=S.zones.reduce((a,b)=>a+b,0)||1;
+  $("zbar").innerHTML=S.zones.map((s,i)=>`<div style="flex:${s||0.0001};background:var(${ZC[i]})"></div>`).join("");
+  $("zleg").innerHTML=S.zones.map((s,i)=>`<span><i style="background:var(${ZC[i]})"></i>Z${i+1} · ${Math.round(zoneHr([.5,.6,.7,.8,.9][i]))}+<b>${mmss(s)}</b>${Math.round(s/tot*100)}%</span>`).join("")}
+function chart(){const W=cv.clientWidth,H=cv.clientHeight,dpr=devicePixelRatio||1;if(!W)return;if(cv.width!==Math.round(W*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr)}
+  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);const now=Date.now(),span=S.win*1000;
+  const pts=S.samples.filter(s=>now-s.t<span);const lo=Math.min(Math.round(zoneHr(.45)),...pts.map(p=>p.hr-5)),hi=Math.max(CFG.max+3,...pts.map(p=>p.hr+3));
+  const y=v=>H-16-(v-lo)/(hi-lo)*(H-24),x=t=>30+(t-(now-span))/span*(W-34);
+  cx.font="10px ui-monospace,Menlo,monospace";
+  [.6,.7,.8,.9].forEach(p=>{const v=zoneHr(p);cx.strokeStyle=cssv("--line");cx.lineWidth=1;cx.beginPath();cx.moveTo(30,y(v));cx.lineTo(W-4,y(v));cx.stroke();cx.fillStyle=cssv("--muted");cx.textAlign="right";cx.fillText(Math.round(v),26,y(v)+3)});
+  S.hrr.forEach(h=>{if(now-h.t<span){cx.fillStyle=cssv("--sky");cx.globalAlpha=.5;cx.fillRect(x(h.t)-1,8,2,H-24);cx.globalAlpha=1}});
+  cx.lineWidth=2.5;cx.lineCap="round";cx.lineJoin="round";
+  for(let i=1;i<pts.length;i++){cx.strokeStyle=cssv(ZC[zoneOf(pts[i].hr)]);cx.beginPath();cx.moveTo(x(pts[i-1].t),y(pts[i-1].hr));cx.lineTo(x(pts[i].t),y(pts[i].hr));cx.stroke()}
+  if(pts.length){const p=pts[pts.length-1];cx.fillStyle=cssv(ZC[zoneOf(p.hr)]);cx.beginPath();cx.arc(x(p.t),y(p.hr),4.5,0,7);cx.fill()}
+  cx.fillStyle=cssv("--muted");cx.textAlign="left";cx.fillText("−"+(S.win/60)+" min",30,H-3);cx.textAlign="right";cx.fillText("ahora",W-4,H-3)}
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.win=+b.dataset.w;document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));chart()});
+addEventListener("resize",()=>chart());
 
-function csv(){const rows=["hora,pulso,rr_ms"].concat(S.samples.map(s=>new Date(s.t).toISOString()+","+s.hr+","+s.rr));
-  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([rows.join("\n")],{type:"text/csv"}));a.download="wod-live-"+new Date(S.t0).toISOString().slice(0,16).replace(":","")+".csv";a.click()}
+const T={mode:"fortime",run:false,t0:0,cfg:{fortime:{cap:20},amrap:{min:12},emom:{every:60,n:10},tabata:{work:20,rest:10,n:8}},rounds:[],hrs:[],rt0:0,raf:null};
+Object.assign(T.cfg,store.get("tcfg",{}));
+let AC=null;function beep(f,d){if(CFG.snd!=="1")return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(.3,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+function tcfgRender(){const c=T.cfg[T.mode];const F=(k,l)=>`<label class="f">${l}<input type="number" inputmode="numeric" data-k="${k}" value="${c[k]}"></label>`;
+  $("tcfg").innerHTML={fortime:F("cap","Límite (min)"),amrap:F("min","Minutos"),emom:F("every","Cada (s)")+F("n","Rondas"),tabata:F("work","Trabajo (s)")+F("rest","Descanso (s)")+F("n","Rondas")}[T.mode];
+  $("tcfg").querySelectorAll("input").forEach(i=>i.onchange=()=>{c[i.dataset.k]=Math.max(1,+i.value||1);store.set("tcfg",T.cfg);tReset()});
+  $("tlap").disabled=!(T.mode==="fortime"||T.mode==="amrap")}
+document.querySelectorAll(".modes button").forEach(b=>b.onclick=()=>{if(T.run)return;T.mode=b.dataset.m;document.querySelectorAll(".modes button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));tcfgRender();tReset()});
+function tState(el){const c=T.cfg[T.mode];
+  if(T.mode==="fortime")return{done:el>=c.cap*60,clock:el,phase:"work",round:T.rounds.length+1,label:"For Time · límite "+c.cap+" min"};
+  if(T.mode==="amrap")return{done:el>=c.min*60,clock:c.min*60-el,phase:"work",round:T.rounds.length+1,label:"AMRAP "+c.min+" min"};
+  if(T.mode==="emom"){const r=Math.floor(el/c.every);return{done:r>=c.n,clock:c.every-(el%c.every),phase:"work",round:r+1,label:"EMOM "+Math.min(r+1,c.n)+"/"+c.n,b:r}}
+  const cyc=c.work+c.rest,r=Math.floor(el/cyc),inW=(el%cyc)<c.work;return{done:r>=c.n,clock:inW?c.work-(el%cyc):cyc-(el%cyc),phase:inW?"work":"rest",round:r+1,label:(inW?"Trabajo ":"Descanso ")+Math.min(r+1,c.n)+"/"+c.n,b:r*2+(inW?0:1)}}
+function closeRound(){const hs=T.hrs;const now=Date.now();if(!hs.length){T.rt0=now;return}T.rounds.push({n:T.rounds.length+1,dur:(now-T.rt0)/1000,avg:Math.round(hs.reduce((a,b)=>a+b,0)/hs.length),max:Math.max(...hs),end:hs[hs.length-1]});T.hrs=[];T.rt0=now;renderRounds()}
+function renderRounds(){$("rounds").innerHTML=T.rounds.length?T.rounds.map(r=>`<tr><td>${r.n}</td><td>${mmss(r.dur)}</td><td>${r.avg}</td><td style="color:var(${ZC[zoneOf(r.max)]})">${r.max}</td><td>${r.end}</td></tr>`).join(""):'<tr><td colspan="5" class="empty">Arranca el timer con la pulsera conectada para ver tus rondas.</td></tr>'}
+function tStart(){if(T.run)return;beep(660,.12);T.run=true;T.t0=0;T.cd=Date.now()+10000;T.rounds=[];T.hrs=[];T.lastB=null;T.lastCd=null;T.warn=null;renderRounds();$("tstart").textContent="Parar";
+  if(!S.on)toast("La pulsera no está conectada: el timer va, pero sin pulso");
+  const loop=()=>{if(!T.run)return;const now=Date.now();
+    if(now<T.cd){const s=Math.ceil((T.cd-now)/1000);$("tclock").textContent=s;$("tphase").textContent="Prepárate";$("tphase").className="phase";if(T.lastCd!==s){T.lastCd=s;if(s<=3)beep(880,.12)}T.raf=requestAnimationFrame(loop);return}
+    if(!T.t0){T.t0=T.cd;T.rt0=T.t0;beep(1320,.45)}
+    const el=(now-T.t0)/1000,st=tState(el);
+    if(st.b!=null&&T.lastB!=null&&st.b!==T.lastB){if(T.mode==="emom"||st.phase==="rest")closeRound();else{T.hrs=[];T.rt0=now}beep(st.phase==="work"?1320:520,.35)}
+    if(st.b!=null)T.lastB=st.b;
+    const sl=Math.ceil(st.clock);if(T.mode!=="fortime"&&sl<=3&&sl>0&&T.warn!==sl+"-"+st.b){T.warn=sl+"-"+st.b;beep(880,.1)}
+    if(st.done){closeRound();beep(1320,.9);tStop("¡Terminado!");return}
+    $("tclock").textContent=mmss(T.mode==="fortime"?el:st.clock);$("tphase").textContent=st.label;$("tphase").className="phase "+st.phase;$("tround").textContent=st.round;
+    T.raf=requestAnimationFrame(loop)};
+  T.raf=requestAnimationFrame(loop)}
+function tStop(msg){T.run=false;cancelAnimationFrame(T.raf);$("tstart").textContent="Empezar";$("tphase").textContent=msg||"Parado";$("tphase").className="phase"}
+function tReset(){tStop("Listo");T.t0=0;T.rounds=[];T.hrs=[];renderRounds();$("tround").textContent="–";const c=T.cfg[T.mode];$("tclock").textContent=mmss(T.mode==="amrap"?c.min*60:T.mode==="emom"?c.every:T.mode==="tabata"?c.work:0)}
+$("tstart").onclick=()=>{if(T.run){if(T.t0)closeRound();tStop()}else tStart()};
+$("tlap").onclick=()=>{if(T.run&&T.t0){closeRound();beep(990,.15);toast("Ronda "+T.rounds.length)}};$("treset").onclick=tReset;
 
-$("connect").onclick=connect;$("demo").onclick=demo;$("stop").onclick=stop;$("mark").onclick=()=>mark(false);$("hrvbtn").onclick=hrvTest;$("csv").onclick=csv;
-addEventListener("keydown",e=>{if(e.code==="Space"&&S.on&&e.target.tagName!=="INPUT"){e.preventDefault();mark(false)}});
-renderHRV();renderHRR();
-$("zbar").innerHTML=ZC.map(c=>`<div style="flex:1;background:${c};opacity:.25"></div>`).join("");
-$("zleg").innerHTML=ZN.map((n,i)=>`<span><i style="background:${ZC[i]}"></i>${n}<b>0:00</b>${[50,60,70,80,90][i]}–${[60,70,80,90,100][i]} %</span>`).join("");
+function renderHist(){const h=store.get("sess",[]);
+  if(!h.length){$("hist").innerHTML='<div class="empty">Cuando termines una sesión con «Terminar y guardar» aparecerá aquí.</div>';$("histsum").textContent="";return}
+  const wk=h.filter(s=>Date.now()-s.id<7*864e5&&!s.demo);$("histsum").textContent=wk.length?`7 días: ${wk.length} · ${mmss(wk.reduce((a,s)=>a+s.dur,0))} · carga ${wk.reduce((a,s)=>a+s.trimp,0)}`:"";
+  $("hist").innerHTML=h.slice(0,40).map(s=>{const d=new Date(s.id);const best=s.hrr&&s.hrr.length?Math.max(...s.hrr):null;
+    return`<div class="sess"><b>${d.toLocaleDateString("es-ES",{weekday:"short",day:"numeric",month:"short"})} · ${d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}${s.demo?' <span class="pill w">prueba</span>':""}</b><b style="font-family:var(--mono)">${mmss(s.dur)}</b>
+    <span class="m">media ${s.avg} · máx ${s.max} · carga ${s.trimp}${s.kcal?" · "+s.kcal+" kcal":""}${best?" · mejor recup. −"+best:""}${s.rounds?" · "+s.rounds+" rondas":""}</span>
+    <div class="zbar">${s.zones.map((z,i)=>`<div style="flex:${z||0.0001};background:var(${ZC[i]})"></div>`).join("")}</div></div>`}).join("")}
+
+const SF={max:"s-max",rest:"s-rest",kg:"s-kg",age:"s-age",sex:"s-sex",model:"s-model",snd:"s-snd"};
+for(const k in SF){const el=$(SF[k]);el.value=CFG[k];el.onchange=()=>{CFG[k]=el.type==="number"?(el.value===""?"":+el.value):el.value;if(!(CFG.max>100))CFG.max=194;if(!(CFG.rest>25))CFG.rest=46;store.set("cfg",CFG);toast("Guardado");renderZones();draw(true)}}
+$("csvlast").onclick=()=>{const l=store.get("last",null);if(!l||!l.length){toast("No hay sesión guardada");return}const rows=["hora,pulso,rr_ms"].concat(l.map(r=>new Date(r[0]).toISOString()+","+r[1]+","+r[2]));
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([rows.join("\n")],{type:"text/csv"}));a.download="wod-live-"+new Date(l[0][0]).toISOString().slice(0,16).replace(":","")+".csv";a.click()};
+let wipeArm=0;$("wipe").onclick=()=>{if(Date.now()-wipeArm<4000){store.set("sess",[]);store.set("last",null);$("wipemsg").textContent="Historial borrado.";renderHist()}else{wipeArm=Date.now();$("wipemsg").textContent="Pulsa otra vez en 4 s para confirmar. No se puede deshacer."}};
+
+$("connect").onclick=connect;$("demo").onclick=demo;$("stop").onclick=stop;$("markbtn").onclick=()=>mark(false);$("hrvbtn").onclick=hrvTest;
+setInterval(()=>{if(S.on)draw()},1000);
+renderHRV();renderHRR();renderZones();tcfgRender();tReset();
 </script>
 </body>
 </html>
