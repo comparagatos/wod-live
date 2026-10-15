@@ -789,6 +789,53 @@ button.p{box-shadow:0 1px 0 rgb(255 255 255/.35) inset,0 12px 28px -12px rgb(255
 .hsres button{text-align:left;display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:16px;background:rgb(255 255 255/.035);border:1px solid var(--line);box-shadow:none}
 .hsres b{font:700 15px var(--body)}
 .hsres small{font:600 12px var(--body);color:var(--muted)}
+
+/* ---------- Premium fino v28: números, letras y anillos más finos ---------- */
+:root{--wN:500;--wL:600}
+body{font-weight:500}
+h1,header h1{font-weight:600!important;letter-spacing:-.035em!important}
+h2{font-weight:600!important;letter-spacing:-.025em}
+h3{font-weight:600!important}
+.eyebrow,small,.dial h4,.mycard small,.s2kpis small,.s2cmp small,.k small,.estats small,.mrow small,.myhead h3{font-weight:var(--wL)!important;letter-spacing:.1em!important}
+.dial .dv b{font-weight:400!important;letter-spacing:-.04em!important}
+.dial.mid .dv b{font-size:40px!important}
+.dial .dv span{font-weight:500!important}
+.mycard .mv b{font-weight:var(--wN)!important}
+.k b,.estats b,.s2kpis b,.s2cmp b,.mrow b,.s2tes b,.rtring b,.rgauge b,.tile .v,.dhero b{font-weight:var(--wN)!important}
+.s2ring b{font-weight:400!important}
+.bpm{font-weight:300!important;letter-spacing:-.05em}
+.dhero b{letter-spacing:-.04em}
+.s2top h2{font-weight:600!important}
+.s2ben h3{font-weight:600!important}
+button,.chips button{font-weight:600}
+button.p{font-weight:600!important}
+.pill,.facts span{font-weight:600!important}
+/* anillos y trazos más finos */
+.dial .trk,.dial .arc{stroke-width:5px!important}
+.dial .glow{opacity:.18!important}
+.rtring circle{stroke-width:5px!important}
+.s2ring circle{stroke-width:6px!important}
+.mring circle{stroke-width:6px!important}
+.bigring circle{stroke-width:7px!important}
+.rgauge path{stroke-width:7px!important}
+.hquick svg,.sgic svg,.s2share svg,.heditbar svg,.hqa svg,.hsbtn svg,nav svg{stroke-width:1.6!important}
+.s2te{height:5px!important}.s2zb{height:8px!important}.tsbar i{height:4px!important}.ftrk{height:9px!important}.zbar{height:8px!important}
+.card:not(.herocard),.mycard{border-color:rgb(255 255 255/.06)!important}
+/* selector de actividad */
+.actlbl{font:600 10.5px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:-4px}
+.actsel{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;width:100%;padding:14px;border-radius:22px;text-align:left;background:radial-gradient(120% 140% at 0% 0%,color-mix(in srgb,var(--ac) 22%,transparent),transparent 60%),rgb(255 255 255/.04);border:1px solid color-mix(in srgb,var(--ac) 35%,rgb(255 255 255/.08));box-shadow:0 18px 40px -26px color-mix(in srgb,var(--ac) 70%,transparent)}
+.aci{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;background:color-mix(in srgb,var(--ac) 16%,transparent);border:1px solid color-mix(in srgb,var(--ac) 35%,transparent);color:var(--ac)}
+.aci svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.act b{display:block;font:600 22px/1.1 var(--display);letter-spacing:-.03em;color:var(--fg)}
+.act small{display:block;margin-top:3px;font:500 12px var(--body)!important;letter-spacing:0!important;text-transform:none;color:var(--muted)}
+.acchev{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.agrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.agrid button{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px;border-radius:20px;text-align:left;background:rgb(255 255 255/.035);border:1px solid rgb(255 255 255/.07);box-shadow:none}
+.agrid button .aci{width:44px;height:44px;border-radius:14px}
+.agrid button b{font:600 16px var(--display);letter-spacing:-.02em;color:var(--fg)}
+.agrid button small{font:500 11.5px var(--body)!important;letter-spacing:0!important;text-transform:none;color:var(--muted);margin-top:-4px}
+.agrid button.on{background:radial-gradient(120% 140% at 0% 0%,color-mix(in srgb,var(--ac) 22%,transparent),transparent 65%),rgb(255 255 255/.05);border-color:color-mix(in srgb,var(--ac) 55%,transparent)}
+#tcard,#rcard{display:none!important}
 </style>
 </head>
 <body>
@@ -2705,7 +2752,7 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="27";let busy=false;
+const WL_BUILD="28";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
   if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if((E&&E.on)||(window.__busyUpd&&window.__busyUpd())){if(manual)toast("Hay versión nueva: se instalará cuando termines y guardes la actividad");return false}
@@ -3492,7 +3539,7 @@ const DEF_HIDE=["day","glance","tiles","load"];
 // accesos rápidos posibles
 const QA=[
  {k:"start",l:"Iniciar",ic:'<path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/>',go:()=>{go("train");setTimeout(()=>{const c=$("connect");c&&c.scrollIntoView({behavior:"smooth",block:"center"})},250)}},
- {k:"wods",l:"Mis WODs",ic:'<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>',go:()=>openHist("wod")},
+ {k:"wods",l:"CrossFit",ic:'<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>',go:()=>openHist("wod")},
  {k:"hist",l:"Historial",ic:'<path d="M4 6h16M4 12h16M4 18h10"/>',go:()=>openHist("all")},
  {k:"run",l:"Carrera",ic:'<circle cx="14" cy="4.5" r="1.8"/><path d="M8 21l3-6 3 3v3M6 12l4-4 4 3 4 1"/>',go:()=>{go("train");setTimeout(()=>{try{openRun()}catch(e){}},200)}},
  {k:"sleep",l:"Sueño",ic:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',go:()=>openDetail("sleep")},
@@ -3582,6 +3629,53 @@ window.__widgetPush=push;
 const _rh=renderHoy;const w=function(){const r=_rh.apply(this,arguments);setTimeout(()=>{try{push(false)}catch(e){}},400);return r};w.now=_rh.now;renderHoy=w;
 document.addEventListener("visibilitychange",()=>{if(document.hidden)try{push(true)}catch(e){}});
 setTimeout(()=>{try{push(true)}catch(e){}},3000);
+})();
+</script>
+<script>
+// ---------- Entrenar v28: selector de actividad premium, sin timers ----------
+(function(){
+const vib=()=>{try{if(NATIVE)nat("haptic").catch(()=>{});else navigator.vibrate&&navigator.vibrate(8)}catch(e){}};
+// tipos de actividad (la clave "wod" se mantiene para no tocar tu historial; se muestra como CrossFit)
+const w=TYPES.find(t=>t[0]==="wod");if(w)w[1]="CrossFit";
+[["hyrox","Hyrox","--pink"],["hiit","HIIT","--z5"],["remo","Remo","--z2"],["natacion","Natación","--sky"],["movilidad","Movilidad","--violet"]].forEach(t=>{if(!TYPES.some(x=>x[0]===t[0]))TYPES.splice(TYPES.length-1,0,t)});
+const IC={wod:'<path d="M8.5 9.5V8a3.5 3.5 0 0 1 7 0v1.5"/><circle cx="12" cy="15" r="5.5"/>',
+ fuerza:'<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>',
+ halte:'<path d="M3 6h18M5 4v4M19 4v4M12 6v5M8.5 21l3.5-10 3.5 10"/>',
+ hyrox:'<path d="M4 20h4v-4h4v-4h4V8h4"/>',
+ hiit:'<circle cx="12" cy="13" r="7"/><path d="M12 9.5V13l2.5 2M10 3h4"/>',
+ carrera:'<circle cx="14" cy="4.5" r="1.8"/><path d="M8 21l3-6 3 3v3M6 12l4-4 4 3 4 1"/>',
+ bici:'<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h5l3 7M10 9l2 7h4M14 6h2"/>',
+ remo:'<path d="M3 18c2 0 2-1.5 4.5-1.5S10 18 12 18s2-1.5 4.5-1.5S19 18 21 18M5 14L17 5M15 3.5l3.5 3.5"/>',
+ natacion:'<circle cx="16.5" cy="7" r="1.8"/><path d="M3 18c2 0 2-1.5 4.5-1.5S10 18 12 18s2-1.5 4.5-1.5S19 18 21 18M6 14l4-4 3 2 3-3"/>',
+ caminar:'<circle cx="12" cy="4.5" r="1.8"/><path d="M10 21l1.5-6L14 17v4M9 11l3-3 2 3 2 1M12 8l-1 5"/>',
+ movilidad:'<circle cx="12" cy="4.5" r="1.8"/><path d="M4 11l8-2 8 2M12 9v6l-4 6M12 15l4 6"/>',
+ surf:'<path d="M3 17c3 0 4-3 7-3s4 3 7 3 3-1 4-2M6 13c1-5 5-8 11-8-2 3-3 6-6 8"/>',
+ otro:'<circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/>'};
+const DESC={wod:"WOD, metcon, AMRAP, EMOM",fuerza:"Gimnasio, básicos, accesorios",halte:"Snatch, clean & jerk",hyrox:"Carrera + estaciones",hiit:"Intervalos de alta intensidad",carrera:"Sin GPS (cinta o pista)",bici:"Bici, spinning, assault bike",remo:"Remo y ski erg",natacion:"Piscina o aguas abiertas",caminar:"Paseo o caminata",movilidad:"Yoga, estiramientos",surf:"Surf y deportes de agua",otro:"Cualquier otra actividad"};
+window.__TYIC=IC;
+const ico=k=>`<svg viewBox="0 0 24 24">${IC[k]||IC.otro}</svg>`;
+// sin timers
+try{T.mode="none"}catch(e){}
+function setup(){const prep=$("prep");if(!prep||$("actsel"))return;
+  const card=prep.querySelector(".card");
+  // quitar tipo antiguo y timer
+  ["types","tmodes","tcfg"].forEach(id=>{const e=$(id);if(e){const h=e.previousElementSibling;if(h&&h.tagName==="H3")h.remove();e.remove()}});
+  const tg=$("targets");if(tg){const h=tg.previousElementSibling;if(h&&h.tagName==="H3")h.textContent="Alerta de zona"}
+  const sel=document.createElement("button");sel.id="actsel";sel.className="actsel";card.prepend(sel);
+  const lbl=document.createElement("div");lbl.className="actlbl";lbl.textContent="Actividad";card.prepend(lbl);
+  const saved=store.get("lastType",null);if(saved&&TYPES.some(t=>t[0]===saved))S.type=saved;
+  paint();sel.onclick=()=>{vib();openPicker()}}
+function paint(){const sel=$("actsel");if(!sel)return;const t=typeOf(S.type);sel.style.setProperty("--ac",`var(${t[2]})`);
+  sel.innerHTML=`<span class="aci">${ico(t[0])}</span><span class="act"><b>${t[1]}</b><small>${DESC[t[0]]||""}</small></span><svg class="acchev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></svg>`}
+function openPicker(){const o=document.createElement("div");o.className="sheet actpick";
+  o.innerHTML=`<div class="in"><div class="grab"></div><div class="row sb"><h2 style="font-size:20px">Elige tu actividad</h2><button class="s ghost" id="apx">Cerrar</button></div>
+  <div class="agrid">${TYPES.map(t=>`<button data-k="${t[0]}" class="${t[0]===S.type?"on":""}" style="--ac:var(${t[2]})"><span class="aci">${ico(t[0])}</span><b>${t[1]}</b><small>${DESC[t[0]]||""}</small></button>`).join("")}</div></div>`;
+  document.body.appendChild(o);const close=()=>o.remove();$("apx").onclick=close;o.onclick=e=>{if(e.target===o)close()};
+  o.querySelectorAll(".agrid button").forEach(b=>b.onclick=()=>{vib();S.type=b.dataset.k;store.set("lastType",S.type);paint();close();if(S.type==="carrera")toast("Para correr con mapa y GPS usa «Carrera GPS» arriba")})}
+window.openActPicker=openPicker;
+setup();
+// en directo: nombre de la actividad sobre el pulso
+const _go=go;go=function(v){const r=_go.apply(this,arguments);if(v==="train")try{setup();paint()}catch(e){}return r};
 })();
 </script>
 </body>
