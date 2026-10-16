@@ -1211,7 +1211,7 @@ async function btGatt(){status("Conectando…","off");const srv=await BT.dev.gat
   try{const bs=await srv.getPrimaryService("battery_service");const bl=await bs.getCharacteristic("battery_level");BT.battery=(await bl.readValue()).getUint8(0);try{await bl.startNotifications();bl.addEventListener("characteristicvaluechanged",e=>{BT.battery=e.target.value.getUint8(0);renderSensor()})}catch(e){}}catch(e){BT.battery=null}
   try{const di=await srv.getPrimaryService("device_information");for(const [k,n] of [["fab","manufacturer_name_string"],["modelo","model_number_string"],["firmware","firmware_revision_string"],["hardware","hardware_revision_string"]]){try{const c=await di.getCharacteristic(n);BT.info[k]=new TextDecoder().decode(await c.readValue()).replace(/\0/g,"").trim()}catch(e){}}}catch(e){}
   renderSensor()}
-function onPacket(m){const now=Date.now();BT.pkts++;BT.lastPkt=now;BT.contactSupported=m.cs;BT.contact=m.cs?m.cc:null;
+function onPacket(m){const now=Date.now();if(demoTimer){stopDemo();status(BT.name||"WHOOP","on");if(S.on&&S.mode==="demo"){S.on=false;startSession("ble");toast("Pulsera detectada: la sesión sigue con tus datos reales")}}BT.pkts++;BT.lastPkt=now;BT.contactSupported=m.cs;BT.contact=m.cs?m.cc:null;
   m.rr.forEach(x=>{BT.rrSeen++;if(Math.abs(x-60000/m.hr)<=1.5)BT.synth++;else BT.real++});beat(m.hr,m.rr);if(!$("m-sensor").hidden&&!$("v-mas").hidden&&BT.pkts%3===0)renderSensor()}
 function btLost(){BT.on=false;if(BT.retry<5&&(S.on||CHK.run||BR.run||ST.run||AUTO.on)){BT.retry++;status("Reconectando "+BT.retry+"/5","off");setTimeout(()=>btGatt().catch(btLost),1500)}else status("Desconectada","off");renderSensor()}
 function status(t,k){$("status").textContent=t;$("dot").className="dot "+(k==="on"?"on":k==="demo"?"demo":"");$("navtrain").classList.toggle("on",k==="on"||k==="demo")}
@@ -1247,7 +1247,7 @@ function tcfgRender(){const c=T.cfg[T.mode];if(!c){$("tcfg").innerHTML="";return
 tcfgRender();
 
 $("connect").onclick=async()=>{if(BT.on||await btConnect())startSession("ble")};
-$("demo").onclick=()=>{startDemo();startSession("demo")};
+$("demo").onclick=()=>{if(BT.lastPkt&&Date.now()-BT.lastPkt<8000){startSession("ble");return}startDemo();startSession("demo")};
 function startSession(mode){if(S.on)return;Object.assign(S,{on:true,mode,t0:Date.now(),samples:[],rr:[],zones:[0,0,0,0,0],hrr:[],pending:null,kcal:0,trimp:0,peaks:0,inPeak:false,min:null,last:null,lastZone:-1,lastVoice:Date.now(),lastOut:0,dfa:null,dfaLog:[],maxRun:0});
   $("prep").hidden=true;$("live").hidden=false;$("tcard").hidden=T.mode==="none";$("rcard").hidden=T.mode==="none";T.rounds=[];renderRounds();tReset();
   if(navigator.wakeLock)navigator.wakeLock.request("screen").then(w=>S.wl=w).catch(()=>{});draw(true)}
@@ -2752,7 +2752,7 @@ restore();
 <script>
 // ---------- Actualización automática: al abrir la app o deslizar hacia abajo carga la última versión ----------
 (function(){
-const WL_BUILD="31";let busy=false;
+const WL_BUILD="32";let busy=false;
 async function checkUpdate(manual){if(busy)return false;busy=true;try{
   const t=await fetch(location.pathname+"?u="+Date.now(),{cache:"no-store"}).then(r=>r.text());const m=t.match(/WL_BUILD="(\d+)"/);
   if(m&&+m[1]>+WL_BUILD){const E=window.__runE&&window.__runE();if((E&&E.on)||(window.__busyUpd&&window.__busyUpd())){if(manual)toast("Hay versión nueva: se instalará cuando termines y guardes la actividad");return false}
